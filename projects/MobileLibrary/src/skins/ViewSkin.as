@@ -1,7 +1,7 @@
 package skins
 {
 	import com.chattrspace.utils.ScreenDPIClassification;
-	import com.rmc.projects.happybirthday.utils.DensityUtil;
+	import com.chattrspace.utils.DensityUtil;
 	
 	import flash.system.Capabilities;
 	

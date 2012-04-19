@@ -15,13 +15,12 @@
     <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_128.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_128.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_057.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_057.png"/>
     <resourceEntry destPath="com/assets_runtime/xml/songs.xml" sourcePath="com/assets_runtime/xml/songs.xml"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_048.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_048.png"/>
+    <resourceEntry destPath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_029.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_029.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_512.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_512.png"/>
-    <resourceEntry destPath="com/rmc/projects/happybirthday/.DS_Store" sourcePath="com/rmc/projects/happybirthday/.DS_Store"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png"/>
+    <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png"/>
   </includeResources>
   <namespaceManifests/>
 </flexLibProperties>

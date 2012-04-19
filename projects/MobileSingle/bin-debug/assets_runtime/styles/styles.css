@@ -3,6 +3,10 @@
 @namespace mx "library://ns.adobe.com/flex/mx";
 @namespace supportClasses "spark.components.supportClasses.*";
 @namespace views "com.rmc.projects.happybirthday.view.components.views.*";
+@namespace views1 "com.chattrspace.happybirthday.view.components.views.*";
+@namespace views2 "com.chattrspace.mobilesingle.view.components.views.*";
+@namespace views3 "com.chattrspace.projects.mobilesingle.view.components.views.*";
+@namespace views4 "com.chattrspace.projects.mobilesingle.mvcs.view.components.views.*";
 
 
 /***************************************
@@ -40,7 +44,7 @@ s|SpinnerList {
 **  basic 'frame' around each view (page)
 **
 ****************************************/
-views|AbstractView {
+views4|AbstractView {
 	backgroundColor: #808080	;
 }
 
