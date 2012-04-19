@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:AbstractView 
+	
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:views="com.rmc.projects.flexmobilecustomizationdemo.views.*" 
+	xmlns:components="com.rmc.projects.flexmobilecustomizationdemo.views.components.*"
+	
+	title = "{PhrasesModel.PHRASES_VO.homeViewTitle}"
+	
+	>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.rmc.projects.flexmobilecustomizationdemo.model.PhrasesModel;
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<!-- Place layout -->
+	<views:layout>
+		<s:VerticalLayout
+			paddingBottom	=	"10"
+			paddingLeft		=	"10"
+			paddingRight	=	"10"
+			paddingTop		=	"10"
+			/>
+			
+	</views:layout>
+
+	
+	<!-- Place visual elements here -->
+	<components:LogoImage	id = "image" 		width	= "100%" height="30%"/>
+	<s:Label 				id = "label1" 		text	= "{PhrasesModel.PHRASES_VO.label1Text}" 			width="100%" />
+	<s:Label 				id = "label2" 		text	= "{PhrasesModel.PHRASES_VO.label2Text}" 			width="100%" />
+	<s:Button 				id = "button1" 		label 	= "{PhrasesModel.PHRASES_VO.button1Label}" 			width="100%" styleName="customButton" />
+	<s:Button	 			id = "button2" 		label 	= "{PhrasesModel.PHRASES_VO.button2Label}" 			width="100%" />
+	<s:TextArea 			id = "textArea1" 	text 	= "{PhrasesModel.PHRASES_VO.textArea1BodyText}" 	width="100%" />
+	<s:TextArea 			id = "textArea2" 	text 	= "{PhrasesModel.PHRASES_VO.textArea2BodyText}" 	width="100%" />
+	
+</views:AbstractView>

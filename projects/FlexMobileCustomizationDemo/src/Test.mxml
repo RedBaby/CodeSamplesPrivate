@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" applicationDPI="160"
+			   
+			   creationComplete="application1_creationCompleteHandler(event)"
+			   >
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				//SINGLETON
+				var pushNotificationServicesAPI : PushNotificationServicesAPI = PushNotificationServicesAPI.getInstance();
+				
+				if (pushNotificationServicesAPI.isSupported()) {
+					
+					if (!pushNotificationServicesAPI.isRegistered()) {
+						
+						//EVENTS
+						pushNotificationServicesAPI.addEventListener (PushNotificationServicesAPIEvent.REGISTERED_SUCCESS,  	_onRegisteredSuccess);
+						pushNotificationServicesAPI.addEventListener (PushNotificationServicesAPIEvent.REGISTERED_ERROR, 		_onRegisteredError);
+						pushNotificationServicesAPI.addEventListener (PushNotificationServicesAPIEvent.UNREGISTERED_SUCCESS, 	_onUnregisteredSuccess);
+						pushNotificationServicesAPI.addEventListener (PushNotificationServicesAPIEvent.UNREGISTERED_ERROR, 		_onUnregisteredError);
+						//
+						pushNotificationServicesAPI.addEventListener (PushNotificationServicesAPIEvent.NOTIFICATION_RECEIVED, 	_onNotificationReceived);
+						
+						//REGISTER
+						var parameters_str: String; //TBD
+						pushNotificationServicesAPI.register(parameters_str);
+						
+					} else {
+						
+						//..SOMETIME LATER....UNREGISTER
+						pushNotificationServicesAPI.unregister();
+						
+					}
+					
+				} else {
+					throw Error ("PushNotificationServicesAPI is required but not supported on this device");
+				}
+				
+				
+				//
+				
+				//SINGLETON
+				var loginServiceAPI : LoginServiceAPI = LoginServiceAPI.getInstance();
+				
+				if (loginServiceAPI.isSupported()) {
+					
+					
+					//ONLY FACEBOOK IS REQUIRED, BUT NOTICE THAT THE API CAN SCALE TO OTHER SITES LATER
+					if (!loginServiceAPI.isLoggedIn(LoginServiceAPI.FACE_BOOK)) {
+						
+						//EVENTS
+						loginServiceAPI.addEventListener (LoginServiceAPIEvent.LOG_IN_SUCCEEDED,  	_onLogInSucceeded);
+						loginServiceAPI.addEventListener (LoginServiceAPIEvent.LOG_OUT_SUCCEEDED, 	_onLogOutSucceeded);
+						loginServiceAPI.addEventListener (LoginServiceAPIEvent.LOG_IN_ERRORED,		_onLogInErrored);
+						loginServiceAPI.addEventListener (LoginServiceAPIEvent.LOG_IN_ERRORED, 		_onLogOutErrored);
+						
+						
+						//LOGIN
+						var permissions_str : String = ""; //add permissions, see FaceBook.com documentation
+						loginServiceAPI.logIn (LoginServiceAPI.FACE_BOOK, permissions_str);
+						
+						
+					} else {
+						//LOGOUT
+						loginServiceAPI.logOut(LoginServiceAPI.FACE_BOOK);
+						
+					}
+					
+					
+				} else {
+					throw Error ("LoginServiceAPI is required but not supported on this device");
+				}
+				
+				
+				
+				
+				//
+				
+				//SINGLETON
+				var chattrspaceServicesAPI : ChattrspaceServicesAPI = ChattrspaceServicesAPI.getInstance();
+				
+				if (chattrspaceServicesAPI.isSupported()) {
+					
+					
+					//EVENTS
+					chattrspaceServicesAPI.addEventListener (LoginServiceAPIEvent.LOG_IN_SUCCEEDED,  	_onLogInSucceeded);
+					chattrspaceServicesAPI.addEventListener (LoginServiceAPIEvent.LOG_OUT_SUCCEEDED, 	_onLogOutSucceeded);
+					chattrspaceServicesAPI.addEventListener (LoginServiceAPIEvent.LOG_IN_ERRORED,		_onLogInErrored);
+					chattrspaceServicesAPI.addEventListener (LoginServiceAPIEvent.LOG_IN_ERRORED, 		_onLogOutErrored);
+					
+					
+					//METHODS
+					
+					/********************
+					 * USER INFO
+					 *******************/
+					
+					//METHOD
+					//	A) CALL
+					var getUserInfoObject : Object = {user_id:"foo123"}
+					chattrspaceServicesAPI.getUserInfo (getUserInfoObject); //pass 0 to get userinfo of current logged in user
+					//	B) RETURN
+					//	{user_id: foo123, mode:host, photoURL: http://blah.com/blah.jpg, etc...}
+
+					/********************
+					 * SETTINGS
+					 *******************/
+					
+					//METHOD
+					//	A) CALL
+					var saveYoutubeInfoObject : Object = {user_id:"foo123", site: "youtube", username:"usernameFoo", password:"passwordFoo"}
+					chattrspaceServicesAPI.linkToSite (saveYoutubeInfoObject);
+					//	B) RETURN
+					//	{user_id: foo123, success=true, etc...}
+					
+					//
+					
+					//METHOD
+					//	A) CALL
+					var setComment : Object = {user_id: "foo123", channel_id: "bar123", text:"This is the comment"}
+					chattrspaceServicesAPI.setCommentForChannel (setComment);
+					//	B) RETURN
+					
+					
+					//METHOD
+					//	A) CALL
+					var getComments : Object = {channel_id: "bar123", limit:20}
+					chattrspaceServicesAPI.getAllRecentCommentsForChannel (getComments);
+					//	B) RETURN
+					//	{[{user_id: foo123, text: "this is the comment", timestamp: blah}, {user_id: foo123, text: "this is the comment", timestamp: blah}, etc...]}
+					//
+					
+
+					//
+					
+					
+					/*
+					Services.instance.callHttpMethod(new FollowCommand(),"unfollowUserById",{follower:DataLocator.instance.userVO.userId,followed:userId});
+					Services.instance.callHttpMethod(new FollowCommand(),"followUserById",{follower:DataLocator.instance.userVO.userId,followed:userId});
+					Services.instance.callHttpMethod(new ServiceCommand(),"saveYoutubeInfo",{user_id:SettingsLocator.instance.csUserId,username:tUsername.text,password:tPassword.text});
+
+					var params:Object = {user_name:tUsername.text, first_name:tFirstname.text, last_name:tLastname.text, email:tEmail.text, password:tPassword.text, sex:sexString, dob:tDob.text}
+					Services.instance.callHttpMethod(new SignupCommand(), "userSignUp", params)
+					
+					Services.instance.callHttpMethod(new LoginCommand(),"login",{email:tEmail.text,password:tPassword.text},this);
+					
+					Services.instance.callHttpMethod(new UserCommand(),"getUserInfo",{user_id:SettingsLocator.instance.csUserId}); //pass 0 to get userinfo of current logged in user
+					
+					Services.instance.callHttpMethod(new DashboardCommand(),"getLiveRecentActivity",{limit:20})
+					
+					NOT NEEDED
+					
+					Services.instance.callHttpMethod(new Responder(isFollowingResultHandler, isFollowingFaultHandler),"isFollowing",{follower:SettingsLocator.instance.csUserId,followed:userId});
+					
+					Services.instance.callHttpMethod(new DashboardCommand(),"getPeopleSearch",{search:data.text,limit:limit});
+					}
+					
+					Services.instance.callHttpMethod(new DashboardCommand(),"getSuggestedPeople",{last_id:suggestedLastId,limit:limit});
+					
+					Services.instance.callHttpMethod(new DashboardCommand(),"getSuggestedPeople",{limit:limit});
+					
+					*/
+					
+					
+					
+				} else {
+					throw Error ("ChattrspaceServicesAPI is required but not supported on this device");
+				}
+				
+				
+				
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+</s:Application>

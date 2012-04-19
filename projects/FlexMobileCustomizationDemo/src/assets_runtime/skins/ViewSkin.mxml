@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	
+	>
+	
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("spark.components.View")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			
+			override protected function createChildren():void
+			{
+				//	SUPER
+				super.createChildren()
+				
+				//	GRAB CUSTOM (NOT 'STANDARD' CSS PROPERTIES) FROM *.CSS FILE(S)
+				var backgroundImageClass:Class     	= this.getStyle('backgroundImage') 		as Class;
+				var backgroundImageAlpha:Number     = this.getStyle('backgroundImageAlpha') as Number;
+				var backgroundColor:uint        	= this.getStyle('backgroundColor') 		as uint;
+				var backgroundColorAlpha:Number   	= this.getStyle('backgroundColorAlpha') as Number;
+				
+				//	USE PROPERTIES
+				
+				if (backgroundImageClass != null) {
+					//USE IT
+					background_bitmapimage.source 	= new backgroundImageClass ();
+				}
+				
+				if (backgroundImageAlpha > 0) {
+					//USE IT
+					background_bitmapimage.alpha = backgroundImageAlpha
+					
+				} 
+				
+				if (backgroundColor > 0) {
+					//USE IT
+					background_solidcolor.color = backgroundColor; 
+				}
+				
+				if (backgroundColorAlpha > 0) {
+					//USE IT
+					background_solidcolor.alpha = backgroundColorAlpha;
+					
+				} 
+				
+			}
+		]]>
+	</fx:Script>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="disabled" />
+		<s:State name="normal" />
+	</s:states>
+	
+	<!-- SkinParts -->
+	<s:Rect id="background_rect" left="0" right="0" top="0" bottom="0"  >
+		<s:fill>
+			<!--- @private -->
+			<s:SolidColor id="background_solidcolor" color="#FFFFFF"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:BitmapImage id = "background_bitmapimage" left="0" right="0" top="0" bottom="0"  />
+	
+	<s:Group id="contentGroup" left="0" right="0" top="0" bottom="0"  />
+	
+	
+</s:Skin>
