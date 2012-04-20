@@ -35,15 +35,18 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	import com.chattrspace.projects.mobilesingle.mvcs.model.events.PhrasesModelEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.events.ViewNavigatorEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.SongVO;
-	import com.chattrspace.utils.CSSUtility;
-	import com.chattrspace.utils.DensityUtil;
-	import com.chattrspace.projects.mobilesingle.utils.SongLyricsFilter;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.SongViewUI;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.WebViewUI;
+	import com.chattrspace.projects.mobilesingle.utils.SongLyricsFilter;
+	import com.chattrspace.utils.CSSUtility;
+	import com.chattrspace.utils.DensityUtil;
 	
 	import flash.events.MouseEvent;
 	import flash.media.StageWebView;
 	import flash.system.Capabilities;
+	
+	import org.robotlegs.core.IMediator;
+	import org.robotlegs.utilities.variance.base.IVariantMediatorMap;
 	
 	import spark.components.supportClasses.StyleableTextField;
 	
@@ -115,7 +118,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			super.onRegister()
 			
 			// 	View Listeners
-			webViewUI.backButtonClick.add  (_onBackButtonClick);
+			webViewUI.backButtonClick.add  (_onBackButtonClick);	
+			webViewUI.phrasesVOChanged.add(_onPhrasesVOChanged);
 			
 			//	Context Listeners
 			happyBirthdayModel.currentSongChangedSignal.add (_onCurrentSongChanged);
@@ -141,6 +145,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			
 			// 	View Listeners
 			webViewUI.backButtonClick.remove (_onBackButtonClick);
+			webViewUI.phrasesVOChanged.remove(_onPhrasesVOChanged);
 			
 			//	Context Listeners
 			happyBirthdayModel.currentSongChangedSignal.remove (_onCurrentSongChanged);
@@ -163,22 +168,18 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			viewNavigatorPopViewSignal.dispatch(new ViewNavigatorEvent (ViewNavigatorEvent.POP_VIEW, null, AssetManager.getViewTransition(ViewNavigatorEvent.POP_VIEW) ) );
 		}
 		
-		//CONTEXT
 		/**
-		 * Handles the Signal: <code>ChangedPhrasesModelSignal</code>.
+		 * Handles the Signal: <code>PhrasesVOChanged</code>.
 		 * 
-		 * @param aEvent <code>PhrasesModelEvent</code> The incoming aEvent payload.
-		 *  
 		 * @return void
 		 * 
 		 */
-		override protected function _onPhrasesModelChanged (aEvent : PhrasesModelEvent):void
+		protected function _onPhrasesVOChanged ():void
 		{
-			super._onPhrasesModelChanged(aEvent);
-			
 			_doShowSong();
 		}
 		
+		//CONTEXT
 		/**
 		 * Handles the Signal: <code>ChangedMessageModelSignal</code>.
 		 * 

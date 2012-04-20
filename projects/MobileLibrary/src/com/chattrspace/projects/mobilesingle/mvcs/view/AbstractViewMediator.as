@@ -28,12 +28,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadPhrasesModelSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.events.PhrasesModelEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.AbstractView;
 	
-	import org.osflash.signals.natives.NativeSignal;
 	import org.robotlegs.mvcs.Mediator;
 	
 	import spark.events.ViewNavigatorEvent;
@@ -56,19 +52,6 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		//  Properties
 		//--------------------------------------
 		//PUBLIC
-		/**
-		 * Signal: Marks a request to load the <code>PhrasesModel</code>
-		 * 
-		 */	
-		[Inject]
-		public var loadPhrasesModelSignal : LoadPhrasesModelSignal;
-		
-		/**
-		 * Reference: <code>PhrasesModel</code>
-		 * 
-		 */	
-		[Inject]
-		public var phrasesModel : PhrasesModel;
 		
 		//--------------------------------------
 		//  Constructor
@@ -94,16 +77,10 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 */
 		override public function onRegister():void
 		{
-			//Model
-			phrasesModel.changedPhrasesModelSignal.add (_onPhrasesModelChanged);
 			
-			//VIEW
+			//	VIEW
 			(getViewComponent() as AbstractView).viewActivatedSignal.add (_onViewActivatedSignal);
 			
-			
-			//	RE-CALL EACH TIME THIS VIEW IS POPPED ON
-			//trace ("abm.onRegister() for " + getViewComponent());
-			loadPhrasesModelSignal.dispatch ();
 			
 		}
 		
@@ -115,28 +92,10 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 */
 		override public function onRemove():void
 		{
-			//THE UI IS REMOVED FOR US, ANY OTHER CLEANUP TO DO?
-			//trace ("abm.onRemove() for  " + getViewComponent());
 			
-			//Model
-			phrasesModel.changedPhrasesModelSignal.remove (_onPhrasesModelChanged);
+			//	VIEW
+			(getViewComponent() as AbstractView).viewActivatedSignal.remove (_onViewActivatedSignal);
 			
-		}
-		
-		
-		/**
-		 * Handles the Signal: <code>ChangedPhrasesModelSignal</code>.
-		 * 
-		 * @param aEvent <code>PhrasesModelEvent</code> The incoming aEvent payload.
-		 *  
-		 * @return void
-		 * 
-		 */
-		protected function _onPhrasesModelChanged (aEvent : PhrasesModelEvent):void
-		{
-			
-			//WE SEE MAIN THEN SONG PROPERLY, WHEN WE RETURN TO MAIN getViewComponent() is null, but somehow its phrases still render. Fine for now.
-			(getViewComponent() as AbstractView).phrasesVO = aEvent.phrasesModel.phrasesVO;
 		}
 		
 		/**

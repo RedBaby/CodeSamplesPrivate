@@ -2,6 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="true" version="3">
   <includeClasses>
     <classEntry path="com.chattrspace.utils.ScreenDPIClassification"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.IPhraseableUI"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_048.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_048.png"/>
@@ -19,8 +20,8 @@
     <resourceEntry destPath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_029.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_029.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_512.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_512.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png"/>
     <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png"/>
+    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png"/>
   </includeResources>
   <namespaceManifests/>
 </flexLibProperties>
