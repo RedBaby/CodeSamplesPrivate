@@ -5,16 +5,41 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	
-	applicationDPI="320" 
+	addedToStage="_onAaddedToStageHandler(event)"
+	
 	>
 	
 	<fx:Script>
 		<![CDATA[
-		
-		
+			
+			
+			//--------------------------------------
+			//  Imports
+			//--------------------------------------
+			import com.chattrspace.projects.mobilesingle.mvcs.view.ApplicationUIMediator;
+			
+			
+			// --------------------------------------
+			// Event Handlers
+			// --------------------------------------
+			/**
+			 * Handles the aEvent: <code>Event.ADDED_TO_STAGE</code>.
+			 * 
+			 * @param aEvent <code>Event</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			protected function _onAaddedToStageHandler(event:Event):void
+			{
+				//Since our Main.mxml lies OUTSIDE of the library, we must map it here and type it to its SuperClass
+				this.context.getMediatorMap().mapView	(Main, ApplicationUIMediator, [ApplicationUI]);
+			}
+			
 		]]>
 	</fx:Script>
 	
+	<!-- Link to the Styles -->
 	<fx:Style source="./assets_runtime/styles/styles.css" />
 	
 </components:ApplicationUI>

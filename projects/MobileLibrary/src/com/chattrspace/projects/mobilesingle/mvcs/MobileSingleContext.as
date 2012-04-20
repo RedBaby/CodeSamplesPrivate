@@ -64,7 +64,11 @@ package com.chattrspace.projects.mobilesingle.mvcs
 	import flash.events.Event;
 	
 	import org.robotlegs.base.ContextEvent;
+	import org.robotlegs.base.MediatorMap;
+	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.mvcs.SignalContext;
+	import org.robotlegs.utilities.variance.base.IVariantMediatorMap;
+	import org.robotlegs.utilities.variance.base.RLVariantMediatorMap;
 	
 	/**
 	 * <p>The Context is the 'glue' or 'brains of the application 
@@ -73,6 +77,24 @@ package com.chattrspace.projects.mobilesingle.mvcs
 	 */
 	public class MobileSingleContext extends SignalContext
 	{
+		
+		//--------------------------------------
+		//  Properties
+		//--------------------------------------
+		/**
+		 *  
+		 */		
+		public function getMediatorMap () 					: IMediatorMap 	{ return mediatorMap; }
+
+		override protected function get mediatorMap():IMediatorMap
+		{
+			return _mediatorMap ||= new RLVariantMediatorMap(contextView, createChildInjector(), reflector);
+		}
+		
+		public function get variantMap():IVariantMediatorMap
+		{
+			return mediatorMap as IVariantMediatorMap;
+		}
 		
 		//--------------------------------------
 		//  Constructor
@@ -85,10 +107,6 @@ package com.chattrspace.projects.mobilesingle.mvcs
 		{
 			super();
 		}
-		
-		//--------------------------------------
-		//  Methods
-		//--------------------------------------
 		
 		//--------------------------------------
 		//  Methods
@@ -147,7 +165,6 @@ package com.chattrspace.projects.mobilesingle.mvcs
 		protected function _startupView() : void
 		{
 			
-			mediatorMap.mapView		(ApplicationUI, 		 	ApplicationUIMediator);
 			mediatorMap.mapView		(MainViewUI, 	MainViewUIMediator); //optional 3rd parameter, [MainViewUI]);
 			mediatorMap.mapView		(SongViewUI, 	SongViewUIMediator);  //optional 3rd parameter, [SongViewUI]);
 			mediatorMap.mapView		(WebViewUI, 	WebViewUIMediator);  //optional 3rd parameter, [SongViewUI]);
