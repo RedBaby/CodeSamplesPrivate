@@ -5,9 +5,28 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	
-	addedToStage="_onAaddedToStageHandler(event)"
+	
+	splashScreenImage="com.chattrspace.projects.mobilesingle.mvcs.view.components.splashscreenimages.SplashScreenImage"
+	preloader="spark.preloaders.SplashScreen"
+	splashScreenMinimumDisplayTime="0"
+	splashScreenScaleMode="zoom"
+	applicationDPI="320"
+	
+	
+	
+	addedToStage="_onAddedToStageHandler(event)"
+	
 	
 	>
+	
+	<!--
+		SRIVELLO - 	Not sure why, but the splash-screen near-by properties 
+					above must be here and not in the superclass. Why? No problem, its fine as is.
+	-->
+	
+	
+	
+	
 	
 	<fx:Script>
 		<![CDATA[
@@ -30,10 +49,10 @@
 			 * @return void
 			 * 
 			 */
-			protected function _onAaddedToStageHandler(event:Event):void
+			protected function _onAddedToStageHandler(event:Event):void
 			{
-				//Since our Main.mxml lies OUTSIDE of the library, we must map it here and type it to its SuperClass
-				this.context.getMediatorMap().mapView	(Main, ApplicationUIMediator, [ApplicationUI]);
+				//USE FOR TESTING SOMETHING PERHAPS...
+					
 			}
 			
 		]]>

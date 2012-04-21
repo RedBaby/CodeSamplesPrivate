@@ -28,6 +28,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.services
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
+	import com.chattrspace.errors.PhrasesLoadServiceError;
+	import com.chattrspace.errors.SwitchStatementDefaultError;
 	import com.chattrspace.projects.mobilesingle.managers.AssetManager;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.PhrasesVO;
@@ -109,14 +111,18 @@ package com.chattrspace.projects.mobilesingle.mvcs.services
 			
 			/*
 			
-				LOAD SERVICE: EXAMPLE OF 'EXTERNAL DATA' (XML, CALLING A SERVER, ETC...)
+			LOAD SERVICE: EXAMPLE OF 'EXTERNAL DATA' (XML, CALLING A SERVER, ETC...)
 			
 			
 			*/
 			var phrasesVO : PhrasesVO = new PhrasesVO ();
 			
 			//CONVERT FOREIGN DATA to app-specific usable data (bogus xml->string example here)
-			var xmlDoc : XML = XML (aEvent.target.data);
+			try {
+				var xmlDoc : XML = XML (aEvent.target.data);
+			} catch (aError: Error) {
+				throw new PhrasesLoadServiceError(AssetManager.PHRASES_XML_URL, aError );
+			}
 			var node : XML;
 			var value_str : String;
 			
@@ -133,7 +139,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.services
 			
 		};
 		
-			
+		
 		/**
 		 * Handles the aEvent: <code>IOErrorEvent.IO_ERROR</code>.
 		 * 

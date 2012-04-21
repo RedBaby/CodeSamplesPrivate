@@ -4,9 +4,8 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:views="com.rmc.projects.flexmobilecustomizationdemo.views.*" 
-	xmlns:components="com.rmc.projects.flexmobilecustomizationdemo.views.components.*"
 	
-	title = "{PhrasesModel.PHRASES_VO.homeViewTitle}"
+	title = "{PhrasesModel.PHRASES_VO.homeViewTitle}" xmlns:components="com.chattrspace.components.*"
 	
 	>
 	

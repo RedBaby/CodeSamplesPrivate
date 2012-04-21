@@ -35,10 +35,6 @@ s|ViewNavigatorApplication {
 	}
 }
 
-s|SpinnerList {
-	fontSize : 45;
-}
-
 /***************************************
 **
 **  basic 'frame' around each view (page)
@@ -46,12 +42,6 @@ s|SpinnerList {
 ****************************************/
 views4|AbstractView {
 	backgroundColor: #808080	;
-}
-
-s|BorderContainer {
-	cornerRadius : 20;
-	borderVisible: false;
-	backgroundColor : #808080;
 }
 
 

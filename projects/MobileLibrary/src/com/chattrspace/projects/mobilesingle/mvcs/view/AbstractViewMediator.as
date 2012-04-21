@@ -109,6 +109,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		protected function _onViewActivatedSignal (aEvent : ViewNavigatorEvent):void
 		{
 			
+			//OVERRIDE AS NEEDED...
+			
 		}
 		
 		

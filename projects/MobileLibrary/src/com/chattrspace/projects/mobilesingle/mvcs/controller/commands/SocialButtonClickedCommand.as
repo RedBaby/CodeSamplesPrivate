@@ -82,27 +82,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 			
 			
 			//SWITCH
-			switch(buttonIDName)
-			{
-				case AbstractView.SOCIAL_EMAIL_BUTTON_ID:
-					urlRequest = new URLRequest ("http://www.rivellomultimediaconsulting.com/contact/");
-					break;
-				case AbstractView.SOCIAL_TWITTER_BUTTON_ID : 
-					urlRequest = new URLRequest ("https://twitter.com/#!/srivello");
-					break;
-				case AbstractView.SOCIAL_FACEBOOK_BUTTON_ID :
-					urlRequest = new URLRequest ("https://www.facebook.com/RivelloMultimediaConsulting");
-					break;
-				case AbstractView.SOCIAL_VIMEO_BUTTON_ID :
-					urlRequest = new URLRequest ("https://vimeo.com/srivello");
-					break;
-				case AbstractView.SOCIAL_RMC_WEBSITE_BUTTON_ID :
-					urlRequest = new URLRequest ("https://www.RivelloMultimediaConsulting.com");
-					break;
-				default:
-					throw new Error("switch failed social button");
-					break;
-			}
+			
+			urlRequest = new URLRequest ("https://www.RivelloMultimediaConsulting.com");
 			
 			//OPEN A URL IN THE BROWSER
 			navigateToURL(urlRequest);

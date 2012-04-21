@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ViewNavigatorApplication 
 	
-	splashScreenImage="com.chattrspace.projects.mobilesingle.mvcs.view.components.splashscreenimages.SplashScreenImage"
-	firstView="com.chattrspace.projects.mobilesingle.mvcs.view.components.views.MainViewUI" 
+	firstView="com.chattrspace.projects.mobilesingle.mvcs.view.components.views.LogInViewUI" 
 	xmlns:mobilesingle="com.chattrspace.projects.mobilesingle.*"
+	xmlns:mvcs="com.chattrspace.projects.mobilesingle.mvcs.*"
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
-
-	preloader="spark.preloaders.SplashScreen"
-	splashScreenMinimumDisplayTime="0"
-	splashScreenScaleMode="zoom"
 	
 	creationComplete="_onCreationComplete(event)" 
-	addedToStage="_onAddedToStage(event)" xmlns:mvcs="com.chattrspace.projects.mobilesingle.mvcs.*"
+	addedToStage="_onAddedToStage(event)" 
 	
 	
 	>

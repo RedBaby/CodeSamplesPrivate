@@ -1,0 +1,69 @@
+
+
+//////////////////////////////
+//////////////////////////////
+//CLIENT STUFF
+//////////////////////////////
+//////////////////////////////
+
+* SRIVELLO - ASK CLIENT FOR HIS PROVISIONINGS FILE (AND P12S?) FOR APP BUILDS. Don't add mine to SVN. MobileSingle and MobileSingleBranded.
+
+
+//////////////////////////////
+//////////////////////////////
+//DOCUMENTATION STUFF
+//////////////////////////////
+//////////////////////////////
+
+* CUSTOMIZATION DOCS - remember appstore(s) steps (provisioning, push notifications server setup, ect...)
+
+
+
+
+
+
+
+
+//////////////////////////////
+//////////////////////////////
+//CODING STUFF
+//////////////////////////////
+//////////////////////////////
+
+
+
+
+
+
+
+//////////////////////////////
+//////////////////////////////
+//PROJECT STUFF
+//////////////////////////////
+//////////////////////////////
+
+
+//TASKS FOR ELLIOT
+
+----NAME: MobileSingle/MobileLibrary asset location vetting 
+----PRIORITY: Well, file setup is v0.5, but customization is really much later, hmmmm...
+
+	**discuss the location of files
+	**demo the setting of 	applicationDPI in Main.mxml. Do we want that? Need that?
+	**propose solution for folders and naming of all runtime/compiletime (remember those are in each MobileSingle and MobileLibrary)
+	**goals: readability, update-ability, DRY, keep swf vs png options alive, go with png only by default
+	**philosophy: if it can be vector (settings icons, ect...) it should. Stuff that cannot be?: splash images, OS-icons, logos (because we want easy photoshopability)
+	**
+	**rename files/folders
+	**then pitch a logo and color scheme for the app (include easy-to-test-DPI-specific-colors) so we can test it out
+	**create a (partial?) set of all assets
+	**
+    **look at the customization demo. Should it live on and link to shared library files. I think yes. 1-2 pages with all components we want to use. Easy testing ground
+	
+	
+	2) What happens when app sent to background? And, what is the user experience when it is returned to foreground? Similarly, what kind of recovery will we provide for the instance where the app is interrupted by phone call or other interruption? What will other users see if the user is broadcasting video when the app is interrupted? Automatic demotion from broadcaster status? We may have to detect the event that the app receives when it is interrupted, and also determine what to do if we don't receive that event (crash) and can't handle it elegantly. (the bullets were meant to be a few alternatives for what an app could do when it is intentionally interrupted and sent to the background. That wasn't really clear in the way I wrote it. )
+— Audio continues
+— Video signal cut, app pauses
+— App shuts down
+
+

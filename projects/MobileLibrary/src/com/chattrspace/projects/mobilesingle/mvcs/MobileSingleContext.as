@@ -52,16 +52,16 @@ package com.chattrspace.projects.mobilesingle.mvcs
 	import com.chattrspace.projects.mobilesingle.mvcs.services.HappyBirthdayLoadService;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.ILoadService;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.PhrasesLoadService;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.MainViewUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ApplicationUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.LogInViewUIMediator;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.PhraseableUIMediator;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.SongViewUIMediator;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.WebViewUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ApplicationUI;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.IPhraseableUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.MainViewUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.SongViewUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.WebViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.LogInViewUI;
 	
 	import flash.events.Event;
+	
+	import mx.core.FlexGlobals;
 	
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.core.IMediatorMap;
@@ -164,16 +164,26 @@ package com.chattrspace.projects.mobilesingle.mvcs
 		protected function _startupView() : void
 		{
 			
-			//WITH INVARIANCE (LESS FLEXIBLE)
-			mediatorMap.mapView		(MainViewUI, 	MainViewUIMediator); 	//optional 3rd parameter, [MainViewUI]);
-			mediatorMap.mapView		(SongViewUI, 	SongViewUIMediator);  	//optional 3rd parameter, [SongViewUI]);
-			mediatorMap.mapView		(WebViewUI, 	WebViewUIMediator);  	//optional 3rd parameter, [SongViewUI]);
 			
+			/////////////////////////////////////
+			//WITH INVARIANCE (LESS FLEXIBLE)
+			/////////////////////////////////////
+			mediatorMap.mapView		(LogInViewUI, 	LogInViewUIMediator); 	//optional 3rd parameter, [MainViewUI]);
+			
+			
+			/////////////////////////////////////
 			//NEW COVARIANCE (MORE FLEXIBLE) - (MobileSingle is the first time we're using this...)
 			//before: mappings are to one specific type
 			//now   : mappings are to one specific type or its interface or any of its super classes!
+			/////////////////////////////////////
 			variantMap.mapMediator(IPhraseableUI, PhraseableUIMediator, true); // true means USE covariance
-		
+			
+			//DYNAMICALLY MAP The Main.mxml (outisde of this library) to a mediatory (in this library) via its UI Superclass, and
+			//					CREATE IT SINCE ITS ALREADY ADDED TO THE STAGE (TOO LATE) FOR AUTO CREATION. All good
+			variantMap.mapMediator(ApplicationUI, ApplicationUIMediator, true); // true means USE covariance
+			mediatorMap.createMediator(FlexGlobals.topLevelApplication);
+
+			
 		}
 		
 		/**
@@ -212,7 +222,7 @@ package com.chattrspace.projects.mobilesingle.mvcs
 		{	
 
 			injector.mapSingletonOf (ILoadService, 	PhrasesLoadService, 		"PhrasesLoadService");
-			injector.mapSingletonOf (ILoadService, HappyBirthdayLoadService, 	"HappyBirthdayLoadService");
+			injector.mapSingletonOf (ILoadService, 	HappyBirthdayLoadService,	"HappyBirthdayLoadService");
 			
 		}
 		

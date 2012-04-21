@@ -2,7 +2,7 @@
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace local "*";
 @namespace views "com.rmc.projects.flexmobilecustomizationdemo.views.*";
-@namespace components "com.rmc.projects.flexmobilecustomizationdemo.views.components.*";
+@namespace components "com.chattrspace.components.*";
 
 
 
@@ -31,8 +31,7 @@ views|AbstractView
 	backgroundImageAlpha 	: 	.9;
 }
 
-
-components|LogoImage 
+components|LogoImage
 {
 	backgroundColor			: 	#00ff00;
 	backgroundColorAlpha 	: 	1;

@@ -3,25 +3,12 @@
   <includeClasses>
     <classEntry path="com.chattrspace.utils.ScreenDPIClassification"/>
     <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.IPhraseableUI"/>
+    <classEntry path="com.chattrspace.errors.PhrasesLoadServiceError"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.views.MainViewUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.views.SettingsViewUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.MainViewUIMediator"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.SettingsViewUIMediator"/>
   </includeClasses>
-  <includeResources>
-    <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_048.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_048.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_016.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_016.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_512.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_512.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_256.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_256.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_032.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_032.png"/>
-    <resourceEntry destPath="com/assets_runtime/xml/phrases.xml" sourcePath="com/assets_runtime/xml/phrases.xml"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/2_Android_Icons/icon_048.png" sourcePath="com/assets_runtime/images/icons/2_Android_Icons/icon_048.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/2_Android_Icons/icon_036.png" sourcePath="com/assets_runtime/images/icons/2_Android_Icons/icon_036.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_128.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_128.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_057.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_057.png"/>
-    <resourceEntry destPath="com/assets_runtime/xml/songs.xml" sourcePath="com/assets_runtime/xml/songs.xml"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_048.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_048.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/2_Android_Icons/icon_072.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_029.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_029.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_512.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_512.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png" sourcePath="com/assets_runtime/images/icons/3_iPhone_Icons/icon_072.png"/>
-    <resourceEntry destPath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png" sourcePath="com/assets_runtime/images/icons/1_Desktop_Icons/icon_114.png"/>
-  </includeResources>
+  <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>

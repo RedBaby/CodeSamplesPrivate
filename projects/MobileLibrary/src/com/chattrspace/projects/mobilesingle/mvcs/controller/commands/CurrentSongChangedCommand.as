@@ -31,7 +31,6 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	import com.chattrspace.projects.mobilesingle.managers.AssetManager;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPushViewSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.events.ViewNavigatorEvent;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.SongViewUI;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -66,7 +65,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 		{
 			
 			//CHANGE VIEW
-			viewNavigatorPushViewSignal.dispatch(new ViewNavigatorEvent (ViewNavigatorEvent.PUSH_VIEW, SongViewUI, AssetManager.getViewTransition(ViewNavigatorEvent.PUSH_VIEW)));
+			//viewNavigatorPushViewSignal.dispatch(new ViewNavigatorEvent (ViewNavigatorEvent.PUSH_VIEW, SongViewUI, AssetManager.getViewTransition(ViewNavigatorEvent.PUSH_VIEW)));
 			
 		}
 	}

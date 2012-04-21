@@ -2,7 +2,7 @@
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace local "*";
 @namespace views "com.rmc.projects.flexmobilecustomizationdemo.views.*";
-@namespace components "com.rmc.projects.flexmobilecustomizationdemo.views.components.*";
+@namespace components "com.chattrspace.components.*";
 
 
 
@@ -27,7 +27,7 @@ views|AbstractView
 	skinClass 				: 	ClassReference("assets_runtime.skins.ViewSkin");
 }
 
-components|LogoImage 
+components|LogoImage
 {
 	skinClass 				: 	ClassReference("assets_runtime.skins.LogoSkin");
 }

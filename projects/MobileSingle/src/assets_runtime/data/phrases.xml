@@ -1,0 +1,168 @@
+<phrases>
+	
+	<!-- 
+	
+	////////////////////////////////////////
+	//		ONE BLANK EXAMPLE NODE 
+	////////////////////////////////////////
+	
+	<phrase name = "samplePhraseName">
+		<EN><![CDATA[Sample Phrase Value]]></EN>
+	</phrase>
+	
+	-->
+	
+	<!--
+	////////////////////////////////////////
+	//		VIEW TITLES
+	////////////////////////////////////////
+	-->
+	
+	<phrase name = "logInViewTitle">
+		<EN><![CDATA[{AppTitle}]]></EN>
+	</phrase>
+	
+	<phrase name = "mainViewTitle">
+		<EN><![CDATA[{AppTitle}]]></EN>
+	</phrase>
+	
+	<phrase name = "settingsViewTitle">
+		<EN><![CDATA[{Settings}]]></EN>
+	</phrase>
+	
+	<phrase name = "sharedSettingsViewTitle">
+		<EN><![CDATA[{Shared Settings}]]></EN>
+	</phrase>
+	
+	<!--
+	////////////////////////////////////////
+	//		NAVIGATION BAR 
+	////////////////////////////////////////
+	-->
+	
+	<phrase name = "backButtonLabel">
+		<EN><![CDATA[{Back}]]></EN>
+	</phrase>
+	
+	<phrase name = "settingsButtonLabel">
+		<EN><![CDATA[{Settings}]]></EN>
+	</phrase>
+	
+	<!--
+	////////////////////////////////////////
+	//		LOG IN VIEW COMPONENTS
+	////////////////////////////////////////
+	-->
+	
+	<phrase name = "logInWithFacebook">
+		<EN><![CDATA[{Log In With Facebook}]]></EN>
+	</phrase>
+	
+	<phrase name = "logOutWithFacebook">
+		<EN><![CDATA[{Log Out With Facebook}]]></EN>
+	</phrase>
+	
+	<phrase name = "notAMemberButton">
+		<EN><![CDATA[{Not A Member?}]]></EN>
+	</phrase>
+	
+	<phrase name = "legalTextCopy">
+		<EN><![CDATA[{Legal Text Copy}]]></EN>
+	</phrase>
+	
+	<!--
+	////////////////////////////////////////
+	//		MAIN VIEW COMPONENTS
+	////////////////////////////////////////
+	-->
+	
+	<phrase name = "recordButton">
+		<EN><![CDATA[{Record}]]></EN>
+	</phrase>
+	
+	<phrase name = "uploadButton">
+		<EN><![CDATA[{Upload}]]></EN>
+	</phrase>
+	
+	<phrase name = "usersToggleButton">
+		<EN><![CDATA[{Users}]]></EN>
+	</phrase>
+	
+	<phrase name = "commentsToggleButton">
+		<EN><![CDATA[{Comments}]]></EN>
+	</phrase>
+	
+	<!--
+	////////////////////////////////////////
+	//		SOCIAL CONTENT : COMMENTS
+	////////////////////////////////////////
+	-->
+	<phrase name = "commentsTextInputDefault">
+		<EN><![CDATA[{Write something...}]]></EN>
+	</phrase>
+	
+	<phrase name = "commentsItemRendererBodyText">
+		<EN><![CDATA[{{USERNAME} : {COMMENT}}]]></EN>
+	</phrase>
+	
+	<phrase name = "commentsTimeDays">
+		<EN><![CDATA[{d}]]></EN>
+	</phrase>
+	
+	<phrase name = "commentsTimeHours">
+		<EN><![CDATA[{h}]]></EN>
+	</phrase>
+	
+	<phrase name = "commentsTimeMinutes">
+		<EN><![CDATA[{m}]]></EN>
+	</phrase>
+	
+	<phrase name = "commentsTimeSeconds">
+		<EN><![CDATA[{s}]]></EN>
+	</phrase>
+
+	<!--
+	////////////////////////////////////////
+	//		SOCIAL CONTENT : USERS
+	////////////////////////////////////////
+	-->
+	
+	<phrase name = "usersTextInputDefault">
+		<EN><![CDATA[{Search username...}]]></EN>
+	</phrase>
+	
+	<phrase name = "usersParticipantsText">
+		<EN><![CDATA[{Participants : {TOTAL_PARTICIPANTS}}]]></EN>
+	</phrase>
+	
+	<phrase name = "usersItemRendererBodyText">
+		<EN><![CDATA[{{USERNAME}     | {USERNAME}}]]></EN>
+	</phrase>
+	
+
+	<!--
+	////////////////////////////////////////
+	//		SETTINGS VIEW COMPONENTS
+	////////////////////////////////////////
+	-->
+	
+	<phrase name = "settingsAccount">
+		<EN><![CDATA[{Account}]]></EN>
+	</phrase>
+	
+	<phrase name = "settingsSharedSettings">
+		<EN><![CDATA[{Shared Settings}]]></EN>
+	</phrase>
+	
+	<phrase name = "settingsMoreSettings">
+		<EN><![CDATA[{More Settings}]]></EN>
+	</phrase>
+	
+	<phrase name = "settingsChattrspaceOnTheWeb">
+		<EN><![CDATA[{Chattrspace on the Web}]]></EN>
+	</phrase>
+	
+	
+	
+	
+</phrases>

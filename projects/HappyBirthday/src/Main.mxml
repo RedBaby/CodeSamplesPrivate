@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ViewNavigatorApplication 
 	
-	splashScreenImage="com.rmc.projects.happybirthday.view.components.splashscreenimages.SplashScreenImage"
 	firstView="com.rmc.projects.happybirthday.view.components.views.MainViewUI" 
 	xmlns:happybirthday="com.rmc.projects.happybirthday.*"
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	
-	applicationDPI="320"
 	
-	
+	 
+	splashScreenImage="com.rmc.projects.happybirthday.view.components.splashscreenimages.SplashScreenImage"
 	preloader="spark.preloaders.SplashScreen"
 	splashScreenMinimumDisplayTime="0"
 	splashScreenScaleMode="zoom"
+	applicationDPI="320"
+	
 	
 	
 	creationComplete="_onCreationComplete(event)" 
@@ -60,7 +61,6 @@
 				//INSTRUCTIONAL TRACE #1 OF 3
 				//trace ("_onCreationComplete()");
 				addedToStageSignal = new NativeSignal (this, Event.ADDED_TO_STAGE, Event);
-				
 			}
 			public var addedToStageSignal:NativeSignal;
 			

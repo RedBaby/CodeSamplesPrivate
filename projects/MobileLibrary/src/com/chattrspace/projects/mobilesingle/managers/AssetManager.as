@@ -25,13 +25,13 @@ package com.chattrspace.projects.mobilesingle.managers
 		 *	URL : Load the languages for the spinner and all song data
 		 *  
 		 */		
-		public static var SONGS_XML_URL:String = "./assets_runtime/xml/songs.xml";
+		public static var SONGS_XML_URL:String = "./assets_runtime/data/songs.xml";
 		
 		/**
 		 *	URL : Load the static display text for the UI
 		 *  
 		 */		
-		public static var PHRASES_XML_URL:String = "./assets_runtime/xml/phrases.xml";
+		public static var PHRASES_XML_URL:String = "./assets_runtime/data/phrases.xml";
 		
 		
 		// --------------------------------------

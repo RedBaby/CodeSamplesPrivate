@@ -27,33 +27,10 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.GuestChangeSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadSongSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.SelectedLanguageChangeSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.SocialButtonClickedSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.StageOrientationChangeSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.events.PhrasesModelEvent;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.GuestVO;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.LanguageVO;
-	import com.chattrspace.utils.DensityUtil;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.MainViewUI;
 	
-	import flash.display.Stage;
-	import flash.display.StageOrientation;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.events.StageOrientationEvent;
-	import flash.system.Capabilities;
-	
-	import mx.collections.ArrayList;
-	import mx.core.DPIClassification;
-	
-	import spark.components.Button;
-	import spark.components.supportClasses.StyleableTextField;
-	import spark.events.IndexChangeEvent;
-	import spark.events.TextOperationEvent;
-	import spark.events.ViewNavigatorEvent;
 	
 	// --------------------------------------
 	// Metadata
@@ -64,7 +41,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	// Class
 	// --------------------------------------
 	/**
-	 * <p>The <code>Mediator</code> managing the I/O to the UI: MainUI</p>
+	 * <p>The <code>Mediator</code> managing its sole <code>UI</code>.</p>
 	 * 
 	 */
 	public class MainViewUIMediator extends AbstractViewMediator
@@ -74,50 +51,14 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		//--------------------------------------
 		//PUBLIC
 		/**
-		 * Reference to the UI being mediated
+		 * Reference: The sole <code>UI</code> being mediated
 		 * 
 		 */	
 		[Inject]
-		public var mainViewUI : MainViewUI;
+		public var mainViewUI : MainViewUI
 		
 		/**
-		 * Signal: Marks a request to load the <code>MessageModel</code>
-		 * 
-		 */	
-		[Inject]
-		public var loadMessageModelSignal : LoadSongSignal;
-		
-		/**
-		 * Signal: Marks a request to load the <code>MessageModel</code>
-		 * 
-		 */	
-		[Inject]
-		public var guestChangeSignal : GuestChangeSignal;
-		
-		/**
-		 * Signal: Marks a request to change the Model
-		 * 
-		 */	
-		[Inject]
-		public var socialButtonClickedSignal : SocialButtonClickedSignal;
-		
-		/**
-		 * Signal: Marks a request to change the Model
-		 * 
-		 */	
-		[Inject]
-		public var selectedLanguageChangeSignal : SelectedLanguageChangeSignal;
-		
-		/**
-		 * Signal: Marks a request to change the stage rotation
-		 * 
-		 */	
-		[Inject]
-		public var stageOrientationChangeSignal : StageOrientationChangeSignal;
-		
-		
-		/**
-		 * Reference: <code>PhrasesModel</code>
+		 * Reference: <code>Model</code>
 		 * 
 		 */	
 		[Inject]
@@ -148,27 +89,16 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 */
 		override public function onRegister():void
 		{
-			//  Super
+			//  SUPER
 			super.onRegister();
 			
-			// 	View Listeners (Note We used a change (model not yet affected) and changed (after model is affected) convention for naming
-			mainViewUI.languageSpinnerListChangeSignal.add  	(_onLanguageSpinnerListChange);
-			mainViewUI.loadButtonClickSignal.add  				(_onLoadButtonClick);
-			mainViewUI.guestNameTextInputChange.add  			(_onGuestNameTextInputChange);
-			mainViewUI.guestGenderRadioButtonChange.add			(_onGuestGenderRadioButtonChange);
-			mainViewUI.socialButtonClicked.add					(_onSocialButtonClicked);
+			//	VIEW
+			mainViewUI.sampleButtonClickedSignal.add  			(_onSampleButtonClicked);
 			
-			//
-			trace ("stageOrientationChangeSignal: " + stageOrientationChangeSignal);
-			stageOrientationChangeSignal.add					(_onStageOrientationChange);
+			//	CONTEXT
 			
-			//	Context Listeners
-			happyBirthdayModel.languagesFullListChangedSignal.add   (_onLanguageFullListChanged);
-			happyBirthdayModel.selectedLanguageChangedSignal.add 	(_onSelectedLanguageChanged);
-			happyBirthdayModel.guestChangedSignal.add 				(_onGuestChanged);
 			
-			//	UPDATE UI
-			_onLanguageFullListChanged();
+			//	UPDATE
 			
 		}
 		
@@ -183,41 +113,18 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			//  SUPER
 			super.onRemove();
 			
-			//THE UI IS REMOVED FOR US, ANY OTHER CLEANUP TO DO?
+			//	VIEW
+			mainViewUI.sampleButtonClickedSignal.remove  			(_onSampleButtonClicked);
 			
-			// 	View Listeners (Note We used a change (model not yet affected) and changed (after model is affected) convention for naming
-			mainViewUI.languageSpinnerListChangeSignal.remove 	(_onLanguageSpinnerListChange);
-			mainViewUI.loadButtonClickSignal.remove  			(_onLoadButtonClick);
-			mainViewUI.guestNameTextInputChange.remove  		(_onGuestNameTextInputChange);
-			mainViewUI.guestGenderRadioButtonChange.remove  	(_onGuestGenderRadioButtonChange);
-			
-			//	Context Listeners
-			happyBirthdayModel.languagesFullListChangedSignal.remove   	(_onLanguageFullListChanged);
-			happyBirthdayModel.selectedLanguageChangedSignal.remove 	(_onSelectedLanguageChanged);
+			//	CONTEXT
 			
 		}
 		
-		//VIEW
 		
-		
-		
-		
-		
-		/**
-		 * Handles the aEvent: <code>IndexChangedEvent.CHANGE</code>.
-		 * 
-		 * @param aEvent <code>IndexChangedEvent</code> The incoming aEvent payload.
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onLanguageSpinnerListChange (aEvent : IndexChangeEvent):void
-		{
-			//
-			selectedLanguageChangeSignal.dispatch (mainViewUI.languageFullList_spinnerlist.selectedItem as LanguageVO);
-			
-		}
-		
+		// --------------------------------------
+		// Event Handlers
+		// --------------------------------------
+		//	VIEW
 		/**
 		 * Handles the aEvent: <code>MouseEvent.CLICK</code>.
 		 * 
@@ -226,206 +133,13 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 * @return void
 		 * 
 		 */
-		private function _onSocialButtonClicked (aEvent : MouseEvent):void
+		private function _onSampleButtonClicked (aEvent : MouseEvent):void
 		{
-			socialButtonClickedSignal.dispatch ((aEvent.target as Button).id);
+			trace ("_onSampleButtonClicked() aEvent: " + aEvent);
 		}
 		
+		//	CONTEXT
 		
-		/**
-		 * Handles the aEvent: <code>MouseEvent.CLICK</code>.
-		 * 
-		 * @param aEvent <code>MouseEvent</code> The incoming aEvent payload.
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onLoadButtonClick (aEvent : MouseEvent):void
-		{
-			loadMessageModelSignal.dispatch(mainViewUI.languageFullList_spinnerlist.selectedItem);
-		}
-		
-		/**
-		 * Handles the aEvent: <code>TextOperationEvent.CHANGE</code>.
-		 * 
-		 * @param aEvent <code>TextOperationEvent</code> The incoming aEvent payload.
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onGuestNameTextInputChange (aEvent : TextOperationEvent):void
-		{
-			guestChangeSignal.dispatch (
-				new GuestVO (
-					mainViewUI.guestName_textinput.text, 
-					mainViewUI.guestGenderMale_radiobutton.selected==true)
-			);
-		}
-		
-		/**
-		 * Handles the aEvent: <code>Event.CHANGE</code>.
-		 * 
-		 * @param aEvent <code>Event</code> The incoming aEvent payload.
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onGuestGenderRadioButtonChange (aEvent : Event):void
-		{
-			guestChangeSignal.dispatch (
-				new GuestVO (
-					mainViewUI.guestName_textinput.text, 
-					mainViewUI.guestGenderMale_radiobutton.selected==true)
-			);
-		}
-		
-		/**
-		 * Handles the Event: <code>ViewNavigatorEvent.VIEW_ACTIVATE</code>.
-		 * 
-		 * @param aEvent <code>ViewNavigatorEvent</code> The incoming aEvent payload.
-		 *  
-		 * @return void
-		 * 
-		 */
-		override protected function _onViewActivatedSignal (aEvent : ViewNavigatorEvent):void
-		{
-			//this occurs after the View is 100% on the screen. This is often too late to do anything (Right?)
-			//keep this here has a reminder...
-			
-		}
-		
-		//CONTEXT
-		/**
-		 * Handles the Signal: <code>StageOrientationEvent</code>.
-		 * 
-		 * @param aEvent : StageOrientationEvent
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onStageOrientationChange (aEvent : StageOrientationEvent):void
-		{
-			
-			return;
-			
-			
-			
-			var nextSpinnerListHeight_uint : uint;
-			
-			if (mainViewUI.stage.orientation == StageOrientation.ROTATED_LEFT || mainViewUI.stage.orientation == StageOrientation.ROTATED_RIGHT ) {
-				
-				//
-				//		LANDSCAPE
-				//
-				
-				//FOR SMALL SCREENS (itouch/iphone 3gs) EXPERIMENT WITH A SMALLER SPIN LIST SO THE ADS STILL FIT BELOW
-				if (DensityUtil.getRuntimeDPI() == DPIClassification.DPI_160) {
-					
-					//NOT SURE WHY, BUT IPAD IS COMING AS DPI 132 BUT DPICLASSIF OF 160
-					if (Capabilities.screenDPI == 132) {
-						//nothing for ipad
-						nextSpinnerListHeight_uint = 1100;
-					} else {
-						//NORMAL, SMALL
-						nextSpinnerListHeight_uint = 275;
-					}
-				}
-			} else {
-				//
-				//		PORTRAIT
-				//
-				//FOR SMALL SCREENS (itouch/iphone 3gs) EXPERIMENT WITH A SMALLER SPIN LIST SO THE ADS STILL FIT BELOW
-				if (DensityUtil.getRuntimeDPI() == DPIClassification.DPI_160) {
-					
-					//NOT SURE WHY, BUT IPAD IS COMING AS DPI 132 BUT DPICLASSIF OF 160
-					if (Capabilities.screenDPI == 132) {
-						//nothing for ipad
-						nextSpinnerListHeight_uint = 1600;
-					} else {
-						//NORMAL, SMALL
-						nextSpinnerListHeight_uint = 600;
-					}
-				}
-			}
-			
-			trace ("nextSpinnerListHeight_uint: " + nextSpinnerListHeight_uint);
-			if (nextSpinnerListHeight_uint != 0 && mainViewUI.languageFullList_spinnerlist.height != nextSpinnerListHeight_uint) {
-			
-					mainViewUI.languageFullList_spinnerlist.height = nextSpinnerListHeight_uint;
-				
-			}
-			
-
-		}
-		
-		/**
-		 * Handles the Signal: <code>LanguageFullListChangedSignal</code>.
-		 * 
-		 * @param aLanguageFullList_array : Array
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onLanguageFullListChanged (aLanguageFullList_array : Array = null) :void
-		{
-			
-			//CHEAT, AND POPULATE SOME MODEL DATA HERE, RATHER THAN LISTEN FOR IT TO CHANGE
-			mainViewUI.guestName_textinput.text = happyBirthdayModel.guestVO.name;
-			mainViewUI.guestGenderMale_radiobutton.selected = happyBirthdayModel.guestVO.isMale==true; //female toggles automatically
-			
-			
-			//THIS VIEW LOADS AFTER THE DATA, SO WE FORCE A CALL HERE AND REACH INTO THE EXISTING MODEL
-			if (!aLanguageFullList_array) {
-				mainViewUI.languageFullList_spinnerlist.dataProvider = new ArrayList (happyBirthdayModel.languagesFullList);
-			} else {
-				//IF THE DATA EVER CHANGES DURING THE APP (SO FAR, THIS DOESN'T HAPPEN) WE'LL CATCH THE UPDATES
-				mainViewUI.languageFullList_spinnerlist.dataProvider = new ArrayList (aLanguageFullList_array);
-			}
-			
-			//IF WE HAVE A SELECTED LANGUAGE USE IT
-			if (happyBirthdayModel.selectedLanguage != null) {
-				mainViewUI.languageFullList_spinnerlist.selectedItem = happyBirthdayModel.selectedLanguage
-			}
-			
-			//WE MAY BE RETURNING FROM 'SONG VIEW' AND HAVE A LANGUAGE SET
-			_onSelectedLanguageChanged(happyBirthdayModel.selectedLanguage);
-		}
-		
-		
-		/**
-		 * Handles the Signal: <code>SelectedLanguageChangedSignal</code>.
-		 * 
-		 * @param aSelectedLanguage_str : String
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onSelectedLanguageChanged (aSelectedLanguage : LanguageVO):void
-		{
-			if (aSelectedLanguage && aSelectedLanguage.languageCode.length > 0) {
-				mainViewUI.loadMessage_button.enabled = true;
-			} else {
-				mainViewUI.loadMessage_button.enabled = false;
-			}
-		}
-		
-		
-		/**
-		 * Handles the Signal: <code>GuestChangedSignal</code>.
-		 * 
-		 * @param aGuestVO : GuestVO
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onGuestChanged (aGuestVO : GuestVO):void
-		{
-			//SOMETIMES CHANGING GENDER SHOULD CHANGE THE NAME (ONLY IF THE USER HAS NEVER SET THE NAME)
-			//SET IT, BUT ONLY IF ITS NOT A MATCH (TO PREVENT A POTENTIAL INVINITE LOOP OF VIEW->MODEL->VIEW->ECT...
-			if (mainViewUI.guestName_textinput.text != aGuestVO.name) {
-				mainViewUI.guestName_textinput.text = aGuestVO.name;
-			}		
-		}
 		
 	}
 }
