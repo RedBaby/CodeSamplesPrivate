@@ -99,23 +99,45 @@
 	* Consider ditching both 'push' and 'pop' and just have one signal that takes an event. The event knows push vs pop. 
 	* Rename 'ViewNavigatorEvent' too because its the same name as an Adobe class and I want to avoid name conflicts like that
 	
-----NAME		: Change Toggle Button Text for MainViewUI
+----NAME		: Change Toggle Switch Text for MainViewUI (we also need to do something with 'toggle button', TBD..)
 ----PRIORITY	: before v0.9 delivery
-	* Change text to "comments" and "users" not "off" and "on". Research solutions. I suspect a skin is needed - http://devgirl.org/2011/11/02/flex-mobile-development-toggleswitch-sample-with-source/
-	* The inner-bg changes from blue to grey. The current highlight looks good, but we want to use css for the 'blue' and 'grey' so we can replace them. Make them colorable a quick-n-dirty way and we can do the css part later
+	* Change text to "comments" and "users" not "off" and "on". Research solutions. I suspect a skin is needed 
+	* see - http://devgirl.org/2011/11/02/flex-mobile-development-toggleswitch-sample-with-source/
+	* see - http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/spark/components/ToggleSwitch.html
+	* The current inner-bg changes from blue to grey. The current highlight looks good, but we want to use css for the 'blue' and 'grey' so we can replace them to blue and . Make them colorable a quick-n-dirty way and we can do the css part later
 	* 
 	
-----NAME		: 
-----PRIORITY	:
-	* 
-	* 
-	* 
+	
+----NAME		: CREATE A DTR SYSTEM to easily replace "My name is {NAME}" with "My name is Sam"
+----PRIORITY	: very low, but its quick and usefull
+	* CHANGE FROM (search codebase for this real example) ...
 
+//	SET TITLE - USING DYNAMIC TOKEN REPLACEMENT (DTR)
+var title_str : String = demoCommentsSocialContentViewUI.phrasesVO.demoViewTitle;
+title_str = title_str.replace("{DEMO_NAME}","Comments");
+demoCommentsSocialContentViewUI.title = title_str;
+
+	* TO...
 	
-----NAME		: 
-----PRIORITY	:
-	* 
-	* 
+//	SET TITLE - USING DYNAMIC TOKEN REPLACEMENT (DTR)
+var source_str : String = demoCommentsSocialContentViewUI.phrasesVO.demoViewTitle;
+var token_str  : String = "{DEMO_NAME}"
+var replacement_str : String = "Comments"
+demoCommentsSocialContentViewUI.title = DynamicTokenReplacementUtil.replaceDynamicToken (source_str, new DynamicTokenReplacement ( token_str, replacement_str) );
+
+//...NOTE, THROW BASE Error class when...
+//throw new Error ("DynamicTokenReplacementUtil: Token must begin with '{' and end with '}'."
+//throw new Error ("DynamicTokenReplacementUtil: Token '{Blah}' not found in source 'I misspelled {Bluuuh}'."
+
+//ROADMAP - DON'T ADD THESE FEATURES, BUT COMMENT IN THE UTIL CLASS THAT THIS IS COMING...
+//DynamicTokenReplacementUtil.replaceDynamicTokens (source, new Vector.<DynamicTokenReplacement>());
+			
+	
+----NAME		: PRE-ANALYSIS WHERE 'LOADING' AFFECTS THE UI
+----PRIORITY	: post version v0.5 deliver
+	* The proposal (including mockups) never addresses loading delays and related ui
+	* I assume we can use this (or a group containing this centered within) and maybe a line of text for 'Loading Blah...';
+	* <s:BusyIndicator rotationInterval="200" symbolColor="0x0f0f0f" />
 	* 
 
 	

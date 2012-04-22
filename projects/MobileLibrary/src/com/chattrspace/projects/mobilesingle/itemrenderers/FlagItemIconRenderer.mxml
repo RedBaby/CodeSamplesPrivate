@@ -13,16 +13,16 @@
 	<fx:Script>
 		<![CDATA[
 			import com.chattrspace.projects.mobilesingle.managers.AssetManager;
-			import com.chattrspace.projects.mobilesingle.mvcs.model.vo.LanguageVO;
+			import com.chattrspace.projects.mobilesingle.mvcs.model.vo.CommentVO;
 			
 			override protected function drawBackground (a : Number,b : Number) : void
 			{
 				//DO NOTHING - THIS OVERRIDES SOMETHING THAT LOOKS LIKE A BORDER AROUND EACH HORIZONTAL PIECE
 			}
 
-			public function myIconFunction (aLanguageVO : LanguageVO) : Class
+			public function myIconFunction (aLanguageVO : CommentVO) : Class
 			{
-				return AssetManager.GetFlagByLanguageCode(aLanguageVO.languageCode);
+				return null; //AssetManager.GetFlagByLanguageCode(aLanguageVO.languageCode);
 			}
 		]]>
 	</fx:Script>

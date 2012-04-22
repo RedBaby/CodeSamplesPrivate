@@ -8,6 +8,7 @@
 @namespace views3 "com.chattrspace.projects.mobilesingle.view.components.views.*";
 @namespace views4 "com.chattrspace.projects.mobilesingle.mvcs.view.components.views.*";
 @namespace views5 "com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.*";
+@namespace views6 "com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.*";
 
 
 /***************************************
@@ -41,7 +42,7 @@ s|ViewNavigatorApplication {
 **  basic 'frame' around each view (page)
 **
 ****************************************/
-views5|AbstractView {
+views6|AbstractView {
 	backgroundColor: #808080	;
 }
 

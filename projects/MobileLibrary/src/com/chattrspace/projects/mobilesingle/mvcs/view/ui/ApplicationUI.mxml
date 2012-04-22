@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ViewNavigatorApplication 
+
+	xmlns:mobilesingle="com.chattrspace.projects.mobilesingle.*"
+	xmlns:mvcs="com.chattrspace.projects.mobilesingle.mvcs.*"
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	
+	creationComplete="_onCreationComplete(event)" 
+	addedToStage="_onAddedToStage(event)" 
+	
+	
+	>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import mx.events.FlexEvent;
+			
+			import org.osflash.signals.natives.NativeSignal;
+			
+			
+			//--------------------------------------
+			//  Properties
+			//--------------------------------------
+			/**
+			 * Signal: When rotating the device.
+			 * 
+			 */
+			public var stageOrientationChangeNativeSignal : NativeSignal;
+			
+			
+			/**
+			 * Signal: When added to the stage for the very first time
+			 * 
+			 */
+			public var addedToStageSignal:NativeSignal;
+
+			
+			//--------------------------------------
+			//  Methods
+			//--------------------------------------
+			/**
+			 * Setup events and signals
+			 * 
+			 * @return void
+			 * 
+			 */
+			protected function _setupCoreEventsAndSignals():void
+			{
+				//	EVENTS
+				stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGE, _onStageOrientationChange);
+
+				//	SIGNALS
+				stageOrientationChangeNativeSignal 		= new NativeSignal (stage, StageOrientationEvent.ORIENTATION_CHANGE, StageOrientationEvent);
+			}
+			
+			
+			//--------------------------------------
+			//  Events
+			//--------------------------------------	
+			/**
+			 * Handles the aEvent: <code>FlexEvent.CREATION_COMPLETE</code>.
+			 * 
+			 * @param aEvent <code>FlexEvent</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			protected function _onCreationComplete (aEvent : FlexEvent):void
+			{
+				//	INSTRUCTIONAL TRACE #1 OF 3
+				//trace ("_onCreationComplete()");
+				
+				//	SIGNAL
+				addedToStageSignal = new NativeSignal (this, Event.ADDED_TO_STAGE, Event);
+				
+			}
+			
+			/**
+			 * Handles the aEvent: <code>Event.ADDED_TO_STAGE</code>.
+			 * 
+			 * @param aEvent <code>Event</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			protected function _onAddedToStage(event:Event):void
+			{
+				//	STARTUP ROBOTLEGS 'ENGINE'
+				context.contextView = this;
+				
+				//	
+				_setupCoreEventsAndSignals();
+			}
+			
+			
+			
+			/**
+			 * Handles the aEvent: <code>StageOrientationEvent.ORIENTATION_CHANGE</code>.
+			 * 
+			 * @param aEvent <code>StageOrientationEvent</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			protected function _onStageOrientationChange(event:StageOrientationEvent):void
+			{
+				//	TRACE
+				//trace ("_onStageOrientationChange");
+				
+			}
+			
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mvcs:MobileSingleContext id = "context" />
+	</fx:Declarations>
+	
+</s:ViewNavigatorApplication>

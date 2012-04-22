@@ -28,8 +28,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.LanguageVO;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.CommentVO;
 	
 	import org.robotlegs.mvcs.Command;
 	
@@ -49,7 +49,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 		 * 
 		 */
 		[Inject]
-		public var happyBirthdayModel : HappyBirthdayModel;
+		public var happyBirthdayModel : CommentsModel;
 		
 		
 		/**
@@ -57,7 +57,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 		 * 
 		 */
 		[Inject]
-		public var selectedLanguageVO : LanguageVO;
+		public var selectedLanguageVO : CommentVO;
 		
 		
 		
@@ -77,7 +77,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 			//selectedLanguageVO...
 			
 			// SET MODEL BASED ON VIEW
-			happyBirthdayModel.selectedLanguage = selectedLanguageVO;
+			//happyBirthdayModel.selectedLanguage = selectedLanguageVO;
 			
 
 		}

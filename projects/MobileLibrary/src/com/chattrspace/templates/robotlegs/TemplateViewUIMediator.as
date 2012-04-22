@@ -27,8 +27,8 @@ package com.chattrspace.templates.robotlegs
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.AbstractViewMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.views.AbstractViewMediator;
 	
 	import flash.events.MouseEvent;
 	
@@ -62,7 +62,7 @@ package com.chattrspace.templates.robotlegs
 		 * 
 		 */	
 		[Inject]
-		public var happyBirthdayModel : HappyBirthdayModel;
+		public var happyBirthdayModel : CommentsModel;
 		
 		
 		//--------------------------------------

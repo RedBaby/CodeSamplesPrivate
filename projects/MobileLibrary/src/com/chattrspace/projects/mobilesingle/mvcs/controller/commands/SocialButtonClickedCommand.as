@@ -28,9 +28,9 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.LanguageVO;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.AbstractView;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.CommentVO;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.AbstractView;
 	
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
@@ -53,7 +53,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 		 * 
 		 */
 		[Inject]
-		public var happyBirthdayModel : HappyBirthdayModel;
+		public var happyBirthdayModel : CommentsModel;
 		
 		
 		/**

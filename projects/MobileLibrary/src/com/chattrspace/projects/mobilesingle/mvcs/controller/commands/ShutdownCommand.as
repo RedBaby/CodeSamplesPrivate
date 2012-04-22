@@ -28,10 +28,10 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.ILoadService;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ApplicationUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.ApplicationUI;
 	
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Command;
@@ -63,7 +63,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 
 			// Model
 			injector.unmap (PhrasesModel);
-			injector.unmap (HappyBirthdayModel);
+			injector.unmap (CommentsModel);
 
 			// View
 			mediatorMap.unmapView (ApplicationUI);

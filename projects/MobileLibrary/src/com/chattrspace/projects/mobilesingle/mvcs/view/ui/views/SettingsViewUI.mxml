@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:AbstractView
+	xmlns:views="com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.*" 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	
+	title="{phrasesVO.settingsViewTitle}"
+	
+	>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			//--------------------------------------
+			//  Imports
+			//--------------------------------------
+			
+			import mx.events.FlexEvent;
+			
+			import org.osflash.signals.natives.NativeSignal;
+			
+			//--------------------------------------
+			//  Properties
+			//--------------------------------------
+			//PUBLIC GETTER/SETTERS
+			
+			//PUBLIC
+			
+			//PUBLIC CONST
+			
+			
+			//PRIVATE
+			
+			// --------------------------------------
+			// Methods
+			// --------------------------------------
+			// PUBLIC
+			
+			// PRIVATE
+			
+			// --------------------------------------
+			// Event Handlers
+			// --------------------------------------
+			/**
+			 * Handles the aEvent: <code>FlexEvent.INITIALIZE</code>.
+			 * 
+			 * @param aEvent <code>FlexEvent</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			override protected function _onInitialize(aEvent:FlexEvent):void
+			{
+				//	SUPER
+				super._onInitialize(aEvent);
+				
+				//	HACK - Hide reused buttons
+				//
+				settings_button.visible = false;
+				settings_button.width = 0;
+				
+				
+			}
+			
+			
+			/**
+			 * Handles the aEvent: <code>FlexEvent.CREATION_COMPLETE</code>.
+			 * 
+			 * @param aEvent <code>FlexEvent</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			override protected function _onCreationComplete(aEvent : FlexEvent) : void
+			{
+				//	SUPER
+				super._onCreationComplete(aEvent);
+				
+				
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<!-- Layout Is Declared In SuperClass -->
+	
+	
+	<!-- Place any UI components here. -->	
+	
+	
+</views:AbstractView>

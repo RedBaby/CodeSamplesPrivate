@@ -32,7 +32,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.LogInSignalEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPushViewSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.MainViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.MainViewUI;
 	
 	import org.robotlegs.mvcs.Command;
 	

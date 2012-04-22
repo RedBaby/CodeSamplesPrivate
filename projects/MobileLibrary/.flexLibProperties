@@ -2,16 +2,16 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="true" version="3">
   <includeClasses>
     <classEntry path="com.chattrspace.utils.ScreenDPIClassification"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.IPhraseableUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.ui.IPhraseableUI"/>
     <classEntry path="com.chattrspace.errors.PhrasesLoadServiceError"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.MainViewUI"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.SettingsViewUI"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.MainViewUIMediator"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.SettingsViewUIMediator"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.MainViewUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.SettingsViewUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.mediators.views.MainViewUIMediator"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.mediators.views.SettingsViewUIMediator"/>
     <classEntry path="com.chattrspace.components.controls.VideoComponent"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.socialcontent.AbstractSocialContent"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.socialcontent.CommentsSocialContentUI"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.socialcontent.UsersSocialContentUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.ui.socialcontent.AbstractSocialContent"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.ui.socialcontent.CommentsSocialContentUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.ui.socialcontent.UsersSocialContentUI"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<views:AbstractView
+<views1:AbstractView
 	xmlns:socialcontent="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.socialcontent.*" 
 	xmlns:views="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.*" 
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
-	xmlns:components="com.chattrspace.components.*"
-	
-	title="{phrasesVO.logInViewTitle}" 
+	xmlns:components="com.chattrspace.components.*" xmlns:socialcontent1="com.chattrspace.projects.mobilesingle.mvcs.view.ui.socialcontent.*" xmlns:views1="com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.*"
 	
 	>
 	
@@ -100,8 +98,8 @@
 	<!-- Layout Is Declared In SuperClass -->
 	
 	<!-- Place any UI components here. -->	
-	<socialcontent:CommentsSocialContentUI />
+	<socialcontent1:CommentsSocialContentUI id = "commentsSocialContentUI" />
 			 
 	
 	
-</views:AbstractView>
+</views1:AbstractView>

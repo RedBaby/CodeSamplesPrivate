@@ -1,0 +1,81 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace local "*";
+@namespace views "com.rmc.projects.flexmobilecustomizationdemo.views.*";
+@namespace components "com.chattrspace.components.*";
+
+
+
+/***************************************
+**
+**  Global
+**
+****************************************/
+local|Main
+{
+	
+}
+
+/***************************************
+**
+**  View
+**
+****************************************/
+
+
+views|AbstractView 
+{
+	backgroundColor			: 	#ff0000;	
+	backgroundColorAlpha 	: 	1;
+	backgroundImage			: 	Embed(source="../assets_compiletime/images/viewBackground.jpg"); 
+	backgroundImageAlpha 	: 	.9;
+}
+
+components|LogoImage
+{
+	backgroundColor			: 	#00ff00;
+	backgroundColorAlpha 	: 	1;
+	backgroundImage			: 	Embed(source="../assets_compiletime/images/icons/mail_plain.png"); 
+	backgroundImageAlpha 	: 	.8;
+}
+
+/***************************************
+**
+**  Button
+**
+****************************************/
+s|Button
+{
+	
+}
+
+.customButton 
+{
+	skinClass			: 	ClassReference("spark.skins.ios.ButtonSkin");
+	
+}
+
+
+/***************************************
+**
+**  Label
+**
+****************************************/
+s|Label
+{
+	
+}
+
+/***************************************
+**
+**  TextArea
+**
+****************************************/
+s|TextArea
+{
+	
+}
+
+
+
+

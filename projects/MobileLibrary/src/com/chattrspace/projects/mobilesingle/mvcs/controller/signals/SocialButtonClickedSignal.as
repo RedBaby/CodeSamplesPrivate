@@ -28,7 +28,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.signals
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.GuestVO;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.UserVO;
 	
 	import org.osflash.signals.Signal;
 	

@@ -28,13 +28,12 @@ package com.chattrspace.projects.mobiledemos.mvcs.view.mediators
 	//  Imports
 	//--------------------------------------
 	import com.chattrspace.projects.mobiledemos.mvcs.view.components.ui.views.DemoCommentsSocialContentViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.CommentVO;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.UserVO;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.views.AbstractViewMediator;
 	
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.LogInSignalEvent;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LogInSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	
-	import flash.events.MouseEvent;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.AbstractViewMediator;
+	import flash.events.Event;
 	
 	// --------------------------------------
 	// Metadata
@@ -63,19 +62,11 @@ package com.chattrspace.projects.mobiledemos.mvcs.view.mediators
 		
 		
 		/**
-		 * Signal: Marks a request to log in or log out depending on the passed event.
+		 * Reference: The sole <code>UI</code> being mediated
 		 * 
 		 */	
 		[Inject]
-		public var logInSignal : LogInSignal;
-		
-		
-		/**
-		 * Reference: <code>Model</code>
-		 * 
-		 */	
-		[Inject]
-		public var happyBirthdayModel : HappyBirthdayModel;
+		public var commentsModel : CommentsModel;
 		
 		
 		//--------------------------------------
@@ -106,13 +97,16 @@ package com.chattrspace.projects.mobiledemos.mvcs.view.mediators
 			super.onRegister();
 			
 			//	VIEW
-			demoCommentsSocialContentViewUI.loginWithFacebookButtonClickedSignal.add  			(_onLogInWithFacebookButtonClicked);
-			demoCommentsSocialContentViewUI.notAMemberButtonClickedSignal.add  					(_onNotAMemberButtonClicked);
+			demoCommentsSocialContentViewUI.phrasesVOChanged.add(_onPhrasesVOChanged);
+			demoCommentsSocialContentViewUI.commentsSocialContentUI.addedToStageSignal.add(_onCommentsSocialContentUIAddedToStage);
 			
 			//	CONTEXT
-
+			
 			
 			//	UPDATE
+			
+			
+			//	USE FAKE DATA
 			
 		}
 		
@@ -128,8 +122,6 @@ package com.chattrspace.projects.mobiledemos.mvcs.view.mediators
 			super.onRemove();
 			
 			//	VIEW
-			demoCommentsSocialContentViewUI.loginWithFacebookButtonClickedSignal.remove  			(_onLogInWithFacebookButtonClicked);
-			demoCommentsSocialContentViewUI.notAMemberButtonClickedSignal.remove  				(_onNotAMemberButtonClicked);
 			
 			//	CONTEXT
 			
@@ -141,33 +133,57 @@ package com.chattrspace.projects.mobiledemos.mvcs.view.mediators
 		// --------------------------------------
 		//	VIEW
 		/**
-		 * Handles the aEvent: <code>MouseEvent.CLICK</code>.
+		 * Handles the Signal: <code>phrasesVOChanged</code>.
 		 * 
-		 * @param aEvent <code>MouseEvent</code> The incoming aEvent payload.
-		 *  
 		 * @return void
 		 * 
 		 */
-		private function _onLogInWithFacebookButtonClicked (aEvent : MouseEvent):void
+		protected function _onPhrasesVOChanged ():void
 		{
-			//	NOTE
-			//		An event is really not needed for now, but its used. We can pack in more data if login situations change.
-			logInSignal.dispatch(	new LogInSignalEvent (LogInSignalEvent.LOG_IN) );
+			//	SET TITLE - USING DYNAMIC TOKEN REPLACEMENT (DTR)
+			var title_str : String = demoCommentsSocialContentViewUI.phrasesVO.demoViewTitle;
+			title_str = title_str.replace("{DEMO_NAME}","Comments");
+			demoCommentsSocialContentViewUI.title = title_str;
+		}
+		
+		
+		/**
+		 * Handles the Signal: <code>addedToStageSignal</code>.
+		 * 
+		 * @param Event
+		 * 
+		 * @return void
+		 * 
+		 */
+		protected function _onCommentsSocialContentUIAddedToStage (aEvent : Event ):void
+		{
+			//	TODO: POPULATE WITH FAKE DATA
+			var comments_vector_commentvo : Vector.<CommentVO> = new Vector.<CommentVO> ();
+			comments_vector_commentvo.push (
+				new CommentVO ( 
+					new UserVO ("SammyA", "www.http://ww1"),		
+					"my comment aa", 	
+					234234324234
+				) 
+			);
+			comments_vector_commentvo.push (
+				new CommentVO ( 
+					new UserVO ("SammyB", "www.http://ww2"),		
+					"my comment bb", 	
+					23423423423
+				) 
+			);
+			comments_vector_commentvo.push (
+				new CommentVO ( 
+					new UserVO ("SammyC", "www.http://ww3"),		
+					"my comment cc", 	
+					23423432342324234
+				) 
+			);
+			commentsModel.comments = comments_vector_commentvo;
 			
 		}
 		
-		/**
-		 * Handles the aEvent: <code>MouseEvent.CLICK</code>.
-		 * 
-		 * @param aEvent <code>MouseEvent</code> The incoming aEvent payload.
-		 *  
-		 * @return void
-		 * 
-		 */
-		private function _onNotAMemberButtonClicked (aEvent : MouseEvent):void
-		{
-			trace ("_onNotAMemberButtonClicked() aEvent: " + aEvent);
-		}
 		
 		//	CONTEXT
 		

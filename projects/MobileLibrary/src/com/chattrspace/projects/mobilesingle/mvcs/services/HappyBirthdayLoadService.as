@@ -29,9 +29,9 @@ package com.chattrspace.projects.mobilesingle.mvcs.services
 	//  Imports
 	//--------------------------------------
 	import com.chattrspace.projects.mobilesingle.managers.AssetManager;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.LanguageVO;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.CommentVO;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.PhrasesVO;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.SongVO;
 	
@@ -59,7 +59,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.services
 		 * 
 		 */
 		[Inject]
-		public var happyBirthdayModel:HappyBirthdayModel;
+		public var happyBirthdayModel:CommentsModel;
 		
 		//--------------------------------------
 		//  Constructor
@@ -109,20 +109,20 @@ package com.chattrspace.projects.mobilesingle.mvcs.services
 		 */
 		private function _onComplete (aEvent : Event) : void 
 		{
-			
-			//CONVERT FOREIGN DATA to app-specific usable data (bogus xml->string example here)
-			var xml : XML = XML (aEvent.target.data);
-
-			//SAVE SONGRAW XML
-			happyBirthdayModel._rawSongs_xmllist = xml.songs;
-
-			//CONVERT languages to objects
-			var languages_xmllist : XMLList = xml.languages.language;
-			var languages_array : Array = new Array();
-			for each (var language:XML in languages_xmllist) {
-				languages_array.push (new LanguageVO (language.@title, language.@languageCode) );
-			}
-			happyBirthdayModel.languagesFullList = languages_array
+//			
+//			//CONVERT FOREIGN DATA to app-specific usable data (bogus xml->string example here)
+//			var xml : XML = XML (aEvent.target.data);
+//
+//			//SAVE SONGRAW XML
+//			happyBirthdayModel._rawSongs_xmllist = xml.songs;
+//
+//			//CONVERT languages to objects
+//			var languages_xmllist : XMLList = xml.languages.language;
+//			var languages_array : Array = new Array();
+//			for each (var language:XML in languages_xmllist) {
+//				languages_array.push (new CommentVO (language.@title, language.@languageCode) );
+//			}
+//			happyBirthdayModel.languagesFullList = languages_array
 			
 		};
 		

@@ -39,31 +39,35 @@ package com.chattrspace.projects.mobilesingle.mvcs
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.SocialButtonClickedCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.StartupCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.ClearSelectedLanguageSignal;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.CommentsChangedSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.GuestChangeSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadHappyBirthdayModelSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadPhrasesModelSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LogInSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LogOutSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.SelectedLanguageChangeSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.SocialButtonClickedSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.StageOrientationChangeSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPopViewSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPushViewSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.HappyBirthdayLoadService;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.ILoadService;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.PhrasesLoadService;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.ApplicationUIMediator;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.LogInViewUIMediator;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.MainViewUIMediator;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.PhraseableUIMediator;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.SettingsViewUIMediator;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ApplicationUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.IPhraseableUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.LogInViewUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.MainViewUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.SettingsViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.ApplicationUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.PhraseableUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.socialcontent.CommentsSocialContentUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.socialcontent.UsersSocialContentUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.views.LogInViewUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.views.MainViewUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.mediators.views.SettingsViewUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.ApplicationUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.IPhraseableUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.socialcontent.CommentsSocialContentUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.socialcontent.UsersSocialContentUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.LogInViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.MainViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.SettingsViewUI;
 	
 	import flash.events.Event;
 	
@@ -150,7 +154,7 @@ package com.chattrspace.projects.mobilesingle.mvcs
 			var phrasesModel : PhrasesModel = new PhrasesModel(); 	//Instantiated manually so I can set a default value (langcode)
 			phrasesModel.langCode 			= PhrasesModel.EN;
 			injector.mapValue		(PhrasesModel, phrasesModel);
-			injector.mapSingleton	(HappyBirthdayModel);			//Instantiated automatically by RL	
+			injector.mapSingleton	(CommentsModel);			//Instantiated automatically by RL	
 			
 			//SIGNALS SETUP WITHIN THIS CONTEXT - 1 OF 2: SIGNALS THAT ARE *NOT* MAPPED TO COMMANDS, BUT JUST OBSERVED DIRECTLY
 			//b. RESPONSES
@@ -172,15 +176,17 @@ package com.chattrspace.projects.mobilesingle.mvcs
 			
 			
 			/////////////////////////////////////
-			//WITH INVARIANCE (LESS FLEXIBLE)
+			//1. WITH INVARIANCE (LESS FLEXIBLE, BUT MUCH MORE COMMON)
 			/////////////////////////////////////
 			mediatorMap.mapView		(LogInViewUI, 		LogInViewUIMediator); 		//optional 3rd parameter, [MainViewUI]);
-			mediatorMap.mapView		(MainViewUI, 		MainViewUIMediator); 		//optional 3rd parameter, [MainViewUI]);
-			mediatorMap.mapView		(SettingsViewUI, 	SettingsViewUIMediator); 	//optional 3rd parameter, [MainViewUI]);
-			
+			mediatorMap.mapView		(MainViewUI, 		MainViewUIMediator); 		
+			mediatorMap.mapView		(SettingsViewUI, 	SettingsViewUIMediator); 	
+			//
+			mediatorMap.mapView		(CommentsSocialContentUI, 	CommentsSocialContentUIMediator); 	
+			mediatorMap.mapView		(UsersSocialContentUI, 		UsersSocialContentUIMediator); 	
 			
 			/////////////////////////////////////
-			//NEW COVARIANCE (MORE FLEXIBLE) - (MobileSingle is the first time we're using this...)
+			//2. NEW COVARIANCE (MORE FLEXIBLE) - (MobileSingle is the first time we're using this...)
 			//before: mappings are to one specific type
 			//now   : mappings are to one specific type or its interface or any of its super classes!
 			/////////////////////////////////////

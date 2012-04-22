@@ -30,7 +30,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	//--------------------------------------
 	import com.chattrspace.projects.mobilesingle.managers.AssetManager;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPopViewSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
+	import com.chattrspace.projects.mobilesingle.mvcs.model.CommentsModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.ILoadService;
@@ -55,7 +55,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 		 * 
 		 */
 		[Inject]
-		public var happyBirthdayModel : HappyBirthdayModel;
+		public var happyBirthdayModel : CommentsModel;
 		
 		/**
 		 * Signal: Change the View

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:AbstractView
+	
+	xmlns:views="com.chattrspace.projects.mobilesingle.mvcs.view.ui.views.*" 
+	xmlns:controls="com.chattrspace.components.controls.*"
+	xmlns:container="com.chattrspace.components.container.*"
+	xmlns:components="com.chattrspace.components.*" 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	
+	title="{phrasesVO.mainViewTitle}" xmlns:socialcontent="com.chattrspace.projects.mobilesingle.mvcs.view.ui.socialcontent.*" 
+	
+	>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			//--------------------------------------
+			//  Imports
+			//--------------------------------------
+			
+			import mx.events.FlexEvent;
+			
+			//--------------------------------------
+			//  Properties
+			//--------------------------------------
+			//PUBLIC GETTER/SETTERS
+			
+			//PUBLIC
+			
+			//PUBLIC CONST
+			
+			
+			//PRIVATE
+			
+			// --------------------------------------
+			// Methods
+			// --------------------------------------
+			// PUBLIC
+			
+			// PRIVATE
+			/**
+			 * Describe this member.
+			 * 
+			 * 
+			 * @return void
+			 * 
+			 */
+			private function _doUpdateViewStackSelectedToMatchToggleSwitch() : void
+			{
+				if (usersAndComments_toggleswitch.selected) {
+					socialContent_viewstack.selectedIndex = 0;
+				} else {
+					socialContent_viewstack.selectedIndex = 1;
+					
+				}
+			}
+			
+			// --------------------------------------
+			// Event Handlers
+			// --------------------------------------
+			/**
+			 * Handles the aEvent: <code>FlexEvent.INITIALIZE</code>.
+			 * 
+			 * @param aEvent <code>FlexEvent</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			override protected function _onInitialize(aEvent:FlexEvent):void
+			{
+				//	SUPER
+				super._onInitialize(aEvent);
+				
+				//	
+				_doUpdateViewStackSelectedToMatchToggleSwitch();
+				
+			}
+			
+			
+			
+			/**
+			 * Handles the aEvent: <code>FlexEvent.CREATION_COMPLETE</code>.
+			 * 
+			 * @param aEvent <code>FlexEvent</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			override protected function _onCreationComplete(aEvent : FlexEvent) : void
+			{
+				//	SUPER
+				super._onCreationComplete(aEvent);
+				
+				//	VIEW
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<!-- States -->
+	
+	<!-- Layout Is Declared In SuperClass -->
+	
+	
+	<!-- Place any UI components here. -->	
+	<controls:VideoComponent 	id = "videoComponent" 								width = "100%" height = "100%" 	/>
+	
+	
+	<s:HGroup width = "100%"	verticalAlign="middle"	>
+		<s:ToggleButton			id = "recordAndUpload_togglebutton"					width = "50%"				
+								label="{phrasesVO.recordButton}"	
+								/>
+		<s:ToggleSwitch			id = "usersAndComments_toggleswitch"				width = "50%"
+								change="_doUpdateViewStackSelectedToMatchToggleSwitch()"
+								/>
+	</s:HGroup>
+	<container:ViewStack id = "socialContent_viewstack"
+						   width="100%" height="100%"
+						   skinClass="com.chattrspace.skins.ViewStackScrollableSkin" 
+						   >
+		<socialcontent:CommentsSocialContentUI 	id = "commentsSocialContent" />
+		<socialcontent:UsersSocialContentUI 		id = "usersSocialContent" />
+	</container:ViewStack>
+	
+	
+</views:AbstractView>
