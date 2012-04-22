@@ -27,8 +27,12 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
+	import com.chattrspace.projects.mobilesingle.managers.AssetManager;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPushViewSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.SettingsViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.MainViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.SettingsViewUI;
 	
 	import flash.events.MouseEvent;
 	
@@ -55,7 +59,18 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 * 
 		 */	
 		[Inject]
-		public var settingsViewUI : SettingsViewUI;
+		public var settingsViewUI : SettingsViewUI
+		
+		
+		
+		/**
+		 * Signal: Change the View
+		 * 
+		 */
+		[Inject]
+		public var viewNavigatorPushViewSignal : ViewNavigatorPushViewSignal;
+		
+		
 		
 		/**
 		 * Reference: <code>Model</code>
@@ -93,7 +108,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			super.onRegister();
 			
 			//	VIEW
-			settingsViewUI.sampleButtonClickedSignal.add  			(_onSampleButtonClicked);
+			settingsViewUI.backButtonClickedSignal.add  			(_onBackButtonClicked);
 			
 			//	CONTEXT
 			
@@ -114,7 +129,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			super.onRemove();
 			
 			//	VIEW
-			settingsViewUI.sampleButtonClickedSignal.remove  			(_onSampleButtonClicked);
+			settingsViewUI.backButtonClickedSignal.remove  			(_onBackButtonClicked);
 			
 			//	CONTEXT
 			
@@ -133,10 +148,13 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 * @return void
 		 * 
 		 */
-		private function _onSampleButtonClicked (aEvent : MouseEvent):void
+		private function _onBackButtonClicked (aEvent : MouseEvent):void
 		{
-			trace ("_onSampleButtonClicked() aEvent: " + aEvent);
+			//	CHANGE VIEW
+			viewNavigatorPushViewSignal.dispatch(new ViewNavigatorEvent (ViewNavigatorEvent.POP_VIEW, MainViewUI, AssetManager.getViewTransition(ViewNavigatorEvent.POP_VIEW)));
+
 		}
+		
 		
 		//	CONTEXT
 		

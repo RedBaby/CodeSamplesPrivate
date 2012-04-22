@@ -110,6 +110,11 @@ package com.chattrspace.projects.mobilesingle.mvcs.model.vo
 		public var settingsSharedSettings : String;
 		public var settingsMoreSettings : String;
 		public var settingsChattrspaceOnTheWeb : String;
+		
+		////////////////////////////////////////
+		//		DEMO ONLY - DON'T EDIT
+		////////////////////////////////////////
+		public var demoViewTitle : String;
 
 		
 		//--------------------------------------

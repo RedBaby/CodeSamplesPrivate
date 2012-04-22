@@ -1,6 +1,6 @@
 package com.chattrspace.projects.mobilesingle.managers
 {
-	import com.chattrspace.projects.mobilesingle.mvcs.model.events.ViewNavigatorEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
 	
 	import flash.text.StyleSheet;
 	

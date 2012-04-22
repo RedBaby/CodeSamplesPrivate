@@ -7,6 +7,7 @@
 @namespace views2 "com.chattrspace.mobilesingle.view.components.views.*";
 @namespace views3 "com.chattrspace.projects.mobilesingle.view.components.views.*";
 @namespace views4 "com.chattrspace.projects.mobilesingle.mvcs.view.components.views.*";
+@namespace views5 "com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.*";
 
 
 /***************************************
@@ -40,7 +41,7 @@ s|ViewNavigatorApplication {
 **  basic 'frame' around each view (page)
 **
 ****************************************/
-views4|AbstractView {
+views5|AbstractView {
 	backgroundColor: #808080	;
 }
 
@@ -110,26 +111,26 @@ s|Button
 
 /* Fonts. Only 1 is in use above.  Experiment with others */
 @font-face {
-	src:url("../assets_compiletime/fonts/Candara.ttf");
+	src:url("../../MobileSingle/assets_compiletime/fonts/Candara.ttf");
 	fontFamily: Candara;
 	embedAsCFF: false; /* false for mobile */
 }
 
 @font-face {
-	src:url("../assets_compiletime/fonts/Candara.ttf");
+	src:url("../../MobileSingle/assets_compiletime/fonts/Candara.ttf");
 	fontFamily: Candara_embedAsCFF;
 	embedAsCFF: true; /* false for mobile */
 }
 
 @font-face {
-	src:url("../assets_compiletime/fonts/Candara Bold.ttf");
+	src:url("../../MobileSingle/assets_compiletime/fonts/Candara Bold.ttf");
 	fontFamily: Candara;
 	fontWeight: bold;
 	embedAsCFF: false; /* false for mobile */
 }
 
 @font-face {
-	src:url("../assets_compiletime/fonts/Candara Italic.ttf");
+	src:url("../../MobileSingle/assets_compiletime/fonts/Candara Italic.ttf");
 	fontFamily: Candara;
 	fontStyle:italic;
 	embedAsCFF: false; /* false for mobile */
@@ -137,7 +138,7 @@ s|Button
 
 
 @font-face {
-	src:url("../assets_compiletime/fonts/Candara Bold Italic.ttf");
+	src:url("../../MobileSingle/assets_compiletime/fonts/Candara Bold Italic.ttf");
 	fontFamily: Candara;
 	fontWeight: bold;
 	fontStyle:italic;

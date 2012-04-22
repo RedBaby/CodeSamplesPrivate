@@ -28,7 +28,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.AbstractView;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.AbstractView;
 	
 	import org.robotlegs.mvcs.Mediator;
 	

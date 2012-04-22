@@ -27,8 +27,10 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.LogInSignalEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LogInSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.LogInViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.LogInViewUI;
 	
 	import flash.events.MouseEvent;
 	
@@ -56,6 +58,15 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 */	
 		[Inject]
 		public var logInViewUI : LogInViewUI;
+		
+		
+		/**
+		 * Signal: Marks a request to log in or log out depending on the passed event.
+		 * 
+		 */	
+		[Inject]
+		public var logInSignal : LogInSignal;
+		
 		
 		/**
 		 * Reference: <code>Model</code>
@@ -93,7 +104,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			super.onRegister();
 			
 			//	VIEW
-			logInViewUI.sampleButtonClickedSignal.add  			(_onSampleButtonClicked);
+			logInViewUI.loginWithFacebookButtonClickedSignal.add  			(_onLogInWithFacebookButtonClicked);
+			logInViewUI.notAMemberButtonClickedSignal.add  					(_onNotAMemberButtonClicked);
 			
 			//	CONTEXT
 
@@ -114,7 +126,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			super.onRemove();
 			
 			//	VIEW
-			logInViewUI.sampleButtonClickedSignal.remove  			(_onSampleButtonClicked);
+			logInViewUI.loginWithFacebookButtonClickedSignal.remove  			(_onLogInWithFacebookButtonClicked);
+			logInViewUI.notAMemberButtonClickedSignal.remove  				(_onNotAMemberButtonClicked);
 			
 			//	CONTEXT
 			
@@ -133,9 +146,25 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 * @return void
 		 * 
 		 */
-		private function _onSampleButtonClicked (aEvent : MouseEvent):void
+		private function _onLogInWithFacebookButtonClicked (aEvent : MouseEvent):void
 		{
-			trace ("_onSampleButtonClicked() aEvent: " + aEvent);
+			//	NOTE
+			//		An event is really not needed for now, but its used. We can pack in more data if login situations change.
+			logInSignal.dispatch(	new LogInSignalEvent (LogInSignalEvent.LOG_IN) );
+			
+		}
+		
+		/**
+		 * Handles the aEvent: <code>MouseEvent.CLICK</code>.
+		 * 
+		 * @param aEvent <code>MouseEvent</code> The incoming aEvent payload.
+		 *  
+		 * @return void
+		 * 
+		 */
+		private function _onNotAMemberButtonClicked (aEvent : MouseEvent):void
+		{
+			trace ("_onNotAMemberButtonClicked() aEvent: " + aEvent);
 		}
 		
 		//	CONTEXT

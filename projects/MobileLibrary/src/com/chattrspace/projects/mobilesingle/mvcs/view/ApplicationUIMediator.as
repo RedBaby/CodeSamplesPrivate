@@ -32,7 +32,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPushViewSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.events.PhrasesModelEvent;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.events.ViewNavigatorEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.PhrasesVO;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ApplicationUI;
 	

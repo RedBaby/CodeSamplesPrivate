@@ -45,7 +45,7 @@
 
 //TASKS FOR ELLIOT
 
-----NAME: MobileSingle/MobileLibrary asset location vetting 
+----NAME: ASSET-LOCATION VETTING AND DECIDING
 ----PRIORITY: Well, file setup is v0.5, but customization is really much later, hmmmm...
 
 	**discuss the location of files
@@ -61,9 +61,88 @@
     **look at the customization demo. Should it live on and link to shared library files. I think yes. 1-2 pages with all components we want to use. Easy testing ground
 	
 	
-	2) What happens when app sent to background? And, what is the user experience when it is returned to foreground? Similarly, what kind of recovery will we provide for the instance where the app is interrupted by phone call or other interruption? What will other users see if the user is broadcasting video when the app is interrupted? Automatic demotion from broadcaster status? We may have to detect the event that the app receives when it is interrupted, and also determine what to do if we don't receive that event (crash) and can't handle it elegantly. (the bullets were meant to be a few alternatives for what an app could do when it is intentionally interrupted and sent to the background. That wasn't really clear in the way I wrote it. )
-— Audio continues
-— Video signal cut, app pauses
-— App shuts down
+	
+	
+----NAME: DEVICE-SPECIFIC-TESTS on MobileSingle version v0.5 after delivery to client - Test on both platform emulators and both platform devices.
+----PRIORITY: post version v0.5 delivery to client.
+	* What happens when app sent to background? 
+	* What is call comes in while app is in use?
+	* How/when is a user kicked out of a channel or his mode changed (manual logout?, manual closing (not minimizing) of app?, anything else?)
+	* do all views, all buttons, all (few that we have) styles working? Any per-device hiccups or performance?
+	* Any layout issues on various screen sizes?
+	
+----NAME		:	OPTIMIZATIONS PRE-ANALYSIS on MobileSingle version v0.5
+----PRIORITY	:	post version v0.5 delivery to client.
+	* See how the app runs on both platform emulators and both platform devices
+	* Evaluate optimizations NEEDED. Proposal a plan to revise or moving-forward do optimization.
+	* Garbage Collection analysis. Look over the STARTUP/SHUTDOWN commands and look at every UI and MEdiator file. Are they removing listeners properly and being RAM-conscious? 
+    * Provide time/times in future we need to check all of this again. 
+    * is our 'view' push and pop working properly. We have exactly 2 (during transition) or 1 view in memory at any time? No others are hiding, right?
+    
+    
+    
+    
+    
+    
+    
+    
+----NAME		: Empower 'not a member' button to click to www.chattrspace.com
+----PRIORITY	: before v0.9 delivery
+	* Create a NavigateToURLSignal/NavigateToURLSignalEvent (url, window)/NavigateToURLSignalCommand
+	* wire that up to notamemeber (later we'll use it more too)
+	* 
+	
+----NAME		: Update API for ViewNavigator stuff
+----PRIORITY	: before v0.9 delivery
+	* Change the API (the general naming of methods, classes etc...), but the functionality is generally good.
+	* Search 'viewNavigatorPushViewSignal.dispatch(new ViewNavigatorEvent' in the project and see how it works
+	* Consider ditching both 'push' and 'pop' and just have one signal that takes an event. The event knows push vs pop. 
+	* Rename 'ViewNavigatorEvent' too because its the same name as an Adobe class and I want to avoid name conflicts like that
+	
+----NAME		: Change Toggle Button Text for MainViewUI
+----PRIORITY	: before v0.9 delivery
+	* Change text to "comments" and "users" not "off" and "on". Research solutions. I suspect a skin is needed - http://devgirl.org/2011/11/02/flex-mobile-development-toggleswitch-sample-with-source/
+	* The inner-bg changes from blue to grey. The current highlight looks good, but we want to use css for the 'blue' and 'grey' so we can replace them. Make them colorable a quick-n-dirty way and we can do the css part later
+	* 
+	
+----NAME		: 
+----PRIORITY	:
+	* 
+	* 
+	* 
 
+	
+----NAME		: 
+----PRIORITY	:
+	* 
+	* 
+	* 
+
+	
+----NAME		: 
+----PRIORITY	:
+	* 
+	* 
+	* 
+
+	
+----NAME		: 
+----PRIORITY	:
+	* 
+	* 
+	* 
+
+	
+----NAME		: 
+----PRIORITY	:
+	* 
+	* 
+	* 
+
+	
+----NAME		: 
+----PRIORITY	:
+	* 
+	* 
+	* 
 

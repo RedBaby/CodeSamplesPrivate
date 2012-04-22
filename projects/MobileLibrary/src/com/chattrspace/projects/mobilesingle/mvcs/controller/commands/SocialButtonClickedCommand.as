@@ -30,7 +30,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	//--------------------------------------
 	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.LanguageVO;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.AbstractView;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.AbstractView;
 	
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;

@@ -32,7 +32,8 @@ package com.chattrspace.projects.mobilesingle.mvcs
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.GuestChangeCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.LoadHappyBirthdayModelCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.LoadPhrasesCommand;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.LoadSongCommand;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.LogInSignalCommand;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.LogOutSignalCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.SelectedLanguageChangeCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.ShutdownCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.SocialButtonClickedCommand;
@@ -41,7 +42,8 @@ package com.chattrspace.projects.mobilesingle.mvcs
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.GuestChangeSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadHappyBirthdayModelSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadPhrasesModelSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadSongSignal;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LogInSignal;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LogOutSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.SelectedLanguageChangeSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.SocialButtonClickedSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.StageOrientationChangeSignal;
@@ -54,10 +56,14 @@ package com.chattrspace.projects.mobilesingle.mvcs
 	import com.chattrspace.projects.mobilesingle.mvcs.services.PhrasesLoadService;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.ApplicationUIMediator;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.LogInViewUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.MainViewUIMediator;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.PhraseableUIMediator;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.SettingsViewUIMediator;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ApplicationUI;
 	import com.chattrspace.projects.mobilesingle.mvcs.view.components.IPhraseableUI;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.LogInViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.LogInViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.MainViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.SettingsViewUI;
 	
 	import flash.events.Event;
 	
@@ -168,7 +174,9 @@ package com.chattrspace.projects.mobilesingle.mvcs
 			/////////////////////////////////////
 			//WITH INVARIANCE (LESS FLEXIBLE)
 			/////////////////////////////////////
-			mediatorMap.mapView		(LogInViewUI, 	LogInViewUIMediator); 	//optional 3rd parameter, [MainViewUI]);
+			mediatorMap.mapView		(LogInViewUI, 		LogInViewUIMediator); 		//optional 3rd parameter, [MainViewUI]);
+			mediatorMap.mapView		(MainViewUI, 		MainViewUIMediator); 		//optional 3rd parameter, [MainViewUI]);
+			mediatorMap.mapView		(SettingsViewUI, 	SettingsViewUIMediator); 	//optional 3rd parameter, [MainViewUI]);
 			
 			
 			/////////////////////////////////////
@@ -197,11 +205,11 @@ package com.chattrspace.projects.mobilesingle.mvcs
 			
 			//SIGNALS SETUP WITHIN THIS CONTEXT - 2 OF 2: SIGNALS THAT ARE MAPPED TO COMMANDS
 			//a. REQUESTS
-			signalCommandMap.mapSignalClass(SelectedLanguageChangeSignal,	SelectedLanguageChangeCommand);
-			signalCommandMap.mapSignalClass(LoadSongSignal,					LoadSongCommand);
-			signalCommandMap.mapSignalClass(GuestChangeSignal,				GuestChangeCommand);
-			signalCommandMap.mapSignalClass(ClearSelectedLanguageSignal,    ClearSelectedLanguageCommand);
-			signalCommandMap.mapSignalClass(SocialButtonClickedSignal,    	SocialButtonClickedCommand);
+			signalCommandMap.mapSignalClass(LogInSignal,					LogInSignalCommand);
+			signalCommandMap.mapSignalClass(LogOutSignal,					LogOutSignalCommand);
+			//
+			
+			
 			//
 			signalCommandMap.mapSignalClass(LoadPhrasesModelSignal,   		LoadPhrasesCommand);
 			signalCommandMap.mapSignalClass(LoadHappyBirthdayModelSignal,  	LoadHappyBirthdayModelCommand);

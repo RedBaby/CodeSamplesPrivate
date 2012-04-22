@@ -95,7 +95,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.services
 			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, 	_onIOError);
 			
 			//LOAD
-			urlLoader.load(urlRequest);
+			//urlLoader.load(urlRequest);
 			
 		}
 		

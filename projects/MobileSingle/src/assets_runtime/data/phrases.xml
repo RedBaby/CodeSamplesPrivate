@@ -163,6 +163,17 @@
 	</phrase>
 	
 	
+	<!--
+	////////////////////////////////////////
+	//		DEMO ONLY - DON'T EDIT
+	////////////////////////////////////////
+	-->
+	
+	<phrase name = "demoViewTitle">
+		<EN><![CDATA[{Demo - {DEMO_NAME}}]]></EN>
+	</phrase>
+	
+	
 	
 	
 </phrases>

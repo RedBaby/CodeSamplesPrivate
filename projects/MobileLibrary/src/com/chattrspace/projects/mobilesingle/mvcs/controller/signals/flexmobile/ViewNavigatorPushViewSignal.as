@@ -29,7 +29,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile
 	//  Imports
 	//--------------------------------------
 	import com.chattrspace.projects.mobilesingle.mvcs.model.events.PhrasesModelEvent;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.events.ViewNavigatorEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
 	
 	import org.osflash.signals.Signal;
 	

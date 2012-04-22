@@ -4,10 +4,14 @@
     <classEntry path="com.chattrspace.utils.ScreenDPIClassification"/>
     <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.IPhraseableUI"/>
     <classEntry path="com.chattrspace.errors.PhrasesLoadServiceError"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.views.MainViewUI"/>
-    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.views.SettingsViewUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.MainViewUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.SettingsViewUI"/>
     <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.MainViewUIMediator"/>
     <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.SettingsViewUIMediator"/>
+    <classEntry path="com.chattrspace.components.controls.VideoComponent"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.socialcontent.AbstractSocialContent"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.socialcontent.CommentsSocialContentUI"/>
+    <classEntry path="com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.socialcontent.UsersSocialContentUI"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

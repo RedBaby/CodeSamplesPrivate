@@ -32,7 +32,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPopViewSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.PhrasesModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.events.ViewNavigatorEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.services.ILoadService;
 	
 	import org.robotlegs.mvcs.Command;

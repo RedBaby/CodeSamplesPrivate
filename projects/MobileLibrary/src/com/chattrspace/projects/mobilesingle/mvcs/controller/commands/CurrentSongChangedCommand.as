@@ -30,7 +30,7 @@ package com.chattrspace.projects.mobilesingle.mvcs.controller.commands
 	//--------------------------------------
 	import com.chattrspace.projects.mobilesingle.managers.AssetManager;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPushViewSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.model.events.ViewNavigatorEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
 	
 	import org.robotlegs.mvcs.Command;
 	

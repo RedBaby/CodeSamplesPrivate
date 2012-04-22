@@ -28,10 +28,10 @@ package com.chattrspace.projects.mobilesingle.mvcs.model
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.LoadSongCommand;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.commands.LogInSignalCommand;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.ChangedMessageModelSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.ChangedPhrasesModelSignal;
-	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LoadSongSignal;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.LogInSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.events.PhrasesModelEvent;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.vo.PhrasesVO;
 	

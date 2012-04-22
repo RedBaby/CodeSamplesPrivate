@@ -27,8 +27,13 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
+	import com.chattrspace.projects.mobilesingle.managers.AssetManager;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.events.ViewNavigatorEvent;
+	import com.chattrspace.projects.mobilesingle.mvcs.controller.signals.flexmobile.ViewNavigatorPushViewSignal;
 	import com.chattrspace.projects.mobilesingle.mvcs.model.HappyBirthdayModel;
-	import com.chattrspace.projects.mobilesingle.mvcs.view.components.views.MainViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.LogInViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.MainViewUI;
+	import com.chattrspace.projects.mobilesingle.mvcs.view.components.ui.views.SettingsViewUI;
 	
 	import flash.events.MouseEvent;
 	
@@ -56,6 +61,17 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 */	
 		[Inject]
 		public var mainViewUI : MainViewUI
+		
+		
+		
+		/**
+		 * Signal: Change the View
+		 * 
+		 */
+		[Inject]
+		public var viewNavigatorPushViewSignal : ViewNavigatorPushViewSignal;
+		
+		
 		
 		/**
 		 * Reference: <code>Model</code>
@@ -93,7 +109,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			super.onRegister();
 			
 			//	VIEW
-			mainViewUI.sampleButtonClickedSignal.add  			(_onSampleButtonClicked);
+			mainViewUI.backButtonClickedSignal.add  			(_onBackButtonClicked);
+			mainViewUI.settingsButtonClickedSignal.add  		(_onSettingsButtonClicked);
 			
 			//	CONTEXT
 			
@@ -114,7 +131,8 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 			super.onRemove();
 			
 			//	VIEW
-			mainViewUI.sampleButtonClickedSignal.remove  			(_onSampleButtonClicked);
+			mainViewUI.backButtonClickedSignal.remove  			(_onBackButtonClicked);
+			mainViewUI.settingsButtonClickedSignal.remove  		(_onSettingsButtonClicked);
 			
 			//	CONTEXT
 			
@@ -133,9 +151,26 @@ package com.chattrspace.projects.mobilesingle.mvcs.view
 		 * @return void
 		 * 
 		 */
-		private function _onSampleButtonClicked (aEvent : MouseEvent):void
+		private function _onBackButtonClicked (aEvent : MouseEvent):void
 		{
-			trace ("_onSampleButtonClicked() aEvent: " + aEvent);
+			//	CHANGE VIEW
+			viewNavigatorPushViewSignal.dispatch(new ViewNavigatorEvent (ViewNavigatorEvent.POP_VIEW, LogInViewUI, AssetManager.getViewTransition(ViewNavigatorEvent.POP_VIEW)));
+
+		}
+		
+		/**
+		 * Handles the aEvent: <code>MouseEvent.CLICK</code>.
+		 * 
+		 * @param aEvent <code>MouseEvent</code> The incoming aEvent payload.
+		 *  
+		 * @return void
+		 * 
+		 */
+		private function _onSettingsButtonClicked (aEvent : MouseEvent):void
+		{
+			//	CHANGE VIEW
+			viewNavigatorPushViewSignal.dispatch(new ViewNavigatorEvent (ViewNavigatorEvent.PUSH_VIEW, SettingsViewUI, AssetManager.getViewTransition(ViewNavigatorEvent.PUSH_VIEW)));
+
 		}
 		
 		//	CONTEXT

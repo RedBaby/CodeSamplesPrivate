@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<components:ApplicationUI
+	
+	xmlns:components="com.chattrspace.projects.mobilesingle.mvcs.view.components.*" 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	
+	splashScreenImage="com.chattrspace.projects.mobilesingle.mvcs.view.components.splashscreenimages.SplashScreenImage"
+	preloader="spark.preloaders.SplashScreen"
+	splashScreenMinimumDisplayTime="10000"
+	splashScreenScaleMode="zoom"
+	applicationDPI="320"
+	
+	
+	
+	addedToStage="_onAddedToStageHandler(event)"
+	
+	
+	>
+	
+	<!--
+	
+	*** DEMO ONLY ***
+	*** This project may or may not (by design) behave like the main application
+	*** This project is designed to show...
+	
+	>>>>The splash screen appears and stays (forever). Not interactive.
+	
+	
+			
+	-->
+	
+	
+	
+	
+	
+	<fx:Script>
+		<![CDATA[
+			
+			
+			//--------------------------------------
+			//  Imports
+			//--------------------------------------
+			import com.chattrspace.projects.mobilesingle.mvcs.view.ApplicationUIMediator;
+			
+			
+			// --------------------------------------
+			// Event Handlers
+			// --------------------------------------
+			/**
+			 * Handles the aEvent: <code>Event.ADDED_TO_STAGE</code>.
+			 * 
+			 * @param aEvent <code>Event</code> The incoming aEvent payload.
+			 *  
+			 * @return void
+			 * 
+			 */
+			protected function _onAddedToStageHandler(event:Event):void
+			{
+				//USE FOR TESTING SOMETHING PERHAPS...
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<!-- Link to the Styles 
+	NOTE:  This URL is relative, inter-project and (ugly). It reaches outside the project. 
+	Ensure all your 'Chattrspace projects' are within the same parent directory on your local machine
+	-->
+	<fx:Style source="./../MobileSingle/src/assets_runtime/styles/styles.css" />
+	
+</components:ApplicationUI>
+
