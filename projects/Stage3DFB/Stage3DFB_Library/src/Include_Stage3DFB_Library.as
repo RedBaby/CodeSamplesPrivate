@@ -27,8 +27,20 @@ package
 	import away3d.materials.ColorMaterial;
 	import away3d.materials.lightpickers.StaticLightPicker;
 	import away3d.primitives.CubeGeometry;
+	import away3d.tools.commands.Align;
+	
+	import com.bit101.components.HBox;
+	import com.bit101.components.ProgressBar;
+	import com.bit101.components.Text;
+	import com.bit101.components.TextArea;
+	import com.bit101.components.VBox;
+	import com.bit101.components.Window;
+	import com.greensock.TweenMax;
+	import com.greensock.data.TweenMaxVars;
+	import com.greensock.events.TweenEvent;
 	
 	import flare.basic.Scene3D;
+	import flare.loaders.ColladaLoader;
 	import flare.loaders.Flare3DLoader1;
 	import flare.primitives.Cube;
 	import flare.primitives.SkyBox;
@@ -37,6 +49,8 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLRequest;
+	
+	import spark.components.VGroup;
 	
 	public class Include_Stage3DFB_Library
 	{
@@ -59,6 +73,9 @@ package
 				flare.primitives.Sphere,
 				AwayStats,
 				
+				
+				ColladaLoader,
+				
 				alternativa.engine3d.core.Camera3D,
 				alternativa.engine3d.core.Object3D,
 				alternativa.engine3d.core.Resource,
@@ -78,6 +95,15 @@ package
 				
 				
 				
+				Text,
+				ProgressBar,
+				TextArea,
+				Window,
+				HBox,
+				VBox,
+				TweenMax,
+				TweenMaxVars,
+				TweenEvent,
 				
 				
 				

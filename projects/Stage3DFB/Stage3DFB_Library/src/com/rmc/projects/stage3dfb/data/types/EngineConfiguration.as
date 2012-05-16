@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2012 Chattrspace Inc.                    
+ * Copyright (C) 2005-2012 by Rivello Multimedia Consulting (RMC).               
  * code [at] RivelloMultimediaConsulting [dot] com                                                  
  *                                                                      
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -101,6 +101,14 @@ package com.rmc.projects.stage3dfb.data.types
 		public function get cameraBackgroundColor () 					: Number 	{ return _cameraBackgroundColor_num; }
 		public function set cameraBackgroundColor (aValue : Number) 	: void 		{ _cameraBackgroundColor_num = aValue; }
 		
+		
+		/**
+		 *  
+		 */		
+		private var _cameraBackgroundAlpha_num : Number;
+		public function get cameraBackgroundAlpha () 					: Number 	{ return _cameraBackgroundAlpha_num; }
+		public function set cameraBackgroundAlpha (aValue : Number) 	: void 		{ _cameraBackgroundAlpha_num = aValue; }
+		
 		/**
 		 *  
 		 */		
@@ -164,8 +172,13 @@ package com.rmc.projects.stage3dfb.data.types
 			// VARIABLES
 			
 			// PROPERTIES
-			originPosition 		= new Vector3D (0,0,0),
-			cameraPosition 		= new Vector3D (0,0,100),
+			originPosition 		= new Vector3D (0,0,0);
+			cameraPosition 		= new Vector3D (0,0,100);
+			//
+			cameraBackgroundAlpha	= 1;
+			cameraBackgroundColor	= 0xff0000;
+			cameraBackgroundImage   = null;
+			//
 			antiAlias		 	= 0
 			cameraFieldOfView 	= 50; 
 			cameraNear			= .1; 

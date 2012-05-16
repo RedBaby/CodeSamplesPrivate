@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2012 Chattrspace Inc.                    
+ * Copyright (C) 2005-2012 by Rivello Multimedia Consulting (RMC).               
  * code [at] RivelloMultimediaConsulting [dot] com                                                  
  *                                                                      
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -28,6 +28,8 @@ package
 	// --------------------------------------
 	// Imports
 	// --------------------------------------
+	import com.rmc.projects.stage3dfb.data.types.ModelData;
+	
 	import flash.events.Event;
 	
 	
@@ -58,6 +60,12 @@ package
 		// Properties
 		// --------------------------------------
 		// PUBLIC GETTER/SETTERS
+		/**
+		 *  
+		 */		
+		private var _modelData : ModelData;
+		public function get modelData () 					: ModelData 	{ return _modelData; }
+		public function set modelData (aValue : ModelData) 	: void 		{ _modelData = aValue; }
 		
 		// PUBLIC CONST
 		/**
@@ -81,6 +89,89 @@ package
 		public static const SETUP_COMPLETE : String = "setupComplete";
 		
 		
+		/**
+		 * 
+		 * The <code>EngineEvent.MODEL_LOAD</code> constant defines the aValue of the <code>type</code> 
+		 * property of the aEvent object of type <code>aEvent</code>.
+		 *
+		 * <p>The properties of the aEvent object have the following aValues:</p>
+		 * <table class='innertable'>
+		 * <tr><th>Property</th><th>aValue</th></tr>
+		 * <tr><td>bubbles</td><td>false</td></tr>
+		 * <tr><td>cancelable</td><td>false</td></tr>
+		 * <tr><td>currentTarget</td><td>The object that is actively processing the aEvent object with an aEvent listener.</td></tr>
+		 * <tr><td>target</td><td>Any DisplayObject instance with a listener registered for this aEvent.</td></tr>
+		 * ...
+		 * </table>
+		 * 
+		 * @aEventType modelLoad
+		 * 
+		 */
+		public static const MODEL_LOAD : String = "modelLoad";
+		
+		
+		/**
+		 * 
+		 * The <code>EngineEvent.MODEL_LOAD_PROGRESS</code> constant defines the aValue of the <code>type</code> 
+		 * property of the aEvent object of type <code>aEvent</code>.
+		 *
+		 * <p>The properties of the aEvent object have the following aValues:</p>
+		 * <table class='innertable'>
+		 * <tr><th>Property</th><th>aValue</th></tr>
+		 * <tr><td>bubbles</td><td>false</td></tr>
+		 * <tr><td>cancelable</td><td>false</td></tr>
+		 * <tr><td>currentTarget</td><td>The object that is actively processing the aEvent object with an aEvent listener.</td></tr>
+		 * <tr><td>target</td><td>Any DisplayObject instance with a listener registered for this aEvent.</td></tr>
+		 * ...
+		 * </table>
+		 * 
+		 * @aEventType modelLoadProgress
+		 * 
+		 */
+		public static const MODEL_LOAD_PROGRESS : String = "modelLoadProgress";
+		
+		
+		/**
+		 * 
+		 * The <code>EngineEvent.MODEL_LOADED</code> constant defines the aValue of the <code>type</code> 
+		 * property of the aEvent object of type <code>aEvent</code>.
+		 *
+		 * <p>The properties of the aEvent object have the following aValues:</p>
+		 * <table class='innertable'>
+		 * <tr><th>Property</th><th>aValue</th></tr>
+		 * <tr><td>bubbles</td><td>false</td></tr>
+		 * <tr><td>cancelable</td><td>false</td></tr>
+		 * <tr><td>currentTarget</td><td>The object that is actively processing the aEvent object with an aEvent listener.</td></tr>
+		 * <tr><td>target</td><td>Any DisplayObject instance with a listener registered for this aEvent.</td></tr>
+		 * ...
+		 * </table>
+		 * 
+		 * @aEventType modelLoaded
+		 * 
+		 */
+		public static const MODEL_LOADED : String = "modelLoaded";
+		
+		/**
+		 * 
+		 * The <code>EngineEvent.MODEL_LOAD_ERROR</code> constant defines the aValue of the <code>type</code> 
+		 * property of the aEvent object of type <code>aEvent</code>.
+		 *
+		 * <p>The properties of the aEvent object have the following aValues:</p>
+		 * <table class='innertable'>
+		 * <tr><th>Property</th><th>aValue</th></tr>
+		 * <tr><td>bubbles</td><td>false</td></tr>
+		 * <tr><td>cancelable</td><td>false</td></tr>
+		 * <tr><td>currentTarget</td><td>The object that is actively processing the aEvent object with an aEvent listener.</td></tr>
+		 * <tr><td>target</td><td>Any DisplayObject instance with a listener registered for this aEvent.</td></tr>
+		 * ...
+		 * </table>
+		 * 
+		 * @aEventType modelLoadError
+		 * 
+		 */
+		public static const MODEL_LOAD_ERROR : String = "modelLoadError";
+		
+		
 		// PRIVATE
 		
 		// --------------------------------------
@@ -91,6 +182,7 @@ package
 		 * 
 		 */
 		public function EngineEvent (	aType_str 			: String, 
+										aModelData			: ModelData,
 										aBubbles_boolean 	: Boolean = false, 
 										aCancelable_boolean : Boolean = false)
 		{
@@ -103,6 +195,7 @@ package
 			// VARIABLES
 			
 			// PROPERTIES
+			_modelData = aModelData;
 			
 			// METHODS
 			
@@ -121,7 +214,7 @@ package
 		 */
 		public override function clone() : Event 
 		{
-			return new EngineEvent(type, bubbles, cancelable);
+			return new EngineEvent(type, modelData, bubbles, cancelable);
 			
 		}
 		

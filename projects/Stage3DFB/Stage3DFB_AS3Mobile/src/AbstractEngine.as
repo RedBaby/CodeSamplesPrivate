@@ -24,8 +24,9 @@
 // Marks the right margin of code *******************************************************************
 package 
 {
-	import away3d.errors.AbstractMethodError;
 	
+	import com.bit101.components.Window;
+	import com.rmc.errors.AbstractMethodError;
 	import com.rmc.projects.stage3dfb.data.types.EngineConfiguration;
 	import com.rmc.projects.stage3dfb.data.types.ModelData;
 	
@@ -66,15 +67,19 @@ package
 		public function set isCurrentlyLoadingANewModel (aValue : Boolean) 	: void 		{ _isCurrentlyLoadingANewModel_boolean = aValue; }
 		
 		
-
-		
-		
 		// PRIVATE CONST
 		/**
 		 * Describe this member.
 		 * 
 		 */
 		protected static var _MODEL_SPIN_ROTATION_AMOUNT:Number;
+		
+		//PUBLIC
+		/**
+		 * Describe this member.
+		 * 
+		 */
+		protected static const _DEGREES_TO_RADIANS:Number = Math.PI / 180;
 		
 		// PRIVATE GETTTERS
 		
@@ -136,7 +141,7 @@ package
 			_doSetupBackground   	();
 			_doSetupInput 			();
 			_doFirstModelSetup		();	
-			_doConfirmSetupComplete	();	
+			_doDispatchSetupComplete	();	
 		}
 
 		/**
@@ -258,14 +263,57 @@ package
 		}
 		
 		/**
-		 * SETUP: Now that its complete let the <code>EngineBrowser</code> know so it can contineu
-		 * 
-		 * @return void
+		 * DISPATCH EVENT: Mark that the setup is complete
 		 * 
 		 */
-		protected function _doConfirmSetupComplete	():void
+		protected function _doDispatchSetupComplete	():void
 		{
-			dispatchEvent( new EngineEvent (EngineEvent.SETUP_COMPLETE));
+			//
+			dispatchEvent( new EngineEvent (EngineEvent.SETUP_COMPLETE, _currentModelLoadingData, true));
+		}
+		
+		/**
+		 * DISPATCH EVENT: Mark that the setup is complete
+		 * 
+		 */
+		protected function _doDispatchModelLoad	():void
+		{
+			//
+			dispatchEvent( new EngineEvent (EngineEvent.MODEL_LOAD, _currentModelLoadingData, true));
+
+		}
+		
+		/**
+		 * DISPATCH EVENT: Mark that the setup is complete
+		 * 
+		 */
+		protected function _doDispatchModelProgress	(aPercentLoaded_num : Number):void
+		{
+			//
+			_currentModelLoadingData.percentLoaded = aPercentLoaded_num;
+			//
+			dispatchEvent( new EngineEvent (EngineEvent.MODEL_LOAD_PROGRESS, _currentModelLoadingData, true));
+		}
+		
+		/**
+		 * DISPATCH EVENT: Mark that the setup is complete
+		 * 
+		 */
+		protected function _doDispatchModelLoaded ():void
+		{
+			//
+			dispatchEvent( new EngineEvent (EngineEvent.MODEL_LOADED, _currentModelLoadingData,  true));
+		}
+		
+		
+		/**
+		 * DISPATCH EVENT: Mark that the setup is errored
+		 * 
+		 */
+		protected function _doDispatchModelLoadError ():void
+		{
+			//
+			dispatchEvent( new EngineEvent (EngineEvent.MODEL_LOAD_ERROR, _currentModelLoadingData,  true));
 		}
 		
 		
@@ -286,9 +334,7 @@ package
 		 */
 		protected function _onExternalModelLoadingProgress (aEvent : *) : void
 		{
-			//SHOW SOME UNIVERSAL SUCCESS UI?
-			
-			//SUBCLASS SHOULD OVERRIDE BUT CALL SUPER ON THIS
+			throw new AbstractMethodError();
 		}
 		
 		/**
@@ -302,6 +348,7 @@ package
 		protected function _onExternalModelLoadingCompleted (aEvent : *) : void
 		{
 			//SHOW SOME UNIVERSAL SUCCESS UI?
+			_doDispatchModelLoaded();
 			
 			//SUBCLASS SHOULD OVERRIDE BUT CALL SUPER ON THIS
 		}
@@ -318,6 +365,7 @@ package
 		protected function _onExternalModelLoadingError(aEvent : *) : void
 		{
 			//SHOW SOME UNIVERSAL FAILURE UI?
+			_doDispatchModelLoadError();
 			
 			//SUBCLASS SHOULD OVERRIDE BUT CALL SUPER ON THIS
 		}

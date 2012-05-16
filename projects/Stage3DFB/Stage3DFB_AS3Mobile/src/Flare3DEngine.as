@@ -34,12 +34,14 @@ package
 	import flare.basic.Scene3D;
 	import flare.core.Camera3D;
 	import flare.core.Pivot3D;
+	import flare.loaders.ColladaLoader;
 	import flare.loaders.Flare3DLoader1;
 	import flare.primitives.Cube;
 	import flare.primitives.SkyBox;
 	import flare.primitives.Sphere;
 	
 	import flash.display.Bitmap;
+	import flash.events.ProgressEvent;
 	import flash.geom.Vector3D;
 	
 	
@@ -194,17 +196,26 @@ package
 				if (_theModel && _theExternallyLoadedChildOfTheModel && _theModel.getChildByName(_theExternallyLoadedChildOfTheModel.name) ) {
 					_theModel.removeChild(_theExternallyLoadedChildOfTheModel);
 					_theExternallyLoadedChildOfTheModel.dispose();
+					_theExternallyLoadedChildOfTheModel.download();
+					trace ("ex disposed1 : " + _theExternallyLoadedChildOfTheModel);
+					trace ("ex disposed2 : " + _theExternallyLoadedChildOfTheModel.parent);
+					trace ("ex disposed3 : " + _theExternallyLoadedChildOfTheModel.inView);
 				}
 				
 				//REMOVE OLD PRIMITIVE
 				if (_theModel && _thePrimitiveChildOfTheModel && _theModel.getChildByName(_thePrimitiveChildOfTheModel.name)  ) {
 					_theModel.removeChild(_thePrimitiveChildOfTheModel);
 					_thePrimitiveChildOfTheModel.dispose();
+					_thePrimitiveChildOfTheModel.download();
+					trace ("prim disposed1 : " + _thePrimitiveChildOfTheModel);
 				}
 				
 				//CREATE NEW
 				switch (_currentModelLoadingData.modelType) {
 					case ModelType.EXTERNAL_MODEL:
+						//	EVENTS
+						_doDispatchModelLoad();
+						//	SETUP
 						// add global scene progress and complete events.
 						_view3D.addEventListener( Scene3D.PROGRESS_EVENT, _onExternalModelLoadingProgress );
 						_view3D.addEventListener( Scene3D.COMPLETE_EVENT, _onExternalModelLoadingCompleted );
@@ -213,6 +224,11 @@ package
 						_theModel.addChild(_theExternallyLoadedChildOfTheModel);
 						break;
 					case ModelType.WIREFRAME_CUBE:
+						//	EVENTS
+						_doDispatchModelLoad();
+						_doDispatchModelProgress(100);
+						_doDispatchModelLoaded()
+						//	SETUP
 						_thePrimitiveChildOfTheModel = new Cube ("Cube", 
 							_currentModelLoadingData.originalScale.x,
 							_currentModelLoadingData.originalScale.y,
@@ -220,15 +236,30 @@ package
 							1, 
 							null
 						);
+						_thePrimitiveChildOfTheModel.setRotation(
+							_currentModelLoadingData.originalRotation.x,
+							_currentModelLoadingData.originalRotation.y,
+							_currentModelLoadingData.originalRotation.z
+						)
 						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						
 						break;
 					case ModelType.WIREFRAME_SPHERE:
+						//	EVENTS
+						_doDispatchModelLoad();
+						_doDispatchModelProgress(100)
+						_doDispatchModelLoaded()
+						//	SETUP
 						_thePrimitiveChildOfTheModel = new Sphere ("Sphere",
 							_currentModelLoadingData.originalScale.x,
 							24,
 							null
 						);
+						_thePrimitiveChildOfTheModel.setRotation(
+							_currentModelLoadingData.originalRotation.x,
+							_currentModelLoadingData.originalRotation.y,
+							_currentModelLoadingData.originalRotation.z
+							)
 						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						
 						break;
@@ -253,7 +284,7 @@ package
 			_theModel.rotateY(AbstractEngine._MODEL_SPIN_ROTATION_AMOUNT, true);
 			//_theCamera.lookAt(
 			//_view3D.render();
-			_theCamera.lookAt(0,0,0); //_theModel.x,_theModel.y,_theModel.z);
+			_theCamera.lookAt(_theModel.x,_theModel.y,_theModel.z);
 			
 			
 			//I WANT TO CONTROL THIS MANUALLY
@@ -426,6 +457,7 @@ package
 		{
 			//CREATE A GROUP, WE WILL ONLY EDIT THE GROUP AS WE ROTATE/ZOOM/ETC...
 			//	THIS LET'S THE MODEL WITHIN HAVE ANY ONE-TIME OFFSETS WE WANT, BUT THEN NOT BE 'TOUCHED'
+			new ColladaLoader(""); //needed
 			_theModel = new Pivot3D("CustomTheModel");
 			_view3D.addChild(_theModel);
 			
@@ -449,7 +481,16 @@ package
 		override protected function _onExternalModelLoadingProgress (aEvent : *) : void
 		{
 			//CALL TO SHOW UNIVERSAL UI
-			super._onExternalModelLoadingProgress(aEvent);
+			var progressEvent : ProgressEvent = (aEvent as ProgressEvent);
+			var percentLoaded_num : Number;
+			
+			//trace (" is " + progressEvent.bytesLoaded + " and " + progressEvent.bytesTotal);
+			if (progressEvent.bytesLoaded > 0 && progressEvent.bytesTotal > 0) {
+				percentLoaded_num = progressEvent.bytesLoaded / progressEvent.bytesLoaded * 100;
+			} else {
+				percentLoaded_num = 0;
+			}
+			_doDispatchModelProgress(percentLoaded_num);
 			
 			//MORE STUFF
 			
@@ -479,6 +520,11 @@ package
 				_currentModelLoadingData.originalScale.y,
 				_currentModelLoadingData.originalScale.z
 			);
+			_theExternallyLoadedChildOfTheModel.setRotation(
+				_currentModelLoadingData.originalRotation.x,
+				_currentModelLoadingData.originalRotation.y,
+				_currentModelLoadingData.originalRotation.z
+			)
 			_theExternallyLoadedChildOfTheModel.visible = true; //show only after loaded and sized to prevent flicker
 			
 		}

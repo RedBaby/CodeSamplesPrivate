@@ -32,8 +32,6 @@ package
 	import alternativa.engine3d.core.Object3D;
 	import alternativa.engine3d.core.Resource;
 	import alternativa.engine3d.core.View;
-	import alternativa.engine3d.lights.AmbientLight;
-	import alternativa.engine3d.lights.DirectionalLight;
 	import alternativa.engine3d.loaders.ParserCollada;
 	import alternativa.engine3d.loaders.ParserMaterial;
 	import alternativa.engine3d.loaders.TexturesLoader;
@@ -42,6 +40,7 @@ package
 	import alternativa.engine3d.objects.Mesh;
 	import alternativa.engine3d.objects.Surface;
 	import alternativa.engine3d.primitives.Box;
+	import alternativa.engine3d.primitives.GeoSphere;
 	import alternativa.engine3d.resources.ExternalTextureResource;
 	import alternativa.engine3d.resources.Geometry;
 	
@@ -53,6 +52,7 @@ package
 	import flash.display.Stage3D;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.geom.Vector3D;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -119,7 +119,7 @@ package
 		 * Describe this member.
 		 * 
 		 */
-		private var _thePrimitiveChildOfTheModel:Box;
+		private var _thePrimitiveChildOfTheModel: Object3D;
 		
 		/**
 		 * Describe this member.
@@ -133,15 +133,10 @@ package
 		 */
 		private var _stage3D:Stage3D;
 		
+		
 		// --------------------------------------
 		// Constructor
 		// --------------------------------------
-
-		private var _simpleObjectController:SimpleObjectController;
-
-		private var c1:Camera3D;
-
-		private var controller1:SimpleObjectController;
 		
 		/**
 		 * This is the constructor.
@@ -237,31 +232,56 @@ package
 				//REMOVE OLD LOADER
 				if (_theExternallyLoadedChildOfTheModel && _theModel.contains(_theExternallyLoadedChildOfTheModel)) {
 					_theModel.removeChild(_theExternallyLoadedChildOfTheModel);
-					//_theExternallyLoadedChildOfTheModel.dispose();
 				}
 				//REMOVE OLD PRIMITIVE
 				if (_thePrimitiveChildOfTheModel && _theModel.contains(_thePrimitiveChildOfTheModel)) {
 					_theModel.removeChild(_thePrimitiveChildOfTheModel);
-					//_thePrimitiveChildOfTheModel.dispose();
 				}
-				
-				
-				return;
 				
 				//CREATE NEW
 				switch (_currentModelLoadingData.modelType) {
 					case ModelType.EXTERNAL_MODEL:
+						//	EVENTS
+						_doDispatchModelLoad();
+						//	SETUP
 						_isCurrentlyLoadingANewModel_boolean = true; //SINCE WE ARE DOING ASYNC LOAD, FLAG THAT
 						_theExternallyLoadedChildOfTheModel = new Object3D ();
+						//	LOAD
 						_loader = new URLLoader();
 						_loader.dataFormat = URLLoaderDataFormat.TEXT;
-						_loader.addEventListener(Event.COMPLETE, _onExternalModelLoadingCompleted);
+						_loader.addEventListener(Event.COMPLETE, 		_onExternalModelLoadingCompleted);
 						_loader.addEventListener(IOErrorEvent.IO_ERROR, _onExternalModelLoadingError);
 						_loader.load(new URLRequest(_currentModelLoadingData.modelURL));
 						break;
 					case ModelType.WIREFRAME_CUBE:
+						//	EVENTS
+						_doDispatchModelLoad();
+						_doDispatchModelProgress()
+						_doDispatchModelLoaded()
+						//	SETUP
+						_thePrimitiveChildOfTheModel = new Box((_currentModelLoadingData.originalScale.x/10), (_currentModelLoadingData.originalScale.x/10), (_currentModelLoadingData.originalScale.x/10), 1, 1, 1, false, new FillMaterial(_currentModelLoadingData.originalColor, _currentModelLoadingData.originalAlpha)); 
+						_thePrimitiveChildOfTheModel.x = _currentModelLoadingData.originalPosition.x;
+						_thePrimitiveChildOfTheModel.y = _currentModelLoadingData.originalPosition.y;
+						_thePrimitiveChildOfTheModel.z = _currentModelLoadingData.originalPosition.z;
+						_thePrimitiveChildOfTheModel.rotationX = _currentModelLoadingData.originalRotation.x * AbstractEngine._DEGREES_TO_RADIANS;
+						_thePrimitiveChildOfTheModel.rotationY = _currentModelLoadingData.originalRotation.y * AbstractEngine._DEGREES_TO_RADIANS;
+						_thePrimitiveChildOfTheModel.rotationZ = _currentModelLoadingData.originalRotation.z * AbstractEngine._DEGREES_TO_RADIANS;
+						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						break;
 					case ModelType.WIREFRAME_SPHERE:
+						//	EVENTS
+						_doDispatchModelLoad();
+						_doDispatchModelProgress()
+						_doDispatchModelLoaded()
+						//	SETUP
+						_thePrimitiveChildOfTheModel = new GeoSphere (_currentModelLoadingData.originalScale.x/10, 10, false, new FillMaterial (_currentModelLoadingData.originalColor, _currentModelLoadingData.originalAlpha) ); //_currentModelLoadingData.originalScale.x, 2, false, new FillMaterial (_currentModelLoadingData.originalColor, _currentModelLoadingData.originalColor));
+						_thePrimitiveChildOfTheModel.x = _currentModelLoadingData.originalPosition.x;
+						_thePrimitiveChildOfTheModel.y = _currentModelLoadingData.originalPosition.y;
+						_thePrimitiveChildOfTheModel.z = _currentModelLoadingData.originalPosition.z;
+						_thePrimitiveChildOfTheModel.rotationX = _currentModelLoadingData.originalRotation.x * AbstractEngine._DEGREES_TO_RADIANS;
+						_thePrimitiveChildOfTheModel.rotationY = _currentModelLoadingData.originalRotation.y * AbstractEngine._DEGREES_TO_RADIANS;
+						_thePrimitiveChildOfTheModel.rotationZ = _currentModelLoadingData.originalRotation.z * AbstractEngine._DEGREES_TO_RADIANS;
+						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						break;
 					default:
 						throw new SwitchStatementDefaultError();
@@ -280,17 +300,8 @@ package
 		 */
 		public function doTick ():void
 		{
-			//_theModel.yaw(AbstractEngine._MODEL_SPIN_ROTATION_AMOUNT)
-			//_theCamera.lookAt(_theModel.position);
-			//_view3D.render();
-			/*
-			_theModel.rotationX += AbstractEngine._MODEL_SPIN_ROTATION_AMOUNT;
-			_simpleObjectController.lookAtXYZ(_theModel.x, _theModel.y, _theModel.z);
+			_theModel.rotationY += AbstractEngine._MODEL_SPIN_ROTATION_AMOUNT/20;
 			_theCamera.render(_stage3D);
-			*/
-			
-			controller1.update();
-				c1.render(_stage3D);
 			
 		}
 		
@@ -303,7 +314,7 @@ package
 		 */
 		override public function doRotateModel (aRotation_num : Number):void
 		{
-			_theModel.rotationZ += (aRotation_num);
+			_theModel.rotationZ -= (aRotation_num);
 		}
 		
 		/**
@@ -314,31 +325,44 @@ package
 		 */
 		override public function doZoomModel (aZoomAmount_num : Number):void
 		{
-			/*
 			//	'MOVE' A PROXY CAMERA, THIS IS SO WE CAN USE THE 'moveForward' method, but just to measure distance
 			//	only for a legal move do we truely update the camera
 			//	TODO - is there  a more optimized way to do this?
-			var temporaryCamera : Camera3D	   = new Camera3D();
-			temporaryCamera.position		   = _theCamera.position;
+			var temporaryCamera : Camera3D	   = new Camera3D(0.1,1000000000);
+			temporaryCamera.x		   = _theCamera.x;
+			temporaryCamera.y		   = _theCamera.y;
+			temporaryCamera.z		   = _theCamera.z;
 			
 			//	MOVE
 			var moveForwardAmount_num : Number = 20*Math.pow(aZoomAmount_num,1);
 			if (aZoomAmount_num > 1) {
-			temporaryCamera.moveForward(moveForwardAmount_num);
+				//temporaryCamera.(moveForwardAmount_num);
 			} else {
-			temporaryCamera.moveForward(-moveForwardAmount_num);
+				//temporaryCamera.moveForward(-moveForwardAmount_num);
 			}
 			
 			//DISTANCE TO MODEL
-			var distance : Number = Vector3D.distance(temporaryCamera.position, _theModel.position);
+			var distance : Number = Vector3D.distance(
+				new Vector3D (
+					temporaryCamera.x,
+					temporaryCamera.y,
+					temporaryCamera.z
+				),
+				new Vector3D (
+					_theModel.x,
+					_theModel.y,
+					_theModel.z
+				)
+			);
 			
 			if (distance > engineConfiguration.modelDistanceNear &&
-			distance < engineConfiguration.modelDistanceFar) {
-			//LEGAL DISTANCE - UPDATE THE CAMERA FOR REAL
-			_theCamera.position = temporaryCamera.position;
-			
+				distance < engineConfiguration.modelDistanceFar) {
+				//LEGAL DISTANCE - UPDATE THE CAMERA FOR REAL
+				_theCamera.x = temporaryCamera.x;
+				_theCamera.y = temporaryCamera.y;
+				_theCamera.z = temporaryCamera.z;
+				
 			}
-			*/
 		}
 		
 		
@@ -466,7 +490,6 @@ package
 			_loader.removeEventListener(IOErrorEvent.IO_ERROR, 	_onExternalModelLoadingError);
 			
 			// Model parsing
-			// Парсинг модели
 			var parser:ParserCollada = new ParserCollada();
 			parser.parse(XML((aEvent.target as URLLoader).data), "./assets_runtime/models/collada/", true);
 			trace(parser.objects);
@@ -474,10 +497,10 @@ package
 			mesh.x = 0;
 			_theExternallyLoadedChildOfTheModel.addChild(mesh);
 			
-			// Загрузка ресурсов
+			//  
 			uploadResources(mesh.getResources(false, Geometry));
 			
-			// Собираем текстуры и назначаем материалы
+			//  
 			var textures:Vector.<ExternalTextureResource> = new Vector.<ExternalTextureResource>();
 			for (var i:int = 0; i < mesh.numSurfaces; i++) {
 				var surface:Surface = mesh.getSurface(i);
@@ -492,7 +515,6 @@ package
 			}
 			
 			// Loading of textures
-			// Загрузка текстур
 			var texturesLoader:TexturesLoader = new TexturesLoader(_stage3D.context3D);
 			texturesLoader.loadResources(textures);
 			
@@ -505,12 +527,15 @@ package
 			_theModel.addChild(_theExternallyLoadedChildOfTheModel);
 			
 			//POSITION THE MODEL (JUST ONE TIME WITHIN LOADER, THEN DON'T 'TOUCH' IT)
-			_theExternallyLoadedChildOfTheModel.scaleX 	= _currentModelLoadingData.originalScale.x;
-			_theExternallyLoadedChildOfTheModel.scaleY 	= _currentModelLoadingData.originalScale.y;
-			_theExternallyLoadedChildOfTheModel.scaleZ 	= _currentModelLoadingData.originalScale.z;
-			_theExternallyLoadedChildOfTheModel.x 		= _currentModelLoadingData.originalPosition.x;
-			_theExternallyLoadedChildOfTheModel.y 		= _currentModelLoadingData.originalPosition.y;
-			_theExternallyLoadedChildOfTheModel.z 		= _currentModelLoadingData.originalPosition.z;
+			_theExternallyLoadedChildOfTheModel.scaleX 		= _currentModelLoadingData.originalScale.x;
+			_theExternallyLoadedChildOfTheModel.scaleY 		= _currentModelLoadingData.originalScale.y;
+			_theExternallyLoadedChildOfTheModel.scaleZ 		= _currentModelLoadingData.originalScale.z;
+			_theExternallyLoadedChildOfTheModel.x 			= _currentModelLoadingData.originalPosition.x;
+			_theExternallyLoadedChildOfTheModel.y 			= _currentModelLoadingData.originalPosition.y;
+			_theExternallyLoadedChildOfTheModel.z 			= _currentModelLoadingData.originalPosition.z;
+			_theExternallyLoadedChildOfTheModel.rotationX 	= (_currentModelLoadingData.originalRotation.x) * AbstractEngine._DEGREES_TO_RADIANS;
+			_theExternallyLoadedChildOfTheModel.rotationY 	= (_currentModelLoadingData.originalRotation.y) * AbstractEngine._DEGREES_TO_RADIANS;
+			_theExternallyLoadedChildOfTheModel.rotationZ 	= (_currentModelLoadingData.originalRotation.z) * AbstractEngine._DEGREES_TO_RADIANS;
 			
 		}
 		
@@ -559,79 +584,41 @@ package
 			_stage3D.removeEventListener(Event.CONTEXT3D_CREATE, _onContextCreate);
 			
 			
-			/*
 			//****************
 			// _doSetupWorld PART 2 OF 2
 			//****************
-			_theCamera 		= new Camera3D (.1, 100000000000000); //engineConfiguration.cameraNear, engineConfiguration.cameraFar);
+			_theCamera 		= new Camera3D (engineConfiguration.cameraNear, engineConfiguration.cameraFar);
 			_theCamera.x 	= engineConfiguration.cameraPosition.x;
 			_theCamera.y 	= engineConfiguration.cameraPosition.y;
 			_theCamera.z 	= engineConfiguration.cameraPosition.z;
 			_theCamera.fov 	= engineConfiguration.cameraFieldOfView;
+			
+			//SETUP ROOT OBJECT OF SCENE
 			_scene 			= new Object3D ();
-			_scene.addChild(_theCamera);
+			_scene.addChild	(_theCamera);
 			
-			
-			_view3D 	= _theCamera.view = new View (engineConfiguration.viewWidth, engineConfiguration.viewHeight, false, engineConfiguration.cameraBackgroundColor, 1, engineConfiguration.antiAlias);
+			//SETUP THE CAMERA
+			_view3D 		= _theCamera.view = new View (engineConfiguration.viewWidth, engineConfiguration.viewHeight, false, engineConfiguration.cameraBackgroundColor, engineConfiguration.cameraBackgroundAlpha, engineConfiguration.antiAlias);
 			setViewPosition (0,0);
-			setViewSize (engineConfiguration.viewWidth, engineConfiguration.viewHeight);
-			addChild(_view3D);
+			setViewSize 	(engineConfiguration.viewWidth, engineConfiguration.viewHeight);
+			addChild		(_view3D);
+			
 			//
-			
-			var ambient : AmbientLight = new AmbientLight(0xc0d0f0); 
-			_scene.addChild(ambient); 
-			//
-			var dLight : DirectionalLight = new DirectionalLight(0xFFFFFF); 
-			dLight.intensity = 1.5; 
-			dLight.y = -500; 
-			dLight.z = 500; 
-			dLight.lookAt(0, 0, 0);
-			_scene.addChild(dLight);
-			
-
-			//
-			var b2 : Box = new Box(100,100,100,1,1,1,false,null); 
-			b2.setMaterialToAllSurfaces(new FillMaterial(0x804080)); 
-			_scene.addChild(b2);
-			
-			
 			//SETUP THE REST
 			_doSetupBackground   	();
 			_doSetupInput 			();
 			_doFirstModelSetup		();	
-			_doConfirmSetupComplete	();	
+			_doDispatchSetupComplete	();	
 			
+			//SETUP A CONTROLLER ONLY TO 'LOOK' AT A VECTOR, THEN DISABLE IT
+			var _simpleObjectController : SimpleObjectController = new SimpleObjectController(stage, _theCamera, 200); 
+			_simpleObjectController.lookAt(_currentModelLoadingData.originalPosition);
+			_simpleObjectController.disable();
 			
-
-
-			_simpleObjectController = new SimpleObjectController(stage, _theCamera, 200); 
-*/
-			
-			c1 = new Camera3D(0.01, 10000000000);
-			c1.x = -50;
-			c1.y = -300;
-			c1.z = 100;
-			controller1 = new SimpleObjectController(stage, c1, 200);
-			controller1.lookAtXYZ(0,0,0);
-			c1.view = new View(800, 600, false, 0xFFFFFF, 0, 4);
-			addChild(c1.view);
-			
-			var r1 : Object3D = new Object3D();
-			r1.addChild(c1);
-			
-			_theModel = new Object3D(); 
-			r1.addChild(_theModel);
-			
-			_thePrimitiveChildOfTheModel = new Box(100,100,100,1,1,1,false,null); 
-			_thePrimitiveChildOfTheModel.setMaterialToAllSurfaces(new FillMaterial(0x804080)); 
-			//_scene.addChild(_thePrimitiveChildOfTheModel);
-			_theModel.addChild(_thePrimitiveChildOfTheModel);
-			
-			for each (var resource:Resource in r1.getResources(true)) {
+			//ALTERNATIVA3D - REQUIRES TO 'UPLOAD' THINGS TO STAGE3D MANUALLY - HERE IT IS...
+			for each (var resource:Resource in _scene.getResources(true)) {
 				resource.upload(_stage3D.context3D);
-				trace ("up: " + resource);
 			}
-			
 		}
 		
 		

@@ -28,9 +28,8 @@ package
 	// Imports
 	// --------------------------------------
 	
-	import away3d.errors.AbstractMethodError;
 	
-	import com.rmc.errors.SwitchStatementDefaultError;
+	import com.rmc.errors.AbstractMethodError;
 	import com.rmc.projects.stage3dfb.data.types.EngineConfiguration;
 	import com.rmc.projects.stage3dfb.data.types.ModelData;
 	
@@ -102,10 +101,15 @@ package
 			}
 			
 			//CAN CURRENT ENGINE RUN THAT MODEL?
+			trace ("\n");
+			trace ("Engine: " + _current_iEngine);
+			trace ("Considering Model: " + _getCurrentModelLoadingData().modelType + " - " + _getCurrentModelLoadingData().modelURL);
 			if (_current_iEngine.isCompatibleWithModelData (_getCurrentModelLoadingData())) {
+				trace ("	Accepting");
 				return _getCurrentModelLoadingData();
 			} else {
 				//not compatible? Call for the next one
+				trace ("	Rejected");
 				return _getNextModelLoadingData(aIsTraversingForward_boolean);
 			}
 			
@@ -156,12 +160,6 @@ package
 		// PUBLIC CONST
 		
 		// PRIVATE CONST
-		/**
-		 * Describe this member.
-		 * 
-		 */
-		//private static var _MODEL_SPIN_ROTATION_AMOUNT:Number;
-		
 		
 		// PRIVATE
 		
@@ -261,7 +259,19 @@ package
 				
 				//	EVENTS
 				if ((_current_iEngine as EventDispatcher).hasEventListener(EngineEvent.SETUP_COMPLETE) ) {
-					(_current_iEngine as EventDispatcher).removeEventListener(EngineEvent.SETUP_COMPLETE, _onEngineSetupComplete)
+					(_current_iEngine as EventDispatcher).removeEventListener(EngineEvent.SETUP_COMPLETE, 	_onEngineSetupComplete)
+				}
+				if ((_current_iEngine as EventDispatcher).hasEventListener(EngineEvent.MODEL_LOAD) ) {
+					(_current_iEngine as EventDispatcher).removeEventListener(EngineEvent.MODEL_LOAD, 		_onEngineModelLoad)
+				}
+				if ((_current_iEngine as EventDispatcher).hasEventListener(EngineEvent.MODEL_LOAD_PROGRESS) ) {
+					(_current_iEngine as EventDispatcher).removeEventListener(EngineEvent.MODEL_LOAD_PROGRESS, 	_onEngineModelLoadProgress);
+				}
+				if ((_current_iEngine as EventDispatcher).hasEventListener(EngineEvent.MODEL_LOADED) ) {
+					(_current_iEngine as EventDispatcher).removeEventListener(EngineEvent.MODEL_LOADED, 	_onEngineModelLoaded)
+				}
+				if ((_current_iEngine as EventDispatcher).hasEventListener(EngineEvent.MODEL_LOAD_ERROR) ) {
+					(_current_iEngine as EventDispatcher).removeEventListener(EngineEvent.MODEL_LOAD_ERROR, 	_onEngineModelLoadError)
 				}
 				
 				_current_iEngine.dispose();
@@ -277,7 +287,11 @@ package
 			addChild(_current_iEngine as DisplayObject);
 			
 			//	EVENTS
-			(_current_iEngine as EventDispatcher).addEventListener(EngineEvent.SETUP_COMPLETE, _onEngineSetupComplete)
+			this.addEventListener(EngineEvent.SETUP_COMPLETE, 			_onEngineSetupComplete)
+			this.addEventListener(EngineEvent.MODEL_LOAD, 				_onEngineModelLoad)
+			this.addEventListener(EngineEvent.MODEL_LOAD_PROGRESS, 		_onEngineModelLoadProgress)
+			this.addEventListener(EngineEvent.MODEL_LOAD_ERROR, 		_onEngineModelLoadError)
+			this.addEventListener(EngineEvent.MODEL_LOADED, 			_onEngineModelLoaded)
 			
 			//CALL SETUP, upon setup complete we call load-model on the engine
 			_current_iEngine.doSetup();
@@ -326,7 +340,9 @@ package
 		 */
 		private function _doNavigateMenuUp (): void
 		{
-			_current_iEngine.doLoadModel(_getNextModelLoadingData(true));
+			if (!_current_iEngine.isCurrentlyLoadingANewModel) {
+				_current_iEngine.doLoadModel(_getNextModelLoadingData(true));
+			}
 		}
 		
 		
@@ -338,7 +354,9 @@ package
 		 */
 		private function _doNavigateMenuDown():void
 		{
-			_current_iEngine.doLoadModel(_getNextModelLoadingData(false));
+			if (!_current_iEngine.isCurrentlyLoadingANewModel) {
+				_current_iEngine.doLoadModel(_getNextModelLoadingData(false));
+			}
 		}
 		
 		
@@ -390,6 +408,62 @@ package
 			//	DECREMENT THE MODEL INDEX SO WE ALWAYS SHOW THE SAME MODEL WHEN WE CHANGE ENGINES
 			_currentModelIndex_int--;
 			_current_iEngine.doLoadModel(_getNextModelLoadingData(true));
+		}	
+		
+		/**
+		 * Handles the Event: <code>EngineEvent.MODEL_LOAD</code>.
+		 * 
+		 * @param aEvent <code>EngineEvent</code> The incoming aEvent payload.
+		 *  
+		 * @return void
+		 * 
+		 */
+		private function _onEngineModelLoad (aEvent : EngineEvent):void
+		{
+			UIManager.addPrompt(this, "Loading...", "Loading %...")
+			
+		}	
+		
+		/**
+		 * Handles the Event: <code>EngineEvent.MODEL_LOAD_PROGRESS</code>.
+		 * 
+		 * @param aEvent <code>EngineEvent</code> The incoming aEvent payload.
+		 *  
+		 * @return void
+		 * 
+		 */
+		private function _onEngineModelLoadProgress (aEvent : EngineEvent):void
+		{
+			UIManager.updatePromptBodyText(aEvent.modelData.percentLoaded )
+		}	
+		
+		/**
+		 * Handles the Event: <code>EngineEvent.MODEL_LOADED</code>.
+		 * 
+		 * @param aEvent <code>EngineEvent</code> The incoming aEvent payload.
+		 *  
+		 * @return void
+		 * 
+		 */
+		private function _onEngineModelLoaded (aEvent : EngineEvent):void
+		{
+			UIManager.removePrompt();	
+			
+		}	
+		
+		/**
+		 * Handles the Event: <code>EngineEvent.MODEL_LOAD_ERROR</code>.
+		 * 
+		 * @param aEvent <code>EngineEvent</code> The incoming aEvent payload.
+		 *  
+		 * @return void
+		 * 
+		 */
+		private function _onEngineModelLoadError (aEvent : EngineEvent):void
+		{
+			trace ("_onEngineModelLoadError");
+			
+			
 		}	
 		
 		
@@ -553,3 +627,4 @@ package
 		}
 	}
 }
+

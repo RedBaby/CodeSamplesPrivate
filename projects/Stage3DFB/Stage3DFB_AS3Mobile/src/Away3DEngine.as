@@ -33,7 +33,6 @@ package
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
-	import away3d.errors.AbstractMethodError;
 	import away3d.events.LoaderEvent;
 	import away3d.loaders.Loader3D;
 	import away3d.loaders.parsers.Parsers;
@@ -43,7 +42,6 @@ package
 	
 	import com.rmc.data.types.ModelType;
 	import com.rmc.errors.SwitchStatementDefaultError;
-	import com.rmc.projects.stage3dfb.data.types.EngineConfiguration;
 	import com.rmc.projects.stage3dfb.data.types.ModelData;
 	
 	import flash.display.Bitmap;
@@ -82,7 +80,7 @@ package
 		 * Describe this member.
 		 * 
 		 */
-		private var _loader3D : Loader3D;
+		private var _theExternallyLoadedChildOfTheModel : Loader3D;
 		
 		/**
 		 * Describe this member.
@@ -96,7 +94,7 @@ package
 		 */
 		private var _theModel : ObjectContainer3D
 		
-		private var _thePrimitive:ObjectContainer3D;
+		private var _thePrimitiveChildOfTheModel:ObjectContainer3D;
 		private var _statsWidget:AwayStats;
 		
 		// --------------------------------------
@@ -181,32 +179,38 @@ package
 				_currentModelLoadingData = aModelLoadingData;
 				
 				//REMOVE OLD LOADER
-				if (_theModel.contains(_loader3D)) {
-					_theModel.removeChild(_loader3D);
-					_loader3D.dispose();
+				if (_theModel.contains(_theExternallyLoadedChildOfTheModel)) {
+					_theModel.removeChild(_theExternallyLoadedChildOfTheModel);
+					_theExternallyLoadedChildOfTheModel.dispose();
 				}
 				//REMOVE OLD PRIMITIVE
-				if (_theModel.contains(_thePrimitive)) {
-					_theModel.removeChild(_thePrimitive);
-					_thePrimitive.dispose();
+				if (_theModel.contains(_thePrimitiveChildOfTheModel)) {
+					_theModel.removeChild(_thePrimitiveChildOfTheModel);
+					_thePrimitiveChildOfTheModel.dispose();
 				}
 				
 				//CREATE NEW
 				switch (_currentModelLoadingData.modelType) {
 					case ModelType.EXTERNAL_MODEL:
 						_isCurrentlyLoadingANewModel_boolean = true; //SINCE WE ARE DOING ASYNC LOAD, FLAG THAT
-						_loader3D = new Loader3D();
-						_loader3D.addEventListener(LoaderEvent.RESOURCE_COMPLETE, _onExternalModelLoadingCompleted );
-						_loader3D.addEventListener(LoaderEvent.LOAD_ERROR, _onExternalModelLoadingError);
-						_loader3D.load( new URLRequest(_currentModelLoadingData.modelURL) );
+						_theExternallyLoadedChildOfTheModel = new Loader3D();
+						_theExternallyLoadedChildOfTheModel.addEventListener(LoaderEvent.RESOURCE_COMPLETE, _onExternalModelLoadingCompleted );
+						_theExternallyLoadedChildOfTheModel.addEventListener(LoaderEvent.LOAD_ERROR, _onExternalModelLoadingError);
+						_theExternallyLoadedChildOfTheModel.load( new URLRequest(_currentModelLoadingData.modelURL) );
 						break;
 					case ModelType.WIREFRAME_CUBE:
-						_thePrimitive = new WireframeCube(_currentModelLoadingData.originalScale.x,_currentModelLoadingData.originalScale.y,_currentModelLoadingData.originalScale.z,_currentModelLoadingData.originalColor, _currentModelLoadingData.originalLineThickness) ;
-						_theModel.addChild(_thePrimitive);
+						_thePrimitiveChildOfTheModel = new WireframeCube(_currentModelLoadingData.originalScale.x,_currentModelLoadingData.originalScale.y,_currentModelLoadingData.originalScale.z,_currentModelLoadingData.originalColor, _currentModelLoadingData.originalLineThickness) ;
+						_thePrimitiveChildOfTheModel.rotationX 	= _currentModelLoadingData.originalRotation.x;
+						_thePrimitiveChildOfTheModel.rotationY 	= _currentModelLoadingData.originalRotation.y;
+						_thePrimitiveChildOfTheModel.rotationZ 	= _currentModelLoadingData.originalRotation.z;
+						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						break;
 					case ModelType.WIREFRAME_SPHERE:
-						_thePrimitive = new WireframeSphere(_currentModelLoadingData.originalScale.x, 16, 12,_currentModelLoadingData.originalColor, _currentModelLoadingData.originalLineThickness) ;
-						_theModel.addChild(_thePrimitive);
+						_thePrimitiveChildOfTheModel = new WireframeSphere(_currentModelLoadingData.originalScale.x, 16, 12,_currentModelLoadingData.originalColor, _currentModelLoadingData.originalLineThickness) ;
+						_thePrimitiveChildOfTheModel.rotationX 	= _currentModelLoadingData.originalRotation.x;
+						_thePrimitiveChildOfTheModel.rotationY 	= _currentModelLoadingData.originalRotation.y;
+						_thePrimitiveChildOfTheModel.rotationZ 	= _currentModelLoadingData.originalRotation.z;
+						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						break;
 					default:
 						throw new SwitchStatementDefaultError();
@@ -417,15 +421,18 @@ package
 			var event : LoaderEvent = aEvent as LoaderEvent;
 			
 			_isCurrentlyLoadingANewModel_boolean = false;
-			_loader3D.removeEventListener(LoaderEvent.RESOURCE_COMPLETE, _onExternalModelLoadingCompleted );
-			_loader3D.removeEventListener(LoaderEvent.LOAD_ERROR, _onExternalModelLoadingError);
-			_theModel.addChild(_loader3D);
+			_theExternallyLoadedChildOfTheModel.removeEventListener(LoaderEvent.RESOURCE_COMPLETE, _onExternalModelLoadingCompleted );
+			_theExternallyLoadedChildOfTheModel.removeEventListener(LoaderEvent.LOAD_ERROR, _onExternalModelLoadingError);
+			_theModel.addChild(_theExternallyLoadedChildOfTheModel);
 			
 			//POSITION THE MODEL (JUST ONE TIME WITHIN LOADER, THEN DON'T 'TOUCH' IT)
-			_loader3D.scaleX = _currentModelLoadingData.originalScale.x;
-			_loader3D.scaleY = _currentModelLoadingData.originalScale.y;
-			_loader3D.scaleZ = _currentModelLoadingData.originalScale.z;
-			_loader3D.position = _currentModelLoadingData.originalPosition;
+			_theExternallyLoadedChildOfTheModel.scaleX 		= _currentModelLoadingData.originalScale.x;
+			_theExternallyLoadedChildOfTheModel.scaleY 		= _currentModelLoadingData.originalScale.y;
+			_theExternallyLoadedChildOfTheModel.scaleZ 		= _currentModelLoadingData.originalScale.z;
+			_theExternallyLoadedChildOfTheModel.position 		= _currentModelLoadingData.originalPosition;
+			_theExternallyLoadedChildOfTheModel.rotationX 	= _currentModelLoadingData.originalRotation.x;
+			_theExternallyLoadedChildOfTheModel.rotationY 	= _currentModelLoadingData.originalRotation.y;
+			_theExternallyLoadedChildOfTheModel.rotationZ 	= _currentModelLoadingData.originalRotation.z;
 
 		}
 		
@@ -449,9 +456,9 @@ package
 			var event : LoaderEvent = aEvent as LoaderEvent;
 			
 			trace('Could not find', event.url);
-			_loader3D.removeEventListener(LoaderEvent.RESOURCE_COMPLETE, _onExternalModelLoadingCompleted );
-			_loader3D.removeEventListener(LoaderEvent.LOAD_ERROR, 		_onExternalModelLoadingError);
-			_loader3D = null;
+			_theExternallyLoadedChildOfTheModel.removeEventListener(LoaderEvent.RESOURCE_COMPLETE, _onExternalModelLoadingCompleted );
+			_theExternallyLoadedChildOfTheModel.removeEventListener(LoaderEvent.LOAD_ERROR, 		_onExternalModelLoadingError);
+			_theExternallyLoadedChildOfTheModel = null;
 		}
 		
 		

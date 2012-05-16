@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2012 Chattrspace Inc.                    
+ * Copyright (C) 2005-2012 by Rivello Multimedia Consulting (RMC).               
  * code [at] RivelloMultimediaConsulting [dot] com                                                  
  *                                                                      
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -110,6 +110,13 @@ package com.rmc.projects.stage3dfb.data.types
 		/**
 		 *  
 		 */		
+		private var _originalRotation_vector3d : Vector3D;
+		public function get originalRotation () 					: Vector3D 	{ return _originalRotation_vector3d; }
+		public function set originalRotation (aValue : Vector3D) 	: void 		{ _originalRotation_vector3d = aValue; }
+		
+		/**
+		 *  
+		 */		
 		private var _originalColor_uint : uint;
 		public function get originalColor () 					: uint 	{ return _originalColor_uint; }
 		public function set originalColor (aValue : uint) 	: void 		{ _originalColor_uint = aValue; }
@@ -117,9 +124,23 @@ package com.rmc.projects.stage3dfb.data.types
 		/**
 		 *  
 		 */		
+		private var _originalAlpha_num : Number;
+		public function get originalAlpha () 					: Number 	{ return _originalAlpha_num; }
+		public function set originalAlpha (aValue : Number) 	: void 		{ _originalAlpha_num = aValue; }
+		
+		/**
+		 *  
+		 */		
 		private var _originalLineThickness_num : Number;
 		public function get originalLineThickness () 					: Number 	{ return _originalLineThickness_num; }
 		public function set originalLineThickness (aValue : Number) 	: void 		{ _originalLineThickness_num = aValue; }
+		
+		/**
+		 *  
+		 */		
+		private var _percentLoaded_num : Number;
+		public function get percentLoaded () 					: Number 	{ return _percentLoaded_num; }
+		public function set percentLoaded (aValue : Number) 	: void 		{ _percentLoaded_num = aValue; }
 		
 		// PUBLIC CONST
 		
@@ -133,11 +154,15 @@ package com.rmc.projects.stage3dfb.data.types
 		 * 
 		 */
 		public function ModelData(aModelType : ModelType, 
-										 aIsAway3DCompatible_boolean : Boolean,
-										 aIsFlare3DCompatible_boolean : Boolean,
-										 aIsAlternativa3DCompatible_boolean : Boolean,
-										 aModelURL_str : String = "", 
-										 aOriginalPosition_vector3d : Vector3D = null, aOriginalScale_vector3d : Vector3D = null)
+								  aIsAway3DCompatible_boolean 			: Boolean,
+								  aIsFlare3DCompatible_boolean 			: Boolean,
+								  aIsAlternativa3DCompatible_boolean 	: Boolean,
+								  aModelURL_str 					 	: String = "", 
+								  aOriginalPosition_vector3d 			: Vector3D = null, 
+								  aOriginalScale_vector3d 				: Vector3D = null,
+								  aOriginalRotation_vector3d 			: Vector3D = null
+								  
+		)
 		{
 			// SUPER
 			super();
@@ -151,8 +176,8 @@ package com.rmc.projects.stage3dfb.data.types
 			_isAway3DCompatible_boolean 		= aIsAway3DCompatible_boolean,
 			_isFlare3DCompatible_boolean 		= aIsFlare3DCompatible_boolean,
 			_isAlternativa3DCompatible_boolean 	= aIsAlternativa3DCompatible_boolean,
-			
-			
+				
+				
 			//ONLY SOME MODELS USE THESE ADDITIONAL PARAMETERS
 			_modelURL_str = aModelURL_str;
 			
@@ -168,8 +193,18 @@ package com.rmc.projects.stage3dfb.data.types
 				_originalScale_vector3d = aOriginalScale_vector3d;
 			}
 			
-			_originalColor_uint 		= 0xFFFFFF;
+			if (aOriginalRotation_vector3d == null) {
+				_originalRotation_vector3d = new Vector3D ( 0, 0, 0);
+			} else {
+				_originalRotation_vector3d = aOriginalRotation_vector3d;
+			}
+			
+			_originalColor_uint 		= 0xefefef; //grey
 			_originalLineThickness_num 	= 2;
+			_originalAlpha_num			= 1;
+			
+			//UPDATED IF/WHEN IT IS LOADED
+			_percentLoaded_num = 0;
 			
 			// METHODS
 			
