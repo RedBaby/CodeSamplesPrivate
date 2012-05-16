@@ -408,6 +408,11 @@ package
 			//	DECREMENT THE MODEL INDEX SO WE ALWAYS SHOW THE SAME MODEL WHEN WE CHANGE ENGINES
 			_currentModelIndex_int--;
 			_current_iEngine.doLoadModel(_getNextModelLoadingData(true));
+			
+			//create dashboard
+			if (!UIManager.getDashboardContents()) {
+				UIManager.addDashboard(this, "Stats", "Loading...")
+			}
 		}	
 		
 		/**
@@ -495,7 +500,7 @@ package
 		 */
 		protected function _onResize (aEvent : *):void
 		{
-			throw new AbstractMethodError();
+			UIManager.resize();
 			
 		}	
 		

@@ -167,6 +167,9 @@ package
 		 */
 		override protected function _onResize(aEvent : *):void
 		{
+			//	SUPER
+			super._onResize(aEvent);
+			
 			//UPDATE CONFIGURATION (WILL AFFECT *NEXT* CREATED ENGINE)
 			_engineConfiguration.viewWidth				= stage.stageWidth;
 			_engineConfiguration.viewHeight				= stage.stageHeight;

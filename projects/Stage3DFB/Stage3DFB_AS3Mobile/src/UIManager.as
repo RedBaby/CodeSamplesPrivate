@@ -29,6 +29,7 @@ package
 	//  Imports
 	//--------------------------------------
 	
+	import com.bit101.components.HBox;
 	import com.bit101.components.ProgressBar;
 	import com.bit101.components.Text;
 	import com.bit101.components.VBox;
@@ -71,7 +72,7 @@ package
 		 */		
 		public function get stageHeight () 					: Number 	{ return uiParent.stage.stageHeight; }
 		
-		private static var _window:Window;
+		private static var _loadingPrompt_window:Window;
 		//PUBLIC CONST
 		
 		//PRIVATE STATIC
@@ -99,7 +100,13 @@ package
 		//  Constructor
 		//--------------------------------------
 		
-		private var _bodyText_text:Text;
+		private var _loadingPromptBodyText_text:Text;
+
+		private var _loadingPromptProgressBar:ProgressBar;
+
+		private var _dashboard_window:Window;
+
+		private var _dashboardContents_hbox:HBox;
 		
 		
 		/**
@@ -140,9 +147,23 @@ package
 		}
 		
 		
+		
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//
+		//
+		//
+		//		NOTE: PROMPT STUFF
+		//
+		//
+		//
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/**
 		 * ADD UI: 
 		 * 
+		 * @param aUIParent_displayobjectcontainer : DisplayObjectContainer
 		 * @param aTitle_str : String
 		 * @param aBodyText_str: String
 		 * 
@@ -155,25 +176,31 @@ package
 			uiParent = aUIParent_displayobjectcontainer;
 			
 			//
-			_window = new Window (uiParent,0,0,aParentaTitle_str);
+			_loadingPrompt_window = new Window (uiParent,0,0,aParentaTitle_str);
+			_loadingPrompt_window.draggable 		= false;
+			_loadingPrompt_window.hasMinimizeButton = false;
+			_loadingPrompt_window.minimized 		= false;
 			//
-			_window.width 	= stageWidth*.50;
-			_window.height 	= _window.width*.50;
-			_window.x 		= (stageWidth)/2 - _window.width/2
-			_window.y 		= (stageHeight)/2 - _window.height/2
+			_loadingPrompt_window.width 	= stageWidth*.50;
+			_loadingPrompt_window.height 	= _loadingPrompt_window.width*.50;
+			_loadingPrompt_window.x 		= (stageWidth)/2 - _loadingPrompt_window.width/2
+			_loadingPrompt_window.y 		= (stageHeight)/2 - _loadingPrompt_window.height/2
+				//
 			var vBox : VBox = new VBox (uiParent, 0,0);
-			vBox.width 		= _window.width;
-			vBox.height 	= _window.height;
+			vBox.width 		= _loadingPrompt_window.width;
+			vBox.height 	= _loadingPrompt_window.height;
 			vBox.alignment 	= VBox.CENTER;
-			_bodyText_text = new Text (uiParent,0,0,aBodyText_str );
-			_bodyText_text.width 		= _window.width;
-			var text2 : ProgressBar = new ProgressBar (uiParent);
-			text2.width 		= _window.width;
-			vBox.addChild(_bodyText_text);
-			vBox.addChild(text2);
-			_window.addChild(vBox);
 			//
-			uiParent.addChild(_window);
+			_loadingPromptBodyText_text = new Text (uiParent,0,0,aBodyText_str );
+			_loadingPromptBodyText_text.width 		= _loadingPrompt_window.width;
+			_loadingPromptProgressBar = new ProgressBar (uiParent);
+			_loadingPromptProgressBar.width 		= _loadingPrompt_window.width;
+			//
+			vBox.addChild(_loadingPromptBodyText_text);
+			vBox.addChild(_loadingPromptProgressBar);
+			_loadingPrompt_window.addChild(vBox);
+			//
+			uiParent.addChild(_loadingPrompt_window);
 			
 			//FADE IN SLOWLY
 			_doFadeIn(0.5);
@@ -192,8 +219,10 @@ package
 		 */
 		public function updatePromptBodyText(aPercentComplete_num : Number):void
 		{
-			if (_bodyText_text) {
-				_bodyText_text.text = "Loading " + aPercentComplete_num + "%...";
+			if (_loadingPromptBodyText_text) {
+				_loadingPromptBodyText_text.text = "Loading " + aPercentComplete_num + "%...";
+				_loadingPromptProgressBar.maximum = 100;
+				_loadingPromptProgressBar.value = aPercentComplete_num*100;
 			}
 		}
 		public static function updatePromptBodyText(aPercentComplete_num: Number):void { return UIManager.getInstance().updatePromptBodyText(aPercentComplete_num);}
@@ -207,7 +236,7 @@ package
 		*/
 		public function removePrompt():void
 		{
-			if (uiParent && _window && uiParent.getChildByName(_window.name)) {
+			if (uiParent && _loadingPrompt_window && uiParent.getChildByName(_loadingPrompt_window.name)) {
 				//FADE OUT SLOWLY
 				_doFadeOut(0.5);
 				
@@ -226,15 +255,19 @@ package
 		{
 			if (_fadeIn_tweenmax == null && aDelayInSeconds_num > 0) {
 				//
-				_window.alpha 	= 0;
+				_loadingPrompt_window.alpha 	= 0;
+				_loadingPrompt_window.draw();
 				//
-				var tweenMaxVars : TweenMaxVars = new TweenMaxVars ();
-				tweenMaxVars.prop("alpha", 1);
-				tweenMaxVars.delay(1);
+				var tweenMaxVars : TweenMaxVars = new TweenMaxVars ()
+				tweenMaxVars.autoAlpha(0)
+				tweenMaxVars.prop("alpha",1);
+				tweenMaxVars.immediateRender(true);
+				tweenMaxVars.delay(0);
 				//
-				trace ("start in" + _window.alpha + " to " + 1);
-				_fadeIn_tweenmax = new TweenMax(_window, aDelayInSeconds_num, tweenMaxVars);
+				trace ("start in" + _loadingPrompt_window.alpha + " to " + 1);
+				_fadeIn_tweenmax = new TweenMax(_loadingPrompt_window, aDelayInSeconds_num, tweenMaxVars);
 				_fadeIn_tweenmax.addEventListener(TweenEvent.COMPLETE, _onFadeInCompleted,false, 0, true);
+				_fadeIn_tweenmax.play();
 				//
 			} else {
 				trace ("start FAILED");
@@ -245,9 +278,9 @@ package
 		protected function _onFadeInCompleted(event:Event = null):void
 		{
 			trace ("start finish");
-			if (_window) {
+			if (_loadingPrompt_window) {
 				//
-				_window.alpha 	= 1;
+				_loadingPrompt_window.alpha 	= 1;
 				//
 				if (_fadeOut_tweenmax && _fadeOut_tweenmax.hasEventListener(TweenEvent.COMPLETE)) {
 					_fadeOut_tweenmax.removeEventListener(TweenEvent.COMPLETE, _onFadeOutCompleted);
@@ -267,13 +300,13 @@ package
 		{
 			if (_fadeOut_tweenmax == null && aDelayInSeconds_num > 0) {
 				//
-				_window.alpha 	= 1;
+				_loadingPrompt_window.alpha 	= 1;
 				//
 				var tweenMaxVars : TweenMaxVars = new TweenMaxVars ();
 				tweenMaxVars.prop("alpha", 0);
 				tweenMaxVars.delay(1);
 				//
-				_fadeOut_tweenmax = new TweenMax(_window, aDelayInSeconds_num, tweenMaxVars);
+				_fadeOut_tweenmax = new TweenMax(_loadingPrompt_window, aDelayInSeconds_num, tweenMaxVars);
 				_fadeOut_tweenmax.addEventListener(TweenEvent.COMPLETE, _onFadeOutCompleted, false, 0, true);
 			} else {
 				
@@ -283,13 +316,13 @@ package
 		
 		protected function _onFadeOutCompleted(event:Event = null):void
 		{
-			if (_window) {
+			if (_loadingPrompt_window) {
 				//
-				_window.alpha 	= 0;
+				_loadingPrompt_window.alpha 	= 0;
 				//
-				uiParent.removeChild(_window);
+				uiParent.removeChild(_loadingPrompt_window);
 				//
-				_window				= null;
+				_loadingPrompt_window				= null;
 				if (_fadeOut_tweenmax && _fadeOut_tweenmax.hasEventListener(TweenEvent.COMPLETE)) {
 					_fadeOut_tweenmax.removeEventListener(TweenEvent.COMPLETE, _onFadeOutCompleted);
 				}
@@ -298,6 +331,100 @@ package
 			
 		}
 		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//
+		//
+		//
+		//		NOTE: DASHBOARD STUFF
+		//
+		//
+		//
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/**
+		 * ADD UI: 
+		 * 
+		 * @param aUIParent_displayobjectcontainer : DisplayObjectContainer
+		 * @param aTitle_str : String
+		 * @param aBodyText_str: String
+		 * 
+		 * @return void
+		 *
+		 */
+		public function addDashboard(aUIParent_displayobjectcontainer : DisplayObjectContainer, aParentaTitle_str : String, aBodyText_str: String):void
+		{
+			//
+			uiParent = aUIParent_displayobjectcontainer;
+			
+			//
+			_dashboard_window = new Window (uiParent,0,0,aParentaTitle_str);
+			_dashboard_window.draggable 		= false;
+			_dashboard_window.hasMinimizeButton = true;
+			_dashboard_window.minimized 		= false;
+			//
+			resize();
+			_dashboard_window.x 		= 0;
+			_dashboard_window.y 		= 0;
+			//
+			var hBox : HBox = new HBox (uiParent, 0,0);
+			hBox.width 		= _dashboard_window.width;
+			hBox.height 	= _dashboard_window.height;
+			hBox.alignment 	= VBox.CENTER;
+			//
+			_dashboardContents_hbox = new HBox (uiParent, 0,0);
+			_dashboardContents_hbox.width 		= 200;
+			_dashboardContents_hbox.height 		= 200;
+			//
+			var _dashboarBodyText_text : Text= new Text (uiParent,0,0,aBodyText_str );
+			_dashboarBodyText_text.width 		= _dashboard_window.width;
+			//PUT AN EMPTY BOX TO THE LEFT (FOR STATS), AND TEXT TO THE RIGHT
+			hBox.addChild(_dashboardContents_hbox);
+			hBox.addChild(_dashboarBodyText_text);
+			_dashboard_window.addChild(hBox);
+			//
+			uiParent.addChild(_dashboard_window);
+			
+			
+		}
+		public static function addDashboard(aUIParent_displayobjectcontainer : DisplayObjectContainer, aTitle_str : String, aBodyText_str: String):void { return UIManager.getInstance().addDashboard(aUIParent_displayobjectcontainer, aTitle_str, aBodyText_str);}
+		
+		
+		
+		
+		
+		/**
+		 * ADD UI: 
+		 * 
+		 * @return void
+		 *
+		 */
+		public function resize():void
+		{
+			if (_dashboard_window) {
+				_dashboard_window.width = stageWidth;
+				_dashboard_window.height = 100;
+			}
+			
+			
+		}
+		public static function resize():void { return UIManager.getInstance().resize();}
+		
+		
+		
+		
+		/**
+		 * ADD UI: 
+		 * 
+		 * @return HBox
+		 *
+		 */
+		public function getDashboarContents():HBox
+		{
+			return _dashboardContents_hbox
+			
+		}
+		public static function getDashboardContents():HBox { return UIManager.getInstance().getDashboarContents();}
 		
 		
 	}
