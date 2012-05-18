@@ -41,10 +41,7 @@ package
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
-	
-	import mx.core.FlexGlobals;
-	
-	import org.osmf.metadata.TimelineMarker;
+	import flash.events.KeyboardEvent;
 	
 	public class UIManager
 	{
@@ -59,8 +56,21 @@ package
 		 *  
 		 */		
 		private var _uiParent_displayObjectContainer : DisplayObjectContainer;
-		public function get uiParent () 				: DisplayObjectContainer 	{ return _uiParent_displayObjectContainer; }
+		public function get uiParent () 				: DisplayObjectContainer 	{  
+			if (_uiParent_displayObjectContainer && !_isInitialized_boolean) {
+				_isInitialized_boolean = true;
+				
+				//DO SOME 1-TIME INITILIZATION THAT DEPENDS ON _uiParent
+				_uiParent_displayObjectContainer.stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+			}
+			return _uiParent_displayObjectContainer;
+		}
 		public function set uiParent (aValue : DisplayObjectContainer) 	: void 		{ _uiParent_displayObjectContainer = aValue; }
+		
+		/**
+		 *  
+		 */		
+		private var _isInitialized_boolean : Boolean = false;
 		
 		/**
 		 *  
@@ -72,7 +82,12 @@ package
 		 */		
 		public function get stageHeight () 					: Number 	{ return uiParent.stage.stageHeight; }
 		
-		private static var _loadingPrompt_window:Window;
+		
+		/**
+		 *  
+		 */		
+		private static var _promptWindow:PromptWindow;
+		
 		//PUBLIC CONST
 		
 		//PRIVATE STATIC
@@ -95,18 +110,15 @@ package
 		 */
 		private var _fadeIn_tweenmax:TweenMax;
 		
+		/**
+		 * Describe this member.
+		 * 
+		 */
+		private var _dashboardWindow:DashboardWindow;
 		
 		//--------------------------------------
 		//  Constructor
 		//--------------------------------------
-		
-		private var _loadingPromptBodyText_text:Text;
-
-		private var _loadingPromptProgressBar:ProgressBar;
-
-		private var _dashboard_window:Window;
-
-		private var _dashboardContents_hbox:HBox;
 		
 		
 		/**
@@ -123,6 +135,7 @@ package
 			} else {
 				
 				//ONE TIME CREATION STUFF
+				
 				
 			}
 		}
@@ -176,31 +189,8 @@ package
 			uiParent = aUIParent_displayobjectcontainer;
 			
 			//
-			_loadingPrompt_window = new Window (uiParent,0,0,aParentaTitle_str);
-			_loadingPrompt_window.draggable 		= false;
-			_loadingPrompt_window.hasMinimizeButton = false;
-			_loadingPrompt_window.minimized 		= false;
-			//
-			_loadingPrompt_window.width 	= stageWidth*.50;
-			_loadingPrompt_window.height 	= _loadingPrompt_window.width*.50;
-			_loadingPrompt_window.x 		= (stageWidth)/2 - _loadingPrompt_window.width/2
-			_loadingPrompt_window.y 		= (stageHeight)/2 - _loadingPrompt_window.height/2
-				//
-			var vBox : VBox = new VBox (uiParent, 0,0);
-			vBox.width 		= _loadingPrompt_window.width;
-			vBox.height 	= _loadingPrompt_window.height;
-			vBox.alignment 	= VBox.CENTER;
-			//
-			_loadingPromptBodyText_text = new Text (uiParent,0,0,aBodyText_str );
-			_loadingPromptBodyText_text.width 		= _loadingPrompt_window.width;
-			_loadingPromptProgressBar = new ProgressBar (uiParent);
-			_loadingPromptProgressBar.width 		= _loadingPrompt_window.width;
-			//
-			vBox.addChild(_loadingPromptBodyText_text);
-			vBox.addChild(_loadingPromptProgressBar);
-			_loadingPrompt_window.addChild(vBox);
-			//
-			uiParent.addChild(_loadingPrompt_window);
+			_promptWindow 			= new PromptWindow (aUIParent_displayobjectcontainer, aParentaTitle_str, aBodyText_str);
+			resize();
 			
 			//FADE IN SLOWLY
 			_doFadeIn(0.5);
@@ -219,10 +209,10 @@ package
 		 */
 		public function updatePromptBodyText(aPercentComplete_num : Number):void
 		{
-			if (_loadingPromptBodyText_text) {
-				_loadingPromptBodyText_text.text = "Loading " + aPercentComplete_num + "%...";
-				_loadingPromptProgressBar.maximum = 100;
-				_loadingPromptProgressBar.value = aPercentComplete_num*100;
+			if (_promptWindow.bodyText) {
+				_promptWindow.bodyText = "Loading " + aPercentComplete_num + "%...";
+				_promptWindow.progressBar.maximum = 100;
+				_promptWindow.progressBar.value = aPercentComplete_num*100;
 			}
 		}
 		public static function updatePromptBodyText(aPercentComplete_num: Number):void { return UIManager.getInstance().updatePromptBodyText(aPercentComplete_num);}
@@ -236,7 +226,7 @@ package
 		*/
 		public function removePrompt():void
 		{
-			if (uiParent && _loadingPrompt_window && uiParent.getChildByName(_loadingPrompt_window.name)) {
+			if (uiParent && _promptWindow && uiParent.getChildByName(_promptWindow.name)) {
 				//FADE OUT SLOWLY
 				_doFadeOut(0.5);
 				
@@ -255,32 +245,29 @@ package
 		{
 			if (_fadeIn_tweenmax == null && aDelayInSeconds_num > 0) {
 				//
-				_loadingPrompt_window.alpha 	= 0;
-				_loadingPrompt_window.draw();
+				_promptWindow.alpha 	= 0;
+				_promptWindow.visible	= false;
+				_promptWindow.draw();
 				//
 				var tweenMaxVars : TweenMaxVars = new TweenMaxVars ()
-				tweenMaxVars.autoAlpha(0)
-				tweenMaxVars.prop("alpha",1);
+				tweenMaxVars.prop("autoAlpha",1);
 				tweenMaxVars.immediateRender(true);
 				tweenMaxVars.delay(0);
 				//
-				trace ("start in" + _loadingPrompt_window.alpha + " to " + 1);
-				_fadeIn_tweenmax = new TweenMax(_loadingPrompt_window, aDelayInSeconds_num, tweenMaxVars);
+				_fadeIn_tweenmax = new TweenMax(_promptWindow, aDelayInSeconds_num, tweenMaxVars);
 				_fadeIn_tweenmax.addEventListener(TweenEvent.COMPLETE, _onFadeInCompleted,false, 0, true);
 				_fadeIn_tweenmax.play();
 				//
 			} else {
-				trace ("start FAILED");
 				_onFadeInCompleted();
 			}
 		}
 		
 		protected function _onFadeInCompleted(event:Event = null):void
 		{
-			trace ("start finish");
-			if (_loadingPrompt_window) {
+			if (_promptWindow) {
 				//
-				_loadingPrompt_window.alpha 	= 1;
+				_promptWindow.alpha 	= 1;
 				//
 				if (_fadeOut_tweenmax && _fadeOut_tweenmax.hasEventListener(TweenEvent.COMPLETE)) {
 					_fadeOut_tweenmax.removeEventListener(TweenEvent.COMPLETE, _onFadeOutCompleted);
@@ -300,13 +287,15 @@ package
 		{
 			if (_fadeOut_tweenmax == null && aDelayInSeconds_num > 0) {
 				//
-				_loadingPrompt_window.alpha 	= 1;
+				_promptWindow.alpha 	= 1;
+				_promptWindow.visible 	= true;
 				//
 				var tweenMaxVars : TweenMaxVars = new TweenMaxVars ();
-				tweenMaxVars.prop("alpha", 0);
+				tweenMaxVars.prop("autoAlpha", 0);
+				tweenMaxVars.immediateRender(true);
 				tweenMaxVars.delay(1);
 				//
-				_fadeOut_tweenmax = new TweenMax(_loadingPrompt_window, aDelayInSeconds_num, tweenMaxVars);
+				_fadeOut_tweenmax = new TweenMax(_promptWindow, aDelayInSeconds_num, tweenMaxVars);
 				_fadeOut_tweenmax.addEventListener(TweenEvent.COMPLETE, _onFadeOutCompleted, false, 0, true);
 			} else {
 				
@@ -316,13 +305,14 @@ package
 		
 		protected function _onFadeOutCompleted(event:Event = null):void
 		{
-			if (_loadingPrompt_window) {
+			if (_promptWindow) {
 				//
-				_loadingPrompt_window.alpha 	= 0;
+				_promptWindow.alpha 	= 0;
+				_promptWindow.visible   = false;
 				//
-				uiParent.removeChild(_loadingPrompt_window);
+				uiParent.removeChild(_promptWindow);
 				//
-				_loadingPrompt_window				= null;
+				_promptWindow				= null;
 				if (_fadeOut_tweenmax && _fadeOut_tweenmax.hasEventListener(TweenEvent.COMPLETE)) {
 					_fadeOut_tweenmax.removeEventListener(TweenEvent.COMPLETE, _onFadeOutCompleted);
 				}
@@ -358,32 +348,9 @@ package
 			uiParent = aUIParent_displayobjectcontainer;
 			
 			//
-			_dashboard_window = new Window (uiParent,0,0,aParentaTitle_str);
-			_dashboard_window.draggable 		= false;
-			_dashboard_window.hasMinimizeButton = true;
-			_dashboard_window.minimized 		= false;
+			_dashboardWindow = new DashboardWindow (uiParent,aParentaTitle_str, aBodyText_str);
 			//
-			resize();
-			_dashboard_window.x 		= 0;
-			_dashboard_window.y 		= 0;
-			//
-			var hBox : HBox = new HBox (uiParent, 0,0);
-			hBox.width 		= _dashboard_window.width;
-			hBox.height 	= _dashboard_window.height;
-			hBox.alignment 	= VBox.CENTER;
-			//
-			_dashboardContents_hbox = new HBox (uiParent, 0,0);
-			_dashboardContents_hbox.width 		= 200;
-			_dashboardContents_hbox.height 		= 200;
-			//
-			var _dashboarBodyText_text : Text= new Text (uiParent,0,0,aBodyText_str );
-			_dashboarBodyText_text.width 		= _dashboard_window.width;
-			//PUT AN EMPTY BOX TO THE LEFT (FOR STATS), AND TEXT TO THE RIGHT
-			hBox.addChild(_dashboardContents_hbox);
-			hBox.addChild(_dashboarBodyText_text);
-			_dashboard_window.addChild(hBox);
-			//
-			uiParent.addChild(_dashboard_window);
+			uiParent.addChild(_dashboardWindow);
 			
 			
 		}
@@ -401,11 +368,16 @@ package
 		 */
 		public function resize():void
 		{
-			if (_dashboard_window) {
-				_dashboard_window.width = stageWidth;
-				_dashboard_window.height = 100;
+			if (_promptWindow) {
+				_promptWindow.setSize	(stageWidth*.50, _promptWindow.width*.50);
+				_promptWindow.move		((stageWidth)/2 - _promptWindow.width/2, (stageHeight)/2 - _promptWindow.height/2);
+				
 			}
-			
+			if (_dashboardWindow) {
+				_dashboardWindow.setSize(stageWidth, 130);
+				_dashboardWindow.move(0,0);
+				
+			}
 			
 		}
 		public static function resize():void { return UIManager.getInstance().resize();}
@@ -419,13 +391,28 @@ package
 		 * @return HBox
 		 *
 		 */
-		public function getDashboarContents():HBox
+		public function getDashboardContents():HBox
 		{
-			return _dashboardContents_hbox
+			if (_dashboardWindow) {
+				return _dashboardWindow.contentsHBox;
+			} else {
+				return null; 
+			}
+		}
+		public static function getDashboardContents():HBox { return UIManager.getInstance().getDashboardContents();}
+		
+		
+		
+		protected function _onKeyDown(aEvent:KeyboardEvent):void
+		{
+			//TILDA ~/` KEY
+			if (aEvent.keyCode == 192) {
+				if (_dashboardWindow) {
+					_dashboardWindow.minimized = !_dashboardWindow.minimized;
+				}
+			}
 			
 		}
-		public static function getDashboardContents():HBox { return UIManager.getInstance().getDashboarContents();}
-		
 		
 	}
 }

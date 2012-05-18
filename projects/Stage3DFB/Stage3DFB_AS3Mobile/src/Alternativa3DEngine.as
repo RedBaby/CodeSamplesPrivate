@@ -49,9 +49,13 @@ package
 	import com.rmc.projects.stage3dfb.data.types.ModelData;
 	
 	import flash.display.Bitmap;
+	import flash.display.DisplayObject;
+	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.display.Stage3D;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
 	import flash.geom.Vector3D;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
@@ -125,7 +129,7 @@ package
 		 * Describe this member.
 		 * 
 		 */
-		private var _statsWidget:*;
+		private var _statsWidget: DisplayObject;
 		
 		/**
 		 * Describe this member.
@@ -137,6 +141,8 @@ package
 		// --------------------------------------
 		// Constructor
 		// --------------------------------------
+
+		private var _statsWidgetHolder_sprite:Sprite;
 		
 		/**
 		 * This is the constructor.
@@ -193,7 +199,7 @@ package
 		public function dispose () : void
 		{
 			//_statsWidget.unregisterView(_view3D);
-			removeChild(_statsWidget);
+			UIManager.getDashboardContents().removeChild(_statsWidgetHolder_sprite);
 			removeChild(_view3D);
 			//_view3D.dispose();
 		}
@@ -249,14 +255,15 @@ package
 						//	LOAD
 						_loader = new URLLoader();
 						_loader.dataFormat = URLLoaderDataFormat.TEXT;
-						_loader.addEventListener(Event.COMPLETE, 		_onExternalModelLoadingCompleted);
-						_loader.addEventListener(IOErrorEvent.IO_ERROR, _onExternalModelLoadingError);
+						_loader.addEventListener(Event.COMPLETE, 			_onExternalModelLoadingCompleted);
+						_loader.addEventListener(ProgressEvent.PROGRESS, 	_onExternalModelLoadingProgress);
+						_loader.addEventListener(IOErrorEvent.IO_ERROR, 	_onExternalModelLoadingError);
 						_loader.load(new URLRequest(_currentModelLoadingData.modelURL));
 						break;
 					case ModelType.WIREFRAME_CUBE:
 						//	EVENTS
 						_doDispatchModelLoad();
-						_doDispatchModelProgress()
+						_doDispatchModelProgress(100)
 						_doDispatchModelLoaded()
 						//	SETUP
 						_thePrimitiveChildOfTheModel = new Box((_currentModelLoadingData.originalScale.x/10), (_currentModelLoadingData.originalScale.x/10), (_currentModelLoadingData.originalScale.x/10), 1, 1, 1, false, new FillMaterial(_currentModelLoadingData.originalColor, _currentModelLoadingData.originalAlpha)); 
@@ -271,7 +278,7 @@ package
 					case ModelType.WIREFRAME_SPHERE:
 						//	EVENTS
 						_doDispatchModelLoad();
-						_doDispatchModelProgress()
+						_doDispatchModelProgress(100)
 						_doDispatchModelLoaded()
 						//	SETUP
 						_thePrimitiveChildOfTheModel = new GeoSphere (_currentModelLoadingData.originalScale.x/10, 10, false, new FillMaterial (_currentModelLoadingData.originalColor, _currentModelLoadingData.originalAlpha) ); //_currentModelLoadingData.originalScale.x, 2, false, new FillMaterial (_currentModelLoadingData.originalColor, _currentModelLoadingData.originalColor));
@@ -446,7 +453,17 @@ package
 		{
 			//the stats
 			_statsWidget = _theCamera.diagram;
-			addChild(_statsWidget);
+			_statsWidgetHolder_sprite = new Sprite ();
+			_statsWidgetHolder_sprite.graphics.clear();
+			_statsWidgetHolder_sprite.graphics.beginFill(0x222222);
+			_statsWidgetHolder_sprite.graphics.drawRect(0,0,120,100);
+			_statsWidgetHolder_sprite.graphics.endFill();
+			//_statsWidget.width 	= _statsWidgetHolder_sprite.width;
+			//_statsWidget.height = _statsWidgetHolder_sprite.height;
+			_statsWidgetHolder_sprite.addChild(_statsWidget);
+			UIManager.getDashboardContents().addChild(_statsWidgetHolder_sprite);
+			_statsWidget.x = 5;
+			_statsWidget.y = 5;
 			
 		}
 		
@@ -472,6 +489,34 @@ package
 		///////////////
 		//	3D EVENTS
 		///////////////
+		///////////////
+		//	3D EVENTS
+		///////////////
+		/**
+		 * Handles the Event: <code>LoaderEvent.RESOURCE_COMPLETE</code>.
+		 * 
+		 * @param aEvent <code>LoaderEvent</code> The incoming aEvent payload.
+		 *  
+		 * @return void
+		 * 
+		 */
+		override protected function _onExternalModelLoadingProgress (aEvent : *) : void
+		{
+			//CALL TO SHOW UNIVERSAL UI
+			var progressEvent : ProgressEvent = (aEvent as ProgressEvent);
+			var percentLoaded_num : Number;
+			
+			//trace (" is " + progressEvent.bytesLoaded + " and " + progressEvent.bytesTotal);
+			if (progressEvent.bytesLoaded > 0 && progressEvent.bytesTotal > 0) {
+				percentLoaded_num = progressEvent.bytesLoaded / progressEvent.bytesLoaded * 100;
+			} else {
+				percentLoaded_num = 0;
+			}
+			_doDispatchModelProgress(percentLoaded_num);
+			
+			//MORE STUFF
+			
+		}
 		/**
 		 * Handles the Event: <code>LoaderEvent.RESOURCE_COMPLETE</code>.
 		 * 

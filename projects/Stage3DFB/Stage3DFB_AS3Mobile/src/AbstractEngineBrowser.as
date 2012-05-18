@@ -232,6 +232,12 @@ package
 			stage.scaleMode = StageScaleMode.NO_SCALE
 			
 			// METHODS
+			
+			//create dashboard
+			if (!UIManager.getDashboardContents()) {
+				UIManager.addDashboard(this, "Dashboard (~ to Open)", "Loading...")
+			}
+			
 			//override the _onAddedToStage and call super._doSetupInput();
 			
 			
@@ -408,11 +414,7 @@ package
 			//	DECREMENT THE MODEL INDEX SO WE ALWAYS SHOW THE SAME MODEL WHEN WE CHANGE ENGINES
 			_currentModelIndex_int--;
 			_current_iEngine.doLoadModel(_getNextModelLoadingData(true));
-			
-			//create dashboard
-			if (!UIManager.getDashboardContents()) {
-				UIManager.addDashboard(this, "Stats", "Loading...")
-			}
+
 		}	
 		
 		/**

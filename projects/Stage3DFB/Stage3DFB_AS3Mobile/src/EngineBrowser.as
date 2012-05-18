@@ -130,9 +130,9 @@ package
 			
 			//ADD ENGINES
 			var _iengines_vector_iengine : Vector.<IEngine> = new Vector.<IEngine> ();
+			_iengines_vector_iengine.push (	new Alternativa3DEngine	() );
+			_iengines_vector_iengine.push (	new Away3DEngine		()  );
 			_iengines_vector_iengine.push (	new Flare3DEngine		() );
-			//_iengines_vector_iengine.push (	new Alternativa3DEngine	() );
-			//_iengines_vector_iengine.push (	new Away3DEngine		()  );
 			ienginesVector = _iengines_vector_iengine;
 			
 			//ADD A STARTING VECTOR ONLY TO CORRECT IF THE MODEL WAS CREATED A LITTLE 'OFF CENTER'

@@ -171,7 +171,7 @@ package
 		 */
 		public function dispose () : void
 		{
-			removeChild(_statsWidget);
+			UIManager.getDashboardContents().removeChild(_statsWidget);
 			_view3D.dispose();
 		}
 		
@@ -443,7 +443,7 @@ package
 		{
 			//the stats
 			_statsWidget = new Flare3DStats();
-			addChild(_statsWidget);
+			UIManager.getDashboardContents().addChild(_statsWidget);
 			
 		}
 		

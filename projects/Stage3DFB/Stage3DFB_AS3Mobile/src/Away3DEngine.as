@@ -156,7 +156,7 @@ package
 		public function dispose () : void
 		{
 			_statsWidget.unregisterView(_view3D);
-			removeChild(_statsWidget);
+			UIManager.getDashboardContents().removeChild(_statsWidget);
 			removeChild(_view3D);
 			_view3D.dispose();
 		}
@@ -192,6 +192,9 @@ package
 				//CREATE NEW
 				switch (_currentModelLoadingData.modelType) {
 					case ModelType.EXTERNAL_MODEL:
+						//	EVENTS
+						_doDispatchModelLoad();
+						//	SETUP
 						_isCurrentlyLoadingANewModel_boolean = true; //SINCE WE ARE DOING ASYNC LOAD, FLAG THAT
 						_theExternallyLoadedChildOfTheModel = new Loader3D();
 						_theExternallyLoadedChildOfTheModel.addEventListener(LoaderEvent.RESOURCE_COMPLETE, _onExternalModelLoadingCompleted );
@@ -199,6 +202,11 @@ package
 						_theExternallyLoadedChildOfTheModel.load( new URLRequest(_currentModelLoadingData.modelURL) );
 						break;
 					case ModelType.WIREFRAME_CUBE:
+						//	EVENTS
+						_doDispatchModelLoad();
+						_doDispatchModelProgress(100)
+						_doDispatchModelLoaded()
+						//	SETUP
 						_thePrimitiveChildOfTheModel = new WireframeCube(_currentModelLoadingData.originalScale.x,_currentModelLoadingData.originalScale.y,_currentModelLoadingData.originalScale.z,_currentModelLoadingData.originalColor, _currentModelLoadingData.originalLineThickness) ;
 						_thePrimitiveChildOfTheModel.rotationX 	= _currentModelLoadingData.originalRotation.x;
 						_thePrimitiveChildOfTheModel.rotationY 	= _currentModelLoadingData.originalRotation.y;
@@ -206,6 +214,11 @@ package
 						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						break;
 					case ModelType.WIREFRAME_SPHERE:
+						//	EVENTS
+						_doDispatchModelLoad();
+						_doDispatchModelProgress(100)
+						_doDispatchModelLoaded()
+						//	SETUP
 						_thePrimitiveChildOfTheModel = new WireframeSphere(_currentModelLoadingData.originalScale.x, 16, 12,_currentModelLoadingData.originalColor, _currentModelLoadingData.originalLineThickness) ;
 						_thePrimitiveChildOfTheModel.rotationX 	= _currentModelLoadingData.originalRotation.x;
 						_thePrimitiveChildOfTheModel.rotationY 	= _currentModelLoadingData.originalRotation.y;
@@ -373,7 +386,7 @@ package
 		{
 			//the stats
 			 _statsWidget = new AwayStats(_view3D);
-			addChild(_statsWidget);
+			 UIManager.getDashboardContents().addChild(_statsWidget);
 			
 		}
 		
@@ -448,7 +461,7 @@ package
 		override protected function _onExternalModelLoadingError(aEvent : *) : void
 		{
 			//CALL TO SHOW UNIVERSAL UI
-			super._onExternalModelLoadingCompleted(aEvent);
+			super._onExternalModelLoadingError(aEvent);
 			
 			//MORE STUFF
 			
