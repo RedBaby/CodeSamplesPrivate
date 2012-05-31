@@ -55,6 +55,7 @@ package com.rmc.projects.stage3dfb.data.types
 		// Properties
 		// --------------------------------------
 		// PUBLIC GETTER/SETTERS
+
 		/**
 		 *  World Position: The Origin
 		 * 

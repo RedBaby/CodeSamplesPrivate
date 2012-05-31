@@ -152,7 +152,7 @@ package
 		{
 			
 			// SUPER
-			super();
+			super("Alternativa3D"); //TITLE FOR DISPLAY PURPOSES ONLY
 			
 			// EVENTS
 			
@@ -246,7 +246,7 @@ package
 				
 				//CREATE NEW
 				switch (_currentModelLoadingData.modelType) {
-					case ModelType.EXTERNAL_MODEL:
+					case ModelType.EXTERNAL_FILE:
 						//	EVENTS
 						_doDispatchModelLoad();
 						//	SETUP
@@ -260,7 +260,7 @@ package
 						_loader.addEventListener(IOErrorEvent.IO_ERROR, 	_onExternalModelLoadingError);
 						_loader.load(new URLRequest(_currentModelLoadingData.modelURL));
 						break;
-					case ModelType.WIREFRAME_CUBE:
+					case ModelType.PRIMITIVE_CUBE:
 						//	EVENTS
 						_doDispatchModelLoad();
 						_doDispatchModelProgress(100)
@@ -275,7 +275,7 @@ package
 						_thePrimitiveChildOfTheModel.rotationZ = _currentModelLoadingData.originalRotation.z * AbstractEngine._DEGREES_TO_RADIANS;
 						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						break;
-					case ModelType.WIREFRAME_SPHERE:
+					case ModelType.PRIMITIVE_SPHERE:
 						//	EVENTS
 						_doDispatchModelLoad();
 						_doDispatchModelProgress(100)

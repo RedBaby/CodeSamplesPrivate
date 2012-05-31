@@ -160,6 +160,23 @@ package
 		// PUBLIC CONST
 		
 		// PRIVATE CONST
+		/**
+		 * Describe this member.
+		 * 
+		 */
+		private static const _LOADING_TEXT : String = "Loading";
+		
+		/**
+		 * Describe this member.
+		 * 
+		 */
+		private static const _LOADED_TEXT : String = "Loaded";
+		
+		/**
+		 * Describe this member.
+		 * 
+		 */
+		private static const _DASHBOARD_TITLE_TEXT : String = "Dashboard (~ to Open)"
 		
 		// PRIVATE
 		
@@ -210,6 +227,7 @@ package
 		// --------------------------------------
 		// Constructor
 		// --------------------------------------
+
 		
 		/**
 		 * This is the constructor.
@@ -235,7 +253,7 @@ package
 			
 			//create dashboard
 			if (!UIManager.getDashboardContents()) {
-				UIManager.addDashboard(this, "Dashboard (~ to Open)", "Loading...")
+				UIManager.addDashboard(this, AbstractEngineBrowser._DASHBOARD_TITLE_TEXT, AbstractEngineBrowser._LOADING_TEXT + "...")
 			}
 			
 			//override the _onAddedToStage and call super._doSetupInput();
@@ -427,7 +445,12 @@ package
 		 */
 		private function _onEngineModelLoad (aEvent : EngineEvent):void
 		{
-			UIManager.addPrompt(this, "Loading...", "Loading %...")
+			var modelTitle_str 		: String 	= aEvent.modelData.title;
+			var iEngine 			: IEngine	= (aEvent.target as IEngine)	
+			var promptBodyText_str 	: String 	= AbstractEngineBrowser._LOADING_TEXT + " '"+modelTitle_str+"' for '"+iEngine.title+"'..."
+			UIManager.addPrompt(this, AbstractEngineBrowser._LOADING_TEXT + "...", promptBodyText_str )
+			//
+			UIManager.updateDashboardBodyText(promptBodyText_str);
 			
 		}	
 		
@@ -441,7 +464,12 @@ package
 		 */
 		private function _onEngineModelLoadProgress (aEvent : EngineEvent):void
 		{
-			UIManager.updatePromptBodyText(aEvent.modelData.percentLoaded )
+			var modelTitle_str : String = aEvent.modelData.title;
+			var iEngine 			: IEngine	= (aEvent.target as IEngine)
+			var promptBodyText_str : String = AbstractEngineBrowser._LOADING_TEXT + " '"+modelTitle_str+"' for '"+iEngine.title+"' ..."
+			UIManager.updatePromptBodyText(promptBodyText_str, aEvent.modelData.percentLoaded )
+			//
+			UIManager.updateDashboardBodyText(promptBodyText_str);
 		}	
 		
 		/**
@@ -455,6 +483,11 @@ package
 		private function _onEngineModelLoaded (aEvent : EngineEvent):void
 		{
 			UIManager.removePrompt();	
+			//
+			var modelTitle_str : String = aEvent.modelData.title;
+			var iEngine 			: IEngine	= (aEvent.target as IEngine)
+			var promptBodyText_str : String = AbstractEngineBrowser._LOADED_TEXT + " '"+modelTitle_str+"' for '"+iEngine.title+"'."
+			UIManager.updateDashboardBodyText(promptBodyText_str);
 			
 		}	
 		

@@ -94,7 +94,16 @@ package
 		 */
 		private var _theModel : ObjectContainer3D
 		
+		/**
+		 * Describe this member.
+		 * 
+		 */
 		private var _thePrimitiveChildOfTheModel:ObjectContainer3D;
+		
+		/**
+		 * Describe this member.
+		 * 
+		 */
 		private var _statsWidget:AwayStats;
 		
 		// --------------------------------------
@@ -109,7 +118,7 @@ package
 		{
 			
 			// SUPER
-			super();
+			super("Away3D");//TITLE FOR DISPLAY PURPOSES ONLY
 			
 			// EVENTS
 			
@@ -191,7 +200,7 @@ package
 				
 				//CREATE NEW
 				switch (_currentModelLoadingData.modelType) {
-					case ModelType.EXTERNAL_MODEL:
+					case ModelType.EXTERNAL_FILE:
 						//	EVENTS
 						_doDispatchModelLoad();
 						//	SETUP
@@ -201,7 +210,7 @@ package
 						_theExternallyLoadedChildOfTheModel.addEventListener(LoaderEvent.LOAD_ERROR, _onExternalModelLoadingError);
 						_theExternallyLoadedChildOfTheModel.load( new URLRequest(_currentModelLoadingData.modelURL) );
 						break;
-					case ModelType.WIREFRAME_CUBE:
+					case ModelType.PRIMITIVE_CUBE:
 						//	EVENTS
 						_doDispatchModelLoad();
 						_doDispatchModelProgress(100)
@@ -213,7 +222,7 @@ package
 						_thePrimitiveChildOfTheModel.rotationZ 	= _currentModelLoadingData.originalRotation.z;
 						_theModel.addChild(_thePrimitiveChildOfTheModel);
 						break;
-					case ModelType.WIREFRAME_SPHERE:
+					case ModelType.PRIMITIVE_SPHERE:
 						//	EVENTS
 						_doDispatchModelLoad();
 						_doDispatchModelProgress(100)
@@ -442,7 +451,7 @@ package
 			_theExternallyLoadedChildOfTheModel.scaleX 		= _currentModelLoadingData.originalScale.x;
 			_theExternallyLoadedChildOfTheModel.scaleY 		= _currentModelLoadingData.originalScale.y;
 			_theExternallyLoadedChildOfTheModel.scaleZ 		= _currentModelLoadingData.originalScale.z;
-			_theExternallyLoadedChildOfTheModel.position 		= _currentModelLoadingData.originalPosition;
+			_theExternallyLoadedChildOfTheModel.position 	= _currentModelLoadingData.originalPosition;
 			_theExternallyLoadedChildOfTheModel.rotationX 	= _currentModelLoadingData.originalRotation.x;
 			_theExternallyLoadedChildOfTheModel.rotationY 	= _currentModelLoadingData.originalRotation.y;
 			_theExternallyLoadedChildOfTheModel.rotationZ 	= _currentModelLoadingData.originalRotation.z;

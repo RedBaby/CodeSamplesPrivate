@@ -207,15 +207,15 @@ package
 		 * @return void
 		 *
 		 */
-		public function updatePromptBodyText(aPercentComplete_num : Number):void
+		public function updatePromptBodyText(aPromptBodyText_str : String, aPercentComplete_num : Number):void
 		{
 			if (_promptWindow.bodyText) {
-				_promptWindow.bodyText = "Loading " + aPercentComplete_num + "%...";
+				_promptWindow.bodyText = aPromptBodyText_str
 				_promptWindow.progressBar.maximum = 100;
 				_promptWindow.progressBar.value = aPercentComplete_num*100;
 			}
 		}
-		public static function updatePromptBodyText(aPercentComplete_num: Number):void { return UIManager.getInstance().updatePromptBodyText(aPercentComplete_num);}
+		public static function updatePromptBodyText(aPromptBodyText_str : String, aPercentComplete_num: Number):void { return UIManager.getInstance().updatePromptBodyText(aPromptBodyText_str, aPercentComplete_num);}
 		
 		
 		/*
@@ -356,6 +356,22 @@ package
 		}
 		public static function addDashboard(aUIParent_displayobjectcontainer : DisplayObjectContainer, aTitle_str : String, aBodyText_str: String):void { return UIManager.getInstance().addDashboard(aUIParent_displayobjectcontainer, aTitle_str, aBodyText_str);}
 		
+		
+		/**
+		 * UPDATE UI: 
+		 * 
+		 * @param aBodyText_str : String
+		 * 
+		 * @return void
+		 *
+		 */
+		public function updateDashboardBodyText(aBodyText_str : String):void
+		{
+			if (_dashboardWindow) {
+				_dashboardWindow.bodyText = aBodyText_str;
+			}
+		}
+		public static function updateDashboardBodyText(aBodyText_str : String):void { return UIManager.getInstance().updateDashboardBodyText(aBodyText_str);}
 		
 		
 		

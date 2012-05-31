@@ -62,6 +62,7 @@ package
 		 */		
 		public function get bodyText () 					: String 	{ return _bodyText_text.text; }
 		public function set bodyText (aValue : String) 	: void 		{ _bodyText_text.text = aValue; }
+		private var _bodyText_text:Text;
 		
 		/**
 		 * Describe this member...
@@ -76,12 +77,6 @@ package
 		
 		
 		// PRIVATE
-		/**
-		 * Describe this member...
-		 * 
-		 */
-		private var _bodyText_text:Text;
-		
 		
 		// --------------------------------------
 		// Constructor
@@ -98,7 +93,6 @@ package
 		public function get contentsHBox () 					: HBox 	{ return _dashboardChild_For_PublicContents_hbox; }
 		public function set contentsHBox (aValue : HBox) 	: void 		{ _dashboardChild_For_PublicContents_hbox = aValue; }
 		
-		private var _dashboardBodyText_text:Text;
 		/**
 		 * This is the constructor.
 		 * 
@@ -124,10 +118,10 @@ package
 			_dashboardChild_For_PublicContents_hbox = new HBox (uiParent, 3,3);
 			_dashboardChild_For_PublicContents_hbox.alignment = HBox.MIDDLE;
 			//
-			_dashboardBodyText_text = new Text (uiParent, 0, 0, aBodyText_str );
+			_bodyText_text = new Text (uiParent, 0, 0, aBodyText_str );
 			
 			//PUT AN EMPTY BOX TO THE RIGHT (FOR STATS), AND LEFT TO THE RIGHT
-			_dashboardParent_hbox.addChild(_dashboardBodyText_text);
+			_dashboardParent_hbox.addChild(_bodyText_text);
 			_dashboardParent_hbox.addChild(_dashboardChild_For_PublicContents_hbox);
 			addChild(_dashboardParent_hbox);
 			//
@@ -159,8 +153,8 @@ package
 				_dashboardParent_hbox.width 	= width;
 				_dashboardParent_hbox.height 	= height;
 			}
-			if (_dashboardBodyText_text) {
-				_dashboardBodyText_text.width 	= width - 135;
+			if (_bodyText_text) {
+				_bodyText_text.width 	= width - 135;
 			}
 		}
 		

@@ -136,16 +136,16 @@ package
 			ienginesVector = _iengines_vector_iengine;
 			
 			//ADD A STARTING VECTOR ONLY TO CORRECT IF THE MODEL WAS CREATED A LITTLE 'OFF CENTER'
-			var _models_vector_modelloadingdata : Vector.<ModelData>		= new Vector.<ModelData> ();
-			_models_vector_modelloadingdata.push(	new ModelData (ModelType.WIREFRAME_CUBE, 		true, 	true, 	true,	"", 												new Vector3D(0,0,0), 			new Vector3D (50,50,50), 	new Vector3D (0, 0, 0)		));
-			_models_vector_modelloadingdata.push(	new ModelData (ModelType.WIREFRAME_SPHERE, 		true, 	true, 	true,	"", 												new Vector3D(0,0,0), 			new Vector3D (30,30,30), 	new Vector3D (0, 0, 0)		));
-			//_models_vector_modelloadingdata.push(	new ModelData (ModelType.EXTERNAL_MODEL,	 	false, 	true,	false,	"./assets_runtime/models/collada/walking_1.dae", 	new Vector3D(0,-50,0), 			new Vector3D (.5,.5,.5),	new Vector3D (0,0,0)	 	));
-			_models_vector_modelloadingdata.push(	new ModelData (ModelType.EXTERNAL_MODEL,	 	false, 	false,	true,	"./assets_runtime/models/collada/model.DAE", 		new Vector3D(0,5,0), 			new Vector3D (.75,.75,.75),	new Vector3D (90,0,0)	 	));
-			_models_vector_modelloadingdata.push(	new ModelData (ModelType.EXTERNAL_MODEL,	 	false, 	true,	false,	"./assets_runtime/models/f3d/flare3d_logo.f3d", 	new Vector3D(0,-10,0), 			new Vector3D (.2,.2,.2), 	new Vector3D (0, 0, 0)	 	));
-			_models_vector_modelloadingdata.push(	new ModelData (ModelType.EXTERNAL_MODEL, 		false, 	true, 	false,	"./assets_runtime/models/f3d/car.f3d", 				new Vector3D(0,-10,0), 			new Vector3D (5,5,5   ), 	new Vector3D (0, 0, 0)	 	));
+			var _models_vector_modelloadingdata : Vector.<ModelData>			= new Vector.<ModelData> ();
+			_models_vector_modelloadingdata.push(	new ModelData ("Cube", 		ModelType.PRIMITIVE_CUBE, 		true, 	true, 	true,	"", 												new Vector3D(0,0,0), 			new Vector3D (50,50,50), 	new Vector3D (0, 0, 0)		));
+			_models_vector_modelloadingdata.push(	new ModelData ("Sphere", 	ModelType.PRIMITIVE_SPHERE, 	true, 	true, 	true,	"", 												new Vector3D(0,0,0), 			new Vector3D (30,30,30), 	new Vector3D (0, 0, 0)		));
+			//_models_vector_modelloadingdata.push(	new ModelData ("Walking", 	ModelType.EXTERNAL_MODEL,	 	false, 	true,	false,	"./assets_runtime/models/collada/walking_1.dae", 	new Vector3D(0,-50,0), 			new Vector3D (.5,.5,.5),	new Vector3D (0,0,0)	 	));
+			_models_vector_modelloadingdata.push(	new ModelData ("Tower", 	ModelType.EXTERNAL_FILE,	 	false, 	false,	true,	"./assets_runtime/models/collada/model.DAE", 		new Vector3D(0,5,0), 			new Vector3D (.75,.75,.75),	new Vector3D (90,0,0)	 	));
+			_models_vector_modelloadingdata.push(	new ModelData ("Logo", 		ModelType.EXTERNAL_FILE,	 	false, 	true,	false,	"./assets_runtime/models/f3d/flare3d_logo.f3d", 	new Vector3D(0,-10,0), 			new Vector3D (.2,.2,.2), 	new Vector3D (0, 0, 0)	 	));
+			_models_vector_modelloadingdata.push(	new ModelData ("Car", 		ModelType.EXTERNAL_FILE, 		false, 	true, 	false,	"./assets_runtime/models/f3d/car.f3d", 				new Vector3D(0,-10,0), 			new Vector3D (5,5,5   ), 	new Vector3D (0, 0, 0)	 	));
 			//
-			_models_vector_modelloadingdata.push(	new ModelData (ModelType.EXTERNAL_MODEL, 		true, 	false, 	false,	"./assets_runtime/models/awd/vase.awd",  			new Vector3D(0,0,0), 			new Vector3D (.1,.1,.1), 	new Vector3D (0, 0, 0)	 	));
-			_models_vector_modelloadingdata.push(	new ModelData (ModelType.EXTERNAL_MODEL, 		true, 	false, 	false,	"./assets_runtime/models/awd/MdlFish.awd", 			new Vector3D (-25,-7, -7 ), 	new Vector3D(.1,.1,.1) , 	new Vector3D (0, 0, 0)		));
+			_models_vector_modelloadingdata.push(	new ModelData ("Vase", 		ModelType.EXTERNAL_FILE, 		true, 	false, 	false,	"./assets_runtime/models/awd/vase.awd",  			new Vector3D(0,0,0), 			new Vector3D (.1,.1,.1), 	new Vector3D (0, 0, 0)	 	));
+			_models_vector_modelloadingdata.push(	new ModelData ("Fish", 		ModelType.EXTERNAL_FILE, 		true, 	false, 	false,	"./assets_runtime/models/awd/MdlFish.awd", 			new Vector3D (-25,-7, -7 ), 	new Vector3D(.1,.1,.1) , 	new Vector3D (0, 0, 0)		));
 			modelLoadingDataVector = _models_vector_modelloadingdata;
 			
 			// SETUP

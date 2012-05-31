@@ -54,9 +54,9 @@ package com.rmc.data.types
 		/**
 		 * DECLARE ALL POSSIBLE ENUMS INSTANCES
 		 */		
-		public static const WIREFRAME_CUBE   	: ModelType = new ModelType();
-		public static const WIREFRAME_SPHERE   	: ModelType = new ModelType();
-		public static const EXTERNAL_MODEL   	: ModelType = new ModelType();
+		public static const PRIMITIVE_CUBE   	: ModelType = new ModelType();
+		public static const PRIMITIVE_SPHERE   	: ModelType = new ModelType();
+		public static const EXTERNAL_FILE   	: ModelType = new ModelType();
 		
 		// PRIVATE STATIC
 		/**

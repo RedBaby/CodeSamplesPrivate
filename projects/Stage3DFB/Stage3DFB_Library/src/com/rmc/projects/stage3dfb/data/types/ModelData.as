@@ -57,6 +57,12 @@ package com.rmc.projects.stage3dfb.data.types
 		/**
 		 *  
 		 */		
+		private var _title_str : String;
+		public function get title () 					: String 	{ return _title_str; }
+		public function set title (aValue : String) 	: void 		{ _title_str = aValue; }
+		/**
+		 *  
+		 */		
 		private var _modelType : ModelType;
 		public function get modelType () 					: ModelType 	{ return _modelType; }
 		public function set modelType (aValue : ModelType) 	: void 		{ _modelType = aValue; }
@@ -153,7 +159,8 @@ package com.rmc.projects.stage3dfb.data.types
 		 * This is the constructor.
 		 * 
 		 */
-		public function ModelData(aModelType : ModelType, 
+		public function ModelData(aTitle_str : String,
+								  aModelType : ModelType, 
 								  aIsAway3DCompatible_boolean 			: Boolean,
 								  aIsFlare3DCompatible_boolean 			: Boolean,
 								  aIsAlternativa3DCompatible_boolean 	: Boolean,
@@ -172,6 +179,7 @@ package com.rmc.projects.stage3dfb.data.types
 			// VARIABLES
 			
 			// PROPERTIES
+			_title_str = aTitle_str;
 			_modelType = aModelType;
 			_isAway3DCompatible_boolean 		= aIsAway3DCompatible_boolean,
 			_isFlare3DCompatible_boolean 		= aIsFlare3DCompatible_boolean,

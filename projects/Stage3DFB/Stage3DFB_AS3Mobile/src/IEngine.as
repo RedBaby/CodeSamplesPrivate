@@ -50,6 +50,7 @@ package
 		//--------------------------------------
 		//PUBLIC GETTER/SETTERS
 		function get isCurrentlyLoadingANewModel () 					: Boolean;
+		function get title () 											: String;
 		
 		//--------------------------------------
 		//  Methods

@@ -66,6 +66,12 @@ package
 		public function get isCurrentlyLoadingANewModel () 					: Boolean 	{ return _isCurrentlyLoadingANewModel_boolean; }
 		public function set isCurrentlyLoadingANewModel (aValue : Boolean) 	: void 		{ _isCurrentlyLoadingANewModel_boolean = aValue; }
 		
+		/**
+		 *  SHOW THE ENGINE TITLE TO THE UI
+		 */		
+		private var _title_str : String;
+		public function get title () 					: String 	{ return _title_str; }
+		
 		
 		// PRIVATE CONST
 		/**
@@ -103,7 +109,7 @@ package
 		 * This is the constructor.
 		 * 
 		 */
-		public function AbstractEngine()
+		public function AbstractEngine(aTitle_str : String)
 		{
 			
 			// SUPER
@@ -114,6 +120,7 @@ package
 			// VARIABLES
 			
 			// PROPERTIES
+			_title_str		 = aTitle_str;
 			
 			//	SETTINGS
 			
