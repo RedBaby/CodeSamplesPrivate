@@ -46,8 +46,21 @@ package
 		// PUBLIC GETTER/SETTERS
 		
 		// PUBLIC CONST
-		[Embed(source="./assets_runtime/images/background.png")]
+		// --------------------------------------
+		//  EMBED: from PNG
+		// --------------------------------------
+		[Embed(source="./assets_compiletime/images/background.png")]
 		public static const BACKGROUND : Class
+		
+		// --------------------------------------
+		//  EMBED: from SWF
+		// --------------------------------------
+		/**
+		 * EMBED: 	One MovieClip From The Library Linked As 'BoyAndDogRunning'
+		 */		
+		[Embed(source = '../assets_compiletime/fla/Stage3DFB_Assets_v1.swf', symbol = "BoyAndDogRunning")] 
+		public static var BoyAndDogRunning:Class;
+		
 		
 		// PRIVATE
 		

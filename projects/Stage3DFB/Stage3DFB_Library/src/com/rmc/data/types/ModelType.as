@@ -57,6 +57,7 @@ package com.rmc.data.types
 		public static const PRIMITIVE_CUBE   	: ModelType = new ModelType();
 		public static const PRIMITIVE_SPHERE   	: ModelType = new ModelType();
 		public static const EXTERNAL_FILE   	: ModelType = new ModelType();
+		public static const EMBEDDED_FILE   	: ModelType = new ModelType();
 		
 		// PRIVATE STATIC
 		/**

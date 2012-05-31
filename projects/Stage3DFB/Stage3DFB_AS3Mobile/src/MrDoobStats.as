@@ -45,7 +45,7 @@ package
 	import flash.text.TextField;
 	import flash.utils.getTimer;	
 	
-	public class Flare3DStats extends Sprite
+	public class MrDoobStats extends Sprite
 	{	
 		protected const WIDTH : uint = 70;
 		protected const HEIGHT : uint = 100;
@@ -76,7 +76,7 @@ package
 		 * 
 		 * @param _theme         Example: { bg: 0x202020, fps: 0xC0C0C0, ms: 0x505050, mem: 0x707070, memmax: 0xA0A0A0 } 
 		 */
-		public function Flare3DStats( _theme : Object = null ) : void
+		public function MrDoobStats( _theme : Object = null ) : void
 		{
 			if (_theme)
 			{

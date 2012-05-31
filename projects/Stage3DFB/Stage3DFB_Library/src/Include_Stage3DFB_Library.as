@@ -52,6 +52,14 @@ package
 	
 	import spark.components.VGroup;
 	
+	import starling.core.Starling;
+	import starling.display.Image;
+	import starling.display.MovieClip;
+	import starling.display.Quad;
+	import starling.textures.Texture;
+	
+	import textureAtlas.DynamicAtlas;
+	
 	public class Include_Stage3DFB_Library
 	{
 		public function Include_Stage3DFB_Library()
@@ -93,6 +101,12 @@ package
 				alternativa.engine3d.primitives.Plane,
 				alternativa.engine3d.controllers.SimpleObjectController,
 				
+				Starling,
+				DynamicAtlas,
+				Quad,
+				Texture,
+				Image,
+				MovieClip,
 				
 				
 				Text,

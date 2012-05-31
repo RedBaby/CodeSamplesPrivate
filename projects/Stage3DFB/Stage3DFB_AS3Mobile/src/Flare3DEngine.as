@@ -101,7 +101,7 @@ package
 		 * Describe this member.
 		 * 
 		 */
-		private var _statsWidget:Flare3DStats;
+		private var _statsWidget:MrDoobStats;
 		
 		/**
 		 * Describe this member.
@@ -442,7 +442,7 @@ package
 		override protected  function _doSetupInput () : void
 		{
 			//the stats
-			_statsWidget = new Flare3DStats();
+			_statsWidget = new MrDoobStats();
 			UIManager.getDashboardContents().addChild(_statsWidget);
 			
 		}

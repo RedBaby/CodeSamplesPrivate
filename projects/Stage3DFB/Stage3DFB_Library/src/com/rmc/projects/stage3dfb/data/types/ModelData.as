@@ -77,6 +77,12 @@ package com.rmc.projects.stage3dfb.data.types
 		/**
 		 *  
 		 */		
+		private var _isStarlingCompatible_boolean : Boolean;
+		public function get isStarlingCompatible () 					: Boolean 	{ return _isStarlingCompatible_boolean; }
+		public function set isStarlingCompatible (aValue : Boolean) 	: void 		{ _isStarlingCompatible_boolean = aValue; }
+		/**
+		 *  
+		 */		
 		private var _isFlare3DCompatible_boolean : Boolean;
 		public function get isFlare3DCompatible () 					: Boolean 	{ return _isFlare3DCompatible_boolean; }
 		public function set isFlare3DCompatible (aValue : Boolean) 	: void 		{ _isFlare3DCompatible_boolean = aValue; }
@@ -164,6 +170,7 @@ package com.rmc.projects.stage3dfb.data.types
 								  aIsAway3DCompatible_boolean 			: Boolean,
 								  aIsFlare3DCompatible_boolean 			: Boolean,
 								  aIsAlternativa3DCompatible_boolean 	: Boolean,
+								  aIsStarlingCompatible_boolean 		: Boolean,
 								  aModelURL_str 					 	: String = "", 
 								  aOriginalPosition_vector3d 			: Vector3D = null, 
 								  aOriginalScale_vector3d 				: Vector3D = null,
@@ -184,6 +191,7 @@ package com.rmc.projects.stage3dfb.data.types
 			_isAway3DCompatible_boolean 		= aIsAway3DCompatible_boolean,
 			_isFlare3DCompatible_boolean 		= aIsFlare3DCompatible_boolean,
 			_isAlternativa3DCompatible_boolean 	= aIsAlternativa3DCompatible_boolean,
+			_isStarlingCompatible_boolean		= aIsStarlingCompatible_boolean;
 				
 				
 			//ONLY SOME MODELS USE THESE ADDITIONAL PARAMETERS
