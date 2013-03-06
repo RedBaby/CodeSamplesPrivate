@@ -37,7 +37,7 @@ package com.rmc.projects.racecardz.robotlegs.controller.commands
 	 * <p>Command: Loading core model data</p>
 	 * 
 	 */
-	public class RenderLayoutCommand extends StarlingCommand
+	public class RenderLayoutSignalCommand extends StarlingCommand
 	{
 		
 		//--------------------------------------
@@ -61,7 +61,7 @@ package com.rmc.projects.racecardz.robotlegs.controller.commands
 		 */
 		override public function execute():void
 		{
-			trace ("RenderLayoutCommand()!");
+			//this executes, but the real work is this signal - directly observed by a mediator.
 			
 			
 		}

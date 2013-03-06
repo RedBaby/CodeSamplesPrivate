@@ -28,6 +28,7 @@ package com.rmc.projects.racecardz.robotlegs.service
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
+	import com.rmc.projects.racecardz.robotlegs.controller.signals.LoadedLocationsModelSignal;
 	import com.rmc.projects.racecardz.robotlegs.model.LocationsModel;
 	import com.rmc.projects.racecardz.robotlegs.model.vo.LocationVO;
 	
@@ -52,10 +53,16 @@ package com.rmc.projects.racecardz.robotlegs.service
 		//--------------------------------------
 
 		/**
-		 *  
+		 *  RL REFERENCE: MODEL
 		 */	
 		[Inject]
 		public var locationModel : LocationsModel;
+
+		/**
+		 *  RL REFERENCE: SIGNAL
+		 */	
+		[Inject]
+		public var loadedLocationsModelSignal : LoadedLocationsModelSignal;
 		
 		
 		//--------------------------------------
@@ -137,7 +144,9 @@ package com.rmc.projects.racecardz.robotlegs.service
 			}
 			
 			locationModel.locations = locations_vector;
-			//dispatchEvent( new Event (Event.COMPLETE, false, false));
+			
+			//
+			loadedLocationsModelSignal.dispatch();
 			
 		};
 		

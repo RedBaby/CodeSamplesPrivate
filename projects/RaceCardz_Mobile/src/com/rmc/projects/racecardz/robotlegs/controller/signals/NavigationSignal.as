@@ -22,67 +22,70 @@
  * OTHER DEALINGS IN THE SOFTWARE.                                      
  */
 //Marks the right margin of code *******************************************************************
-package com.rmc.projects.racecardz.robotlegs.view.mediator
+package com.rmc.projects.racecardz.robotlegs.controller.signals
 {
-	import com.rmc.errors.SwitchStatementDefaultError;
-	import com.rmc.projects.racecardz.controls.TestAnswerScreen;
-	import com.rmc.projects.racecardz.robotlegs.controller.events.NavigationSignalEvent;
-	import com.rmc.projects.racecardz.robotlegs.controller.signals.NavigationSignal;
-	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
 	
-	import org.robotlegs.core.IMediator;
-	import org.robotlegs.mvcs.StarlingMediator;
+	//--------------------------------------
+	//  Imports
+	//--------------------------------------
+	import org.osflash.signals.Signal;
 	
-	public class MainMenuScreenMediator extends StarlingMediator implements IMediator
-	{
+	//--------------------------------------
+	//  Metadata
+	//--------------------------------------
+	
+	//--------------------------------------
+	//  Class
+	//--------------------------------------
+	/**
+	 * <p>The <code>NavigationSignal</code> class marks a request to change screens.</p>
+	 * 
+	 */
+	public class NavigationSignal extends Signal
+	{		
+		
+		//--------------------------------------
+		//  Properties
+		//--------------------------------------
+		//PUBLIC GETTER/SETTERS
+		
+		//PUBLIC CONST
+		
+		//PRIVATE
+		
+		//--------------------------------------
+		//  Constructor
+		//--------------------------------------
 		/**
-		 * RL REFERENCE: VIEW 
-		 */		
-		public function get mainMenuScreen () 					: MainMenuScreen 	{ return viewComponent as MainMenuScreen; }
-		
-		/**
-		 * RL REFERENCE: SIGNAL 
-		 */		
-		[Inject]
-		public var navigationSignal:NavigationSignal;
-		
-		public function MainMenuScreenMediator()
+		 * This is the constructor.
+		 * 
+		 */
+		public function NavigationSignal ()
 		{
-			super();
-		}
-		
-		
-		
-		override public function onRegister():void
-		{
-			mainMenuScreen.menuButtonClickSignal.add(_onMenuButtonClickSignal);
-		}
-		
-		[PostConstruct]
-		public function _onPostConstruct () : void
-		{
-			trace ("yessss");
-		}
-		
-		private function _onMenuButtonClickSignal(aButtonType_str : String):void
-		{
-			switch (aButtonType_str) {
-				case MainMenuScreen.BUTTON_PLAY_GAME:
-					navigationSignal.dispatch( new NavigationSignalEvent (NavigationSignalEvent.SHOW_SCREEN, TestAnswerScreen));
-					break;
-				case MainMenuScreen.BUTTON_OTHER:
-					break;
-				default:
-					throw new SwitchStatementDefaultError();
-					break;
-			}
+			//SUPER
+			super () 
+			
+			//EVENTS
+			
+			//VARIABLES
+			
+			//PROPERTIES
+			
+			//METHODS
 			
 		}
 		
-		override public function onRemove():void
-		{
-			trace("MainMenuScreenMediator.onRemove()");
-		}
+		
+		//--------------------------------------
+		//  Methods
+		//--------------------------------------		
+		//PUBLIC	
+		
+		//PRIVATE	
+		
+		//--------------------------------------
+		//  Event Handlers
+		//--------------------------------------		
+		
 	}
 }
-

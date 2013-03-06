@@ -30,6 +30,7 @@ package com.rmc.projects.racecardz.robotlegs
 	import com.rmc.projects.racecardz.robotlegs.controller.commands.LoadPhrasesModelCommand;
 	import com.rmc.projects.racecardz.robotlegs.controller.commands.LoadedConfigurationModelCommand;
 	import com.rmc.projects.racecardz.robotlegs.controller.commands.LoadedLocationsModelCommand;
+	import com.rmc.projects.racecardz.robotlegs.controller.commands.RenderLayoutSignalCommand;
 	import com.rmc.projects.racecardz.robotlegs.controller.commands.StartupCommand;
 	import com.rmc.projects.racecardz.robotlegs.controller.events.CoreEvent;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.LoadConfigurationModelSignal;
@@ -37,13 +38,15 @@ package com.rmc.projects.racecardz.robotlegs
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.LoadPhrasesModelSignal;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.LoadedConfigurationModelSignal;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.LoadedLocationsModelSignal;
+	import com.rmc.projects.racecardz.robotlegs.controller.signals.NavigationSignal;
+	import com.rmc.projects.racecardz.robotlegs.controller.signals.RenderLayoutSignal;
 	import com.rmc.projects.racecardz.robotlegs.model.ConfigurationModel;
 	import com.rmc.projects.racecardz.robotlegs.model.LocationsModel;
 	import com.rmc.projects.racecardz.robotlegs.model.PhrasesModel;
 	import com.rmc.projects.racecardz.robotlegs.service.ILoadService;
 	import com.rmc.projects.racecardz.robotlegs.service.LoadConfigurationModelService;
-	import com.rmc.projects.racecardz.robotlegs.service.LoadPhrasesModelService;
 	import com.rmc.projects.racecardz.robotlegs.service.LoadLocationsModelService;
+	import com.rmc.projects.racecardz.robotlegs.service.LoadPhrasesModelService;
 	import com.rmc.projects.racecardz.robotlegs.view.mediator.MainMenuScreenMediator;
 	import com.rmc.projects.racecardz.robotlegs.view.mediator.RaceCardzGameMediator;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
@@ -51,8 +54,10 @@ package com.rmc.projects.racecardz.robotlegs
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.base.SignalCommandMap;
 	import org.robotlegs.core.ISignalCommandMap;
+	import org.robotlegs.core.IStarlingMediatorMap;
 	import org.robotlegs.mvcs.StarlingContext;
 	
+	import starling.core.Starling;
 	import starling.display.DisplayObjectContainer;
 	
 	public class RaceCardzContext extends StarlingContext
@@ -79,6 +84,24 @@ package com.rmc.projects.racecardz.robotlegs
 			injector.mapValue(ISignalCommandMap, signalCommandMap);
 		}
 		
+		/**
+		 * The <code>IStarlingMediatorMap</code> for this <code>IContext</code>
+		 */
+		public function get mediatorMap():IStarlingMediatorMap
+		{
+			return _mediatorMap;
+		}
+		
+		/**
+		 * The <code>IStarlingMediatorMap</code> for this <code>IContext</code>
+		 */
+		public static function get MediatorMap():IStarlingMediatorMap
+		{
+			return ((Starling.current.root as RaceCardzGame).starlingContext as RaceCardzContext).mediatorMap;
+			
+		}
+		
+		
 		
 		public function RaceCardzContext(contextView:DisplayObjectContainer=null, autoStartup:Boolean=true)
 		{
@@ -96,7 +119,7 @@ package com.rmc.projects.racecardz.robotlegs
 			injector.mapSingleton(ConfigurationModel);
 			injector.mapSingleton(LocationsModel);
 			
-			//CONTROLLER
+			//CONTROLLER (SIGNAL->COMMAND)
 			commandMap.mapEvent(CoreEvent.CHANGE_SCREEN, EventCommand, CoreEvent);
 			signalCommandMap.mapSignalClass(LoadPhrasesModelSignal,   			LoadPhrasesModelCommand);
 			//
@@ -105,6 +128,12 @@ package com.rmc.projects.racecardz.robotlegs
 			//
 			signalCommandMap.mapSignalClass(LoadLocationsModelSignal,   			LoadLocationsModelCommand);
 			signalCommandMap.mapSignalClass(LoadedLocationsModelSignal,   		LoadedLocationsModelCommand);
+			//
+			signalCommandMap.mapSignalClass(RenderLayoutSignal,   				RenderLayoutSignalCommand);
+			
+			
+			//CONTROLLER (SIGNAL->MEDIATOR)
+			injector.mapSingleton(NavigationSignal);
 			
 			//SERVICE
 			injector.mapSingletonOf(ILoadService, 	LoadLocationsModelService, 		"LoadLocationsModelService");
@@ -112,8 +141,11 @@ package com.rmc.projects.racecardz.robotlegs
 			injector.mapSingletonOf(ILoadService, 	LoadConfigurationModelService, 	"LoadConfigurationModelService");
 			
 			//VIEW (DO THIS LAST, IT DEPENDS ON THE ABOVE)
-			mediatorMap.mapView(MainMenuScreen, 	MainMenuScreenMediator);
+			mediatorMap.mapView(MainMenuScreen, MainMenuScreenMediator );
 			mediatorMap.mapView(RaceCardzGame, 	RaceCardzGameMediator);
+			
+			
+			
 			
 			
 			//...

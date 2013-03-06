@@ -71,7 +71,7 @@ package
 		/**
 		 * 
 		 */		
-		private var _starlingContext:StarlingContext;
+		public var starlingContext:StarlingContext;
 		
 		
 		// --------------------------------------
@@ -87,7 +87,7 @@ package
 			// SUPER
 			super();
 			
-			_starlingContext = new RaceCardzContext(this);
+			starlingContext = new RaceCardzContext(this);
 			
 			
 		}
@@ -110,6 +110,15 @@ package
 			
 			//
 			_setThemeClass (MetalWorksMobileTheme);
+			
+			
+		}	
+		/**
+		 * 
+		 * 
+		 */		
+		public function doLayoutScreens () : void
+		{
 			
 			//
 			_shardzScreenNavigator = new ShardzScreenNavigator ();
@@ -136,20 +145,16 @@ package
 			var testAnswerScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new TestAnswerScreen ());
 			//(testQuestionScreenItem.screen as ListMenuScreen).addEventListener(ShardzEvent.HEADER_PREVIOUS_BUTTON_CLICK, 		_onHeaderButtonClick);
 			_shardzScreenNavigator.addScreen(TestAnswerScreen.ID, testAnswerScreenItem);
+
 			
-			//
-			//_shardzScreenNavigator.showScreen(TestAnswerScreen.ID);
-			_shardzScreenNavigator.showScreen(MainMenuScreen.ID);
-			//_shardzScreenNavigator.showScreen(TestQuestionScreen.ID);
-			
-			
-			
-			//_shardzScreenNavigator.showScreen(StressTest2DScreen.ID);
-			//_screenNavigator.showScreen(StressTest2DSettingsScreen.ID);
-			//_screenNavigator.showScreen(MainMenuScreen.ID);
-			//_screenNavigator.showScreen(ListMenuScreen.ID);
-			//_screenNavigator.showScreen(ButtonMenuScreen.ID);
-			
+		}	
+		/**
+		 * 
+		 * 
+		 */		
+		public function showScreen (aScreen_class : Class) : void
+		{
+			_shardzScreenNavigator.showScreen(aScreen_class["ID"]);
 			
 		}	
 		

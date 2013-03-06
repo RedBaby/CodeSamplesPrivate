@@ -28,12 +28,16 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 	// --------------------------------------
 	// Imports
 	// --------------------------------------
+	import com.rmc.projects.racecardz.robotlegs.RaceCardzContext;
 	import com.rmc.projects.racecardz.robotlegs.controller.events.CoreEvent;
+	import com.rmc.projects.racecardz.robotlegs.view.mediator.MainMenuScreenMediator;
 	import com.rmc.projects.shardz.controls.ShardzScreen;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ButtonGroup;
 	import feathers.data.ListCollection;
+	
+	import org.osflash.signals.Signal;
 	
 	import starling.events.Event;
 	
@@ -61,6 +65,12 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 		/**
 		 *  
 		 */		
+		private var _menuButtonClickSignal : Signal;
+		public function get menuButtonClickSignal () 					: Signal 	{ return _menuButtonClickSignal; }
+		
+		/**
+		 *  
+		 */		
 		private var _dataProvider_listcollection : ListCollection;
 		public function get dataProvider () 					: ListCollection 	{ return _dataProvider_listcollection; }
 		public function set dataProvider (aValue : ListCollection) 	: void 		
@@ -78,17 +88,21 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 		 * 
 		 */		
 		public static var ID:String = "MainMenuScreen";
-
+		
 		
 		// PRIVATE
 		
 		// --------------------------------------
 		// Constructor
 		// --------------------------------------
-
-
+		
+		
 		private var _buttonGroup:ButtonGroup;
 
+		private var listCollection:ListCollection;
+		public static const BUTTON_OTHER: String = "BUTTON_OTHER";
+		public static const BUTTON_PLAY_GAME: String = "BUTTON_PLAY_GAME";
+		
 		/**
 		 * This is the constructor.
 		 * 
@@ -103,6 +117,7 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			// VARIABLES
 			
 			// PROPERTIES
+			_menuButtonClickSignal = new Signal ();
 			
 			// METHODS
 			
@@ -143,20 +158,34 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			
 			
 			//SET FROM OUTSIDE
-			var listCollection : ListCollection 	= new ListCollection(
+			listCollection 	= new ListCollection(
 				[
-					{ label: "Play Game", triggered: _onMenuItemClick },
-					{ label: "Other", triggered: _onMenuItemClick },
+					{ 
+						
+						label: "[Play Game]",
+						triggered: function(event:Event):void
+						{
+							_onMenuItemClick(event, BUTTON_PLAY_GAME);
+						}
+					
+					},
+					{ 
+						label: "[Other]", 
+						triggered: function(event:Event):void
+						{
+							_onMenuItemClick(event, BUTTON_OTHER);
+						}
+					
+					},
 				]);
 			dataProvider = listCollection;
 			
 		}
 		
-		private function _onMenuItemClick(aEvent:Event):void
+		private function _onMenuItemClick(aEvent:Event, aButtonData_str : String):void
 		{
 			const button:Button = (aEvent.currentTarget as Button);
-			trace(button.label + " triggered!");
-			dispatchEvent( new CoreEvent (CoreEvent.CHANGE_SCREEN));
+			_menuButtonClickSignal.dispatch(aButtonData_str);
 		}
 		
 		/**
@@ -169,12 +198,12 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			
 			//SUPER
 			super.draw();
-
+			
 			//
 			_buttonGroup.validate();
 			_buttonGroup.x = (this.actualWidth - _buttonGroup.width) / 2;
 			_buttonGroup.y = -shardzHeader.height + (this.actualHeight - shardzHeader.height - _buttonGroup.height) / 2;
-
+			
 			
 		}
 		
