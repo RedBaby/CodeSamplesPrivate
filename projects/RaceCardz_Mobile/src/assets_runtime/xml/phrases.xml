@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+	
+	<!-- EACH PHRASE IN ENGLISH (EN) -->
+	
+	<phrase name = "debug_title_str">
+		<EN><![CDATA[Debug Panel: ]]></EN>
+	</phrase>
+	
+	
+</phrases>
