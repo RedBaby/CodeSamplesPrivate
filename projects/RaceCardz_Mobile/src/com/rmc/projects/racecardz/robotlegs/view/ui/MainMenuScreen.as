@@ -28,9 +28,7 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 	// --------------------------------------
 	// Imports
 	// --------------------------------------
-	import com.rmc.projects.racecardz.robotlegs.RaceCardzContext;
-	import com.rmc.projects.racecardz.robotlegs.controller.events.CoreEvent;
-	import com.rmc.projects.racecardz.robotlegs.view.mediator.MainMenuScreenMediator;
+	import com.rmc.projects.racecardz.robotlegs.model.PhrasesModel;
 	import com.rmc.projects.shardz.controls.ShardzScreen;
 	
 	import feathers.controls.Button;
@@ -41,12 +39,6 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 	
 	import starling.events.Event;
 	
-	
-	// --------------------------------------
-	// Metadata
-	// --------------------------------------
-	
-	
 	// --------------------------------------
 	// Class
 	// --------------------------------------
@@ -54,14 +46,13 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 	 * <p>The <code>MainMenuScreen</code> class is ...</p>
 	 * 
 	 */
-	public class MainMenuScreen extends ShardzScreen
+	public class MainMenuScreen extends AbstractScreen
 	{
 		
 		// --------------------------------------
 		// Properties
 		// --------------------------------------
 		// PUBLIC GETTER/SETTERS
-		
 		/**
 		 *  
 		 */		
@@ -83,11 +74,16 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			}
 		}
 		
+		private var _buttonGroup:ButtonGroup;
+		private var listCollection:ListCollection;
+		
 		// PUBLIC CONST
 		/**
 		 * 
 		 */		
 		public static var ID:String = "MainMenuScreen";
+		public static const BUTTON_OTHER: String = "BUTTON_OTHER";
+		public static const BUTTON_PLAY_GAME: String = "BUTTON_PLAY_GAME";
 		
 		
 		// PRIVATE
@@ -95,14 +91,6 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 		// --------------------------------------
 		// Constructor
 		// --------------------------------------
-		
-		
-		private var _buttonGroup:ButtonGroup;
-
-		private var listCollection:ListCollection;
-		public static const BUTTON_OTHER: String = "BUTTON_OTHER";
-		public static const BUTTON_PLAY_GAME: String = "BUTTON_PLAY_GAME";
-		
 		/**
 		 * This is the constructor.
 		 * 
@@ -141,8 +129,6 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			super.initialize();
 			
 			//
-			title = "Menu";
-			//
 			//shardzHeader.visible = false;
 			shardzHeader.previousButton.visible = false;
 			shardzHeader.nextButton.visible = false;
@@ -156,26 +142,34 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			}
 			this.addChild(_buttonGroup);
 			
+
+			
+		}
+		
+		override protected function _doLayoutWithLocalization () : void
+		{
+			//
+			title = phrasesModel.phrasesVO.titleMainMenuScreen_str;
 			
 			//SET FROM OUTSIDE
 			listCollection 	= new ListCollection(
 				[
 					{ 
 						
-						label: "[Play Game]",
+						label: phrasesModel.phrasesVO.buttonPlayGame_str,
 						triggered: function(event:Event):void
 						{
 							_onMenuItemClick(event, BUTTON_PLAY_GAME);
 						}
-					
+						
 					},
 					{ 
-						label: "[Other]", 
+						label: phrasesModel.phrasesVO.buttonOther_str, 
 						triggered: function(event:Event):void
 						{
 							_onMenuItemClick(event, BUTTON_OTHER);
 						}
-					
+						
 					},
 				]);
 			dataProvider = listCollection;

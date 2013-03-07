@@ -24,17 +24,34 @@
 //Marks the right margin of code *******************************************************************
 package com.rmc.projects.racecardz.robotlegs.view.mediator
 {
+	// --------------------------------------
+	// Imports
+	// --------------------------------------
+	
 	import com.rmc.errors.SwitchStatementDefaultError;
-	import com.rmc.projects.racecardz.controls.TestAnswerScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
 	import com.rmc.projects.racecardz.robotlegs.controller.events.NavigationSignalEvent;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.NavigationSignal;
+	import com.rmc.projects.racecardz.robotlegs.model.PhrasesModel;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
 	
 	import org.robotlegs.core.IMediator;
 	import org.robotlegs.mvcs.StarlingMediator;
 	
-	public class MainMenuScreenMediator extends StarlingMediator implements IMediator
+	// --------------------------------------
+	// Class
+	// --------------------------------------
+	/**
+	 * <p>This <code>MainMenuScreenMediator</code> is designed to...</p>
+	 * 
+	 */
+	public class MainMenuScreenMediator extends AbstractMediator implements IMediator
 	{
+		
+		// --------------------------------------
+		// Properties
+		// --------------------------------------
+		// PUBLIC GETTER/SETTERS
 		/**
 		 * RL REFERENCE: VIEW 
 		 */		
@@ -45,30 +62,53 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 		 */		
 		[Inject]
 		public var navigationSignal:NavigationSignal;
+
 		
+		// --------------------------------------
+		// Constructor
+		// --------------------------------------
+		/**
+		 * This is the constructor.
+		 * 
+		 */
 		public function MainMenuScreenMediator()
 		{
 			super();
 		}
 		
 		
-		
+		// --------------------------------------
+		// Methods
+		// --------------------------------------
+		// PUBLIC
 		override public function onRegister():void
 		{
 			mainMenuScreen.menuButtonClickSignal.add(_onMenuButtonClickSignal);
+			mainMenuScreen.phrasesModel = phrasesModel;
 		}
 		
 		[PostConstruct]
 		public function _onPostConstruct () : void
 		{
-			trace ("yessss");
+			trace ("_onPostConstruct");
 		}
 		
+		override public function onRemove():void
+		{
+			trace("MainMenuScreenMediator.onRemove()");
+		}
+		
+
+		
+		
+		// --------------------------------------
+		// Event Handlers
+		// --------------------------------------
 		private function _onMenuButtonClickSignal(aButtonType_str : String):void
 		{
 			switch (aButtonType_str) {
 				case MainMenuScreen.BUTTON_PLAY_GAME:
-					navigationSignal.dispatch( new NavigationSignalEvent (NavigationSignalEvent.SHOW_SCREEN, TestAnswerScreen));
+					navigationSignal.dispatch( new NavigationSignalEvent (NavigationSignalEvent.SHOW_SCREEN, AnswerScreen));
 					break;
 				case MainMenuScreen.BUTTON_OTHER:
 					break;
@@ -78,11 +118,7 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 			}
 			
 		}
-		
-		override public function onRemove():void
-		{
-			trace("MainMenuScreenMediator.onRemove()");
-		}
+
 	}
 }
 

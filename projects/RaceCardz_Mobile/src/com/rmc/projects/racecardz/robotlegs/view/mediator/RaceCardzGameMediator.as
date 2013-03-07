@@ -27,6 +27,7 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 	import com.rmc.projects.racecardz.robotlegs.controller.events.NavigationSignalEvent;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.NavigationSignal;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.RenderLayoutSignal;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
 	
 	import org.robotlegs.mvcs.StarlingMediator;
@@ -58,31 +59,26 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 		
 		override public function onRegister():void
 		{
-			trace("RaceCardzGameMediator.onRegister() : " + raceCardzGame);
-			
 			navigationSignal.add(_onNavigationSignal);
 			renderLayoutSignal.add(_onRenderLayoutSignal);
-			trace ("ok");
 		}
 		
 		override public function onRemove():void
 		{
-			trace("RaceCardzGameMediator.onRemove()");
-			navigationSignal.removeAll();
+			navigationSignal.remove(_onNavigationSignal);
+			renderLayoutSignal.remove(_onRenderLayoutSignal);
 		}
 		
 		private function _onNavigationSignal (aNavigationSignalEvent : NavigationSignalEvent) : void
 		{
 			var screen_class : Class = aNavigationSignalEvent.data as Class;
-			trace ("_onNavigationSignal" + screen_class );
 			raceCardzGame.showScreen (screen_class);
 		}
 		
 		private function _onRenderLayoutSignal () : void
 		{
-			trace ("_onRenderLayoutSignal");
 			raceCardzGame.doLayoutScreens();
-			raceCardzGame.showScreen (MainMenuScreen);
+			raceCardzGame.showScreen (AnswerScreen);
 		}
 	}
 }

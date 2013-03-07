@@ -28,8 +28,8 @@ package
 	// --------------------------------------
 	// Imports
 	// --------------------------------------
-	import com.rmc.projects.racecardz.controls.TestAnswerScreen;
-	import com.rmc.projects.racecardz.controls.TestQuestionScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.QuestionScreen;
 	import com.rmc.projects.racecardz.robotlegs.RaceCardzContext;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
 	import com.rmc.projects.shardz.controls.ShardzScreenNavigator;
@@ -137,14 +137,14 @@ package
 			////////////////////////////////////////////
 			////////////////////////////////////////////
 			//
-			var testQuestionScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new TestQuestionScreen ());
+			var testQuestionScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new QuestionScreen ());
 			//(testQuestionScreenItem.screen as ListMenuScreen).addEventListener(ShardzEvent.HEADER_PREVIOUS_BUTTON_CLICK, 		_onHeaderButtonClick);
-			_shardzScreenNavigator.addScreen(TestQuestionScreen.ID, testQuestionScreenItem);
+			_shardzScreenNavigator.addScreen(QuestionScreen.ID, testQuestionScreenItem);
 			
 			//
-			var testAnswerScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new TestAnswerScreen ());
+			var testAnswerScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new AnswerScreen ());
 			//(testQuestionScreenItem.screen as ListMenuScreen).addEventListener(ShardzEvent.HEADER_PREVIOUS_BUTTON_CLICK, 		_onHeaderButtonClick);
-			_shardzScreenNavigator.addScreen(TestAnswerScreen.ID, testAnswerScreenItem);
+			_shardzScreenNavigator.addScreen(AnswerScreen.ID, testAnswerScreenItem);
 
 			
 		}	
@@ -168,7 +168,7 @@ package
 		{
 			if (aEvent.currentTarget is MainMenuScreen) {
 				if (aEvent.type == ShardzEvent.HEADER_NEXT_BUTTON_CLICK) {
-					_shardzScreenNavigator.showScreen(TestQuestionScreen.ID);
+					_shardzScreenNavigator.showScreen(QuestionScreen.ID);
 				}
 			} else {
 				//TODO, MAKE ERROR

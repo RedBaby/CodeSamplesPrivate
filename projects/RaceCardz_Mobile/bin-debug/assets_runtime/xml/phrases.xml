@@ -3,8 +3,8 @@
 	
 	<!-- EACH PHRASE IN ENGLISH (EN) -->
 	
-	<phrase name = "debug_title_str">
-		<EN><![CDATA[Debug Panel: ]]></EN>
+	<phrase name = "titleMainMenuScreen_str">
+		<EN><![CDATA[Main Menu]]></EN>
 	</phrase>
 	
 	
