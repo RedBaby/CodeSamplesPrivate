@@ -29,6 +29,7 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.RenderLayoutSignal;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.QuestionScreen;
 	
 	import org.robotlegs.mvcs.StarlingMediator;
 	
@@ -78,7 +79,7 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 		private function _onRenderLayoutSignal () : void
 		{
 			raceCardzGame.doLayoutScreens();
-			raceCardzGame.showScreen (AnswerScreen);
+			raceCardzGame.showScreen (QuestionScreen);
 		}
 	}
 }

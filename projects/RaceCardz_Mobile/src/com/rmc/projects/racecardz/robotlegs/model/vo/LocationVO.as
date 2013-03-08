@@ -49,16 +49,23 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		/**
 		 *  
 		 */		
-		private var _countryName_str : String;
-		public function get countryName () 					: String 	{ return _countryName_str; }
-		public function set countryName (aValue : String) 	: void 		{ _countryName_str = aValue; }
+		private var _title_str : String;
+		public function get title () 					: String 	{ return _title_str; }
+		public function set title (aValue : String) 		: void 		{ _title_str = aValue; }
 		
 		/**
 		 *  
 		 */		
-		private var _continentName_str : String;
-		public function get continentName () 					: String 	{ return _continentName_str; }
-		public function set continentName (aValue : String) 	: void 		{ _continentName_str = aValue; }
+		private var _data_str : String;
+		public function get data () 					: String 	{ return _data_str; }
+		public function set data (aValue : String) 	: void 		{ _data_str = aValue; }
+		
+		/**
+		 *  
+		 */		
+		private var _continentVO : ContinentVO;
+		public function get continent () 						: ContinentVO 	{ return _continentVO; }
+		public function set continent (aValue : ContinentVO) 	: void 		{ _continentVO = aValue; }
 		
 		//--------------------------------------
 		//  Constructor
@@ -67,12 +74,13 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		 * This is the constructor.
 		 * 
 		 */
-		public function LocationVO (aCountryName_str : String, aContinentName_str)
+		public function LocationVO (aTitle_str : String, aData_str : String, aContinent: ContinentVO)
 		{
 			//SUPER
 			super(); 
-			_countryName_str 	= aCountryName_str;
-			_continentName_str 	= aContinentName_str;
+			_title_str 		= aTitle_str;
+			_data_str 		= aData_str;
+			_continentVO 	= aContinent;
 
 		}
 
@@ -85,7 +93,7 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		 */
 		public function toString () : String 
 		{
-			return "[LocationVO "+_countryName_str+"]";
+			return "[LocationVO "+_title_str+"]";
 		}
 		
 	}

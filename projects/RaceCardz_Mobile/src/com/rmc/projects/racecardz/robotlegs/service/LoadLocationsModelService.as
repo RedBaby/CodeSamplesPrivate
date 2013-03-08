@@ -30,6 +30,7 @@ package com.rmc.projects.racecardz.robotlegs.service
 	//--------------------------------------
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.LoadedLocationsModelSignal;
 	import com.rmc.projects.racecardz.robotlegs.model.LocationsModel;
+	import com.rmc.projects.racecardz.robotlegs.model.vo.ContinentVO;
 	import com.rmc.projects.racecardz.robotlegs.model.vo.LocationVO;
 	
 	import flash.errors.IOError;
@@ -130,17 +131,22 @@ package com.rmc.projects.racecardz.robotlegs.service
 			var locations_vector: Vector.<LocationVO>;
 			locations_vector = new Vector.<LocationVO>();
 			
-			var countryName_str : String;
-			var continentName_str : String;
+			var countryTitle_str : String;
+			var countryData_str : String;
+			var continentTitle_str : String;
+			var continentData_str : String;
+			//
 			var locationVO : LocationVO;
 			
 			//if the localized version doesn't exist, use the english one
 			for each (node in countries_xmllist) {
 				
-				countryName_str 		= node.@name 
-				continentName_str 	= node.parent().@name
-				trace ("yeah" + continentName_str + " : " + countryName_str);
-				locations_vector.push ( new LocationVO (countryName_str, continentName_str));
+				countryTitle_str 		= node.@title 
+				countryData_str 			= node.@data 
+				continentTitle_str 		= node.parent().@title
+				continentData_str 		= node.parent().@data
+				trace ("yeah" + continentTitle_str + " : " + countryTitle_str);
+				locations_vector.push ( new LocationVO (countryTitle_str, countryData_str, new ContinentVO (continentTitle_str, continentData_str)));
 			}
 			
 			locationModel.locations = locations_vector;

@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locations>
 	<continents>
-		<continent name="Africa" data="AFRICA">
-			<country name="Egypt" />
-			<country name="Morocco" />
+		<continent 		title="Africa" 			data="AFRICA">
+			<country 	title="Egypt" 			data="EGYPT" />
+			<country 	title="Morocco" 			data="MOROCCO" />
 		</continent>
-	</continents>
-	<continents>
-		<continent name="North America" data="NORTH_AMERICA">
-			<country name="America" />
-			<country name="Canada" />
-			<country name="Mexico" />
+		<continent 		title="Asia" 			data="ASIA">
+			<country 	title="Burma" 			data="BURMA" />
+			<country 	title="Cambodia" 		data="CAMBODIA" />
+			<country 	title="China" 			data="CHINA" />
+			<country 	title="Japan" 			data="JAPAN" />
+			<country 	title="Korean" 			data="KOREAN" />
+			<country	 	title="Philippines" 		data="PHILIPPINES" />
+			<country 	title="Taiwan" 			data="TAIWAN" />
+			<country 	title="Thailand" 		data="THAILAND" />
+			<country 	title="Vietnam" 			data="VIETNAM" />
+		</continent>
+		<continent 		title="North America" 	data="NORTH_AMERICA">
+			<country 	title="USA" 				data="USA" />
+			<country 	title="Canada" 			data="CANADA" />
+			<country 	title="Mexico" 			data="MEXICO" />
+			<country 	title="Puerto Rico" 		data="PUERTO_RICO" />
+		</continent>
+		<continent 		title="South America" 	data="SOUTH_AMERICA">
+			<country 	title="Peru" 			data="PERU" />
 		</continent>
 	</continents>
 </locations>

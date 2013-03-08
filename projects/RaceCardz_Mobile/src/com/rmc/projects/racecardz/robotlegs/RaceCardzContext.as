@@ -49,9 +49,11 @@ package com.rmc.projects.racecardz.robotlegs
 	import com.rmc.projects.racecardz.robotlegs.service.LoadPhrasesModelService;
 	import com.rmc.projects.racecardz.robotlegs.view.mediator.AnswerScreenMediator;
 	import com.rmc.projects.racecardz.robotlegs.view.mediator.MainMenuScreenMediator;
+	import com.rmc.projects.racecardz.robotlegs.view.mediator.QuestionScreenMediator;
 	import com.rmc.projects.racecardz.robotlegs.view.mediator.RaceCardzGameMediator;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.QuestionScreen;
 	
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.base.SignalCommandMap;
@@ -145,6 +147,7 @@ package com.rmc.projects.racecardz.robotlegs
 			
 			//VIEW (DO THIS LAST, IT DEPENDS ON THE ABOVE)
 			mediatorMap.mapView(MainMenuScreen, 		MainMenuScreenMediator );
+			mediatorMap.mapView(QuestionScreen, 		QuestionScreenMediator );
 			mediatorMap.mapView(AnswerScreen, 		AnswerScreenMediator );
 			mediatorMap.mapView(RaceCardzGame, 		RaceCardzGameMediator);
 			

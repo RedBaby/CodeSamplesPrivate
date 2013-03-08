@@ -50,6 +50,7 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		//--------------------------------------
 		//  Debug
 		//--------------------------------------
+
 		/**
 		 * Display Text:
 		 * 
@@ -57,9 +58,18 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		
 		//MAIN MENU
 		public var titleMainMenuScreen_str:String; //put in xml, LATER,... put all these in xml
-		public var titleAnswerScreen_str:String 		= "Your Answer";
 		public var buttonPlayGame_str:String			= "Play Game";
 		public var buttonOther_str:String			= "Other";
+		
+		//ANSWERS
+		public var titleAnswerScreen_str:String 		= "Your Answer";
+		
+		
+		//QUESTION
+		public var titleQuestionScreen_str:String = "Question";
+		public var labelImageTitle_str:String = "Image";
+		public var labelGuessTitle_str:String = "Guess";
+		public var buttonGuess_str:String = "Guess!";
 		
 
 		//--------------------------------------
