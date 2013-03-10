@@ -40,14 +40,6 @@ package com.rmc.projects.racecardz.robotlegs.model
 		//  Properties
 		//--------------------------------------
 		/**
-		 *  Config: Toggles the visibility for configuration prompt visible. Confirms load of configuration.xml upon application start.
-		 */		
-		private var _isConfigurationPromptVisible_boolean : Boolean;
-		public function get isConfigurationPromptVisible () 					: Boolean 	{ return _isConfigurationPromptVisible_boolean; }
-		public function set isConfigurationPromptVisible (aValue : Boolean) 	: void 		{ _isConfigurationPromptVisible_boolean = aValue; }
-		
-			
-		/**
 		 *  Config: Toggles the visibility for a debug window that shows when 
 		 * images fail
 		 */		
@@ -64,77 +56,11 @@ package com.rmc.projects.racecardz.robotlegs.model
 		public function set isDebugPanelVisible (aValue : Boolean) 	: void 		{ _isDebugPanelVisible_boolean = aValue; }
 		
 		/**
-		 *  Config: Toggles the apps use of MonsterDebugger. A free 3rd party debugger app for 'Debug...', 'Run...', and 'Export AIR Release Build...'
+		 *  Config: This value in milliseconds. Duration of a question.
 		 */		
-		private var _isUsingMonsterDebugger_boolean : Boolean;
-		public function get isUsingMonsterDebugger () 					: Boolean 	{ return _isUsingMonsterDebugger_boolean; }
-		public function set isUsingMonsterDebugger (aValue : Boolean) 	: void 		{ _isUsingMonsterDebugger_boolean = aValue; }
-		
-		/**
-		 *  	 	Toggles the visibility of an overlay of tick lines in the LifeBar 
-		 * area showing days/months.
-		 */		
-		private var _isLifeBarGuideVisible_boolean : Boolean;
-		public function get isLifeBarGuideVisible () 				: Boolean 	{ return _isLifeBarGuideVisible_boolean; }
-		public function set isLifeBarGuideVisible (aValue : Boolean) 	: void 		{ _isLifeBarGuideVisible_boolean = aValue; }
-			
-		/**
-		 *  Config: Toggles the session’s mouse cursor visibility.
-		 */		
-		private var _isMouseVisible_boolean : Boolean;
-		public function get isMouseVisible () 					: Boolean 	{ return _isMouseVisible_boolean; }
-		public function set isMouseVisible (aValue : Boolean) 	: void 		{ _isMouseVisible_boolean = aValue; }
-		
-		/**
-		 *  Config: Toggle the fullscreen. If false, the app is in a window (for 
-		 * easier debugging/development)
-		 */		
-		private var _isFullScreen_boolean : Boolean;
-		public function get isFullScreen () 					: Boolean 	{ return _isFullScreen_boolean; }
-		public function set isFullScreen (aValue : Boolean) 	: void 		{ _isFullScreen_boolean = aValue; }
-		
-		/**
-		 *  Config: This URL is called for the session data immediately after the 
-		 * config is loaded.
-		 */		
-		private var _backendDataURL_str : String;
-		public function get backendDataURL () 					: String 	{ return _backendDataURL_str; }
-		public function set backendDataURL (aValue : String) 	: void 		{ _backendDataURL_str = aValue; }
-		
-		/**
-		 *  NOTE: THis is never loaded unless the debug panel requests it be loaded 
-		 * by clicking 'reset with KS'
-		 */		
-		private var _backendDataURLKitchenSink_str : String;
-		public function get backendDataURLKitchenSink () 					: String 	{ return _backendDataURLKitchenSink_str; }
-		public function set backendDataURLKitchenSink (aValue : String) 	: void 		{ _backendDataURLKitchenSink_str = aValue; }
-		
-		
-		/**
-		 *  Config: When the application starts or resets the app simulates a ´click´ 
-		 * to the main menu button of this index, showing the content for that menu item. The default value will show the top menu item´s content. 
-		 */		
-		private var _defaultMenuItemIndex_uint : uint;
-		public function get defaultMenuItemIndex () 					: uint 	{ return _defaultMenuItemIndex_uint; }
-		public function set defaultMenuItemIndex (aValue : uint) 	: void 		{ _defaultMenuItemIndex_uint = aValue; }
-		
-
-		/**
-		 *  Config: This value in milliseconds. When the application sits idle with 
-		 * no user interactivity for this duration, it resets to display the content of the default menu item as defined by defaultMenuItemIndex. The reset has no transition. The default time is 120000 milliseconds, which is 2 minutes. 
-		 */		
-		private var _idleDurationMS_uint : uint;
-		public function get idleDurationMS () 					: uint 	{ return _idleDurationMS_uint; }
-		public function set idleDurationMS (aValue : uint) 	: void 		{ _idleDurationMS_uint = aValue; }
-		
-		/**
-		 *  Toggles the visibility of an overlay showing text for every successful 
-		 * tracking event sent to the servers.
-		 */		
-		private var _isTrackingPanelVisible_boolean : Boolean;
-		public function get isTrackingPanelVisible () 					: Boolean 	{ return _isTrackingPanelVisible_boolean; }
-		public function set isTrackingPanelVisible (aValue : Boolean) 	: void 		{ _isTrackingPanelVisible_boolean = aValue; }
-		
+		private var _questionTimerDurationMS_uint : uint;
+		public function get questionTimerDurationMS () 					: uint 	{ return _questionTimerDurationMS_uint; }
+		public function set questionTimerDurationMS (aValue : uint) 	: void 		{ _questionTimerDurationMS_uint = aValue; }
 		
 		/**
 		 *    The trackingID sent to GoogleAnalytics. Default is UA-34181128-1 as 
@@ -144,16 +70,6 @@ package com.rmc.projects.racecardz.robotlegs.model
 		public function get trackingID () 					: String 	{ return _trackingID_str; }
 		public function set trackingID (aValue : String) 	: void 		{ _trackingID_str = aValue; }
 			
-		
-		/**
-		 *  NOTE: This is not defined by xml, its false and toggled by debugpanel 
-		 * during debugging
-		 */		
-		private var _isUsingKitchenSinkURL_boolean : Boolean;
-		public function get isUsingKitchenSinkURL () 					: Boolean 	{ return _isUsingKitchenSinkURL_boolean; }
-		public function set isUsingKitchenSinkURL (aValue : Boolean) 	: void 		{ _isUsingKitchenSinkURL_boolean = aValue; }			
-		
-		
 		//PUBLIC SETTER/GETTER
 
 		//--------------------------------------
@@ -169,20 +85,6 @@ package com.rmc.projects.racecardz.robotlegs.model
 
 			
 			//PROPERTIES (FROM XML)
-			isConfigurationPromptVisible 	= undefined;
-			isDebugPromptVisible 			= undefined;
-			isDebugPanelVisible 				= undefined;
-			isUsingMonsterDebugger			= undefined;
-			isLifeBarGuideVisible 			= undefined;
-			isMouseVisible 					= undefined;
-			isFullScreen 					= undefined;
-			backendDataURL 					= undefined;
-			backendDataURLKitchenSink 		= undefined;
-			defaultMenuItemIndex 			= undefined;
-			idleDurationMS 					= undefined;
-			isTrackingPanelVisible 			= undefined;
-			trackingID 						= undefined;
-			isUsingKitchenSinkURL 			= undefined;
 			
 			
 		}

@@ -29,14 +29,14 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 	// --------------------------------------
 	
 	import com.rmc.errors.SwitchStatementDefaultError;
-	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
-	import com.rmc.projects.racecardz.robotlegs.controller.events.NavigationSignalEvent;
+	import com.rmc.projects.racecardz.robotlegs.controller.events.NavigationEvent;
+	import com.rmc.projects.racecardz.robotlegs.controller.signals.LoadTestModelSignal;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.NavigationSignal;
-	import com.rmc.projects.racecardz.robotlegs.model.PhrasesModel;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.SettingsScreen;
+	import com.rmc.projects.shardz.events.ShardzEvent;
 	
 	import org.robotlegs.core.IMediator;
-	import org.robotlegs.mvcs.StarlingMediator;
 	
 	// --------------------------------------
 	// Class
@@ -61,8 +61,13 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 		 * RL REFERENCE: SIGNAL 
 		 */		
 		[Inject]
-		public var navigationSignal:NavigationSignal;
+		public var loadTestModelSignal:LoadTestModelSignal;
 
+		/**
+		 * RL REFERENCE: SIGNAL 
+		 */		
+		[Inject]
+		public var navigationSignal:NavigationSignal;
 		
 		// --------------------------------------
 		// Constructor
@@ -84,18 +89,21 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 		override public function onRegister():void
 		{
 			mainMenuScreen.menuButtonClickSignal.add(_onMenuButtonClickSignal);
+			mainMenuScreen.settingsButtonClickSignal.add (_onSettingsButtonClick);
 			mainMenuScreen.phrasesModel = phrasesModel;
 		}
 		
 		[PostConstruct]
 		public function _onPostConstruct () : void
 		{
-			trace ("_onPostConstruct");
+
 		}
 		
 		override public function onRemove():void
 		{
 			trace("MainMenuScreenMediator.onRemove()");
+			mainMenuScreen.settingsButtonClickSignal.remove (_onSettingsButtonClick);
+			mainMenuScreen.menuButtonClickSignal.remove(_onMenuButtonClickSignal);
 		}
 		
 
@@ -108,7 +116,7 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 		{
 			switch (aButtonType_str) {
 				case MainMenuScreen.BUTTON_PLAY_GAME:
-					navigationSignal.dispatch( new NavigationSignalEvent (NavigationSignalEvent.SHOW_SCREEN, AnswerScreen));
+					loadTestModelSignal.dispatch();
 					break;
 				case MainMenuScreen.BUTTON_OTHER:
 					break;
@@ -116,6 +124,12 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 					throw new SwitchStatementDefaultError();
 					break;
 			}
+			
+		}
+		
+		private function _onSettingsButtonClick(aEvent : ShardzEvent):void
+		{
+			navigationSignal.dispatch( new NavigationEvent (NavigationEvent.SHOW_SCREEN, SettingsScreen));
 			
 		}
 

@@ -50,6 +50,35 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		//--------------------------------------
 		//  Debug
 		//--------------------------------------
+		public var labelTimerTitle_str:String		 = "Timer";
+		public var scrollTextAfterTest_str:String     = "You did [ok] with a score of [score], etc...";
+		public var titleAfterTestScreen_str:String	 = "Summary";
+		public var titleAfterQuestionScreen_str:String = "Loading...";
+		public var buttonNext_str:String			= "Next";
+		public var buttonQuit_str:String				= "Quit";
+		public var scrollTextSettings_str:String		= " " +
+			
+"“Civilization is the encouragement of differences.“ -Mohandas Gandhi"+
+"\n"+
+"\n"+
+"App"+
+"\n"+
+"\n"+
+"This app is designed to measure the user's ability to distinguish the people of the world and improve that ability. The intention is to entertain and promote diversity education."+
+"\n"+
+"\n"+
+"Developers"+
+"\n"+
+"\n"+
+"Rivello Multimedia Consulting (RMC) is a boutique software consulting firm with a global focus. RMC's unique value is in creating and improving virtual staff relations and workflow procedures across cultures. RMC's experiences include working with teams in 4 continents and a dozen+ nationalities and its goals include increasing efficiencies in clients' cross-location, cross-culture, and cross-language locations. Continued victories are merging cultures and encouraging diversity from both personal and professional prospectives."+
+"\n"+
+"\n";
+		
+		public var labelLegal_str:String				= "TM & C RivelloMultimediaConsulting.com (RMC)";
+		public var buttonContactUs_str:String		= "Contact RMC";
+		public var titleSettingsScreen_str:String    = "Settings";
+		public var buttonSettings_str:String			= "Settings";
+		public var buttonBack_str:String				= "Back";
 
 		/**
 		 * Display Text:

@@ -67,6 +67,7 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		public function get continent () 						: ContinentVO 	{ return _continentVO; }
 		public function set continent (aValue : ContinentVO) 	: void 		{ _continentVO = aValue; }
 		
+		public static const TIMER_EXPIRED:String = "TIMER_COMPLETE";
 		//--------------------------------------
 		//  Constructor
 		//--------------------------------------
@@ -96,5 +97,9 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 			return "[LocationVO "+_title_str+"]";
 		}
 		
+		public static function GetInstanceForTimerComplete():LocationVO
+		{
+			return new LocationVO ("[Timer Expired]", TIMER_EXPIRED,null);
+		}
 	}
 }

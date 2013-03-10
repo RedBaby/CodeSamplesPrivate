@@ -9,6 +9,7 @@
 			<country 	title="Burma" 			data="BURMA" />
 			<country 	title="Cambodia" 		data="CAMBODIA" />
 			<country 	title="China" 			data="CHINA" />
+			<country 	title="India" 			data="INDIA" />
 			<country 	title="Japan" 			data="JAPAN" />
 			<country 	title="Korean" 			data="KOREAN" />
 			<country	 	title="Philippines" 		data="PHILIPPINES" />
@@ -16,14 +17,37 @@
 			<country 	title="Thailand" 		data="THAILAND" />
 			<country 	title="Vietnam" 			data="VIETNAM" />
 		</continent>
+		<continent 		title="Europe" 			data="EUROPE">
+			<country 	title="Bulgaria" 		data="BULGARIA" />
+			<country 	title="France" 			data="FRANCE" />
+			<country 	title="Germany" 			data="GERMANY" />
+			<country 	title="Greece" 			data="GREECE" />
+			<country 	title="Italy" 			data="ITALY" />
+			<country 	title="Netherlands" 		data="NETHERLANDS" />
+			<country 	title="Poland" 			data="POLAND" />
+			<country 	title="Spain" 			data="SPAIN" />
+			<country 	title="Sweden" 			data="SWEDEN" />
+			<country 	title="United Kingdom"	data="UNITED_KINGDOM" />
+		</continent>
 		<continent 		title="North America" 	data="NORTH_AMERICA">
-			<country 	title="USA" 				data="USA" />
 			<country 	title="Canada" 			data="CANADA" />
+			<country 	title="Costa Rica"		data="COSTA RICA" />
+			<country 	title="Guatamala" 		data="GUATAMALA" />
+			<country 	title="Haiti" 			data="HAITI" />
+			<country 	title="Dominican Republic" data="DOMINICAN_REPUBLIC" />
 			<country 	title="Mexico" 			data="MEXICO" />
 			<country 	title="Puerto Rico" 		data="PUERTO_RICO" />
 		</continent>
 		<continent 		title="South America" 	data="SOUTH_AMERICA">
+			<country 	title="Argentina" 		data="ARGENTINA" />
+			<country 	title="Bolivia" 			data="BOLIVIA" />
+			<country 	title="Brazil" 			data="BRAZIL" />
+			<country 	title="Chile" 			data="CHILE" />
+			<country 	title="Colombia" 		data="COLOMBIA" />
+			<country 	title="Ecuador" 			data="ECUADOR" />
 			<country 	title="Peru" 			data="PERU" />
+			<country 	title="Uruguay" 			data="URUGUA" />
+			<country 	title="Venezuela" 		data="VENEZUELA" />
 		</continent>
 	</continents>
 </locations>

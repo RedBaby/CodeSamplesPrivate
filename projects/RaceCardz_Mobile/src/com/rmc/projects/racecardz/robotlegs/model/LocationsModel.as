@@ -74,11 +74,31 @@ package com.rmc.projects.racecardz.robotlegs.model
 		//  Methods
 		//--------------------------------------
 		//PUBLIC
+		/**
+		 * 
+		 * @param locationData_str
+		 * @return 
+		 * 
+		 */		
+		public function getLocationByLocationData(aLocationData_str:String):LocationVO
+		{
+			var foundLocationVO : LocationVO = null;
+			//
+			for each (var locationVO : LocationVO in locations) {
+				
+				if (locationVO.data == aLocationData_str) {
+					foundLocationVO = locationVO;
+					break;
+				}
+			}
+			
+			return foundLocationVO;
+		}
 		
 		
 		
 		
-		
+
 	}
 }
 

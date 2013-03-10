@@ -24,7 +24,7 @@
 //Marks the right margin of code *******************************************************************
 package com.rmc.projects.racecardz.robotlegs.view.mediator
 {
-	import com.rmc.projects.racecardz.robotlegs.controller.events.NavigationSignalEvent;
+	import com.rmc.projects.racecardz.robotlegs.controller.events.NavigationEvent;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.NavigationSignal;
 	import com.rmc.projects.racecardz.robotlegs.controller.signals.RenderLayoutSignal;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
@@ -70,7 +70,7 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 			renderLayoutSignal.remove(_onRenderLayoutSignal);
 		}
 		
-		private function _onNavigationSignal (aNavigationSignalEvent : NavigationSignalEvent) : void
+		private function _onNavigationSignal (aNavigationSignalEvent : NavigationEvent) : void
 		{
 			var screen_class : Class = aNavigationSignalEvent.data as Class;
 			raceCardzGame.showScreen (screen_class);
@@ -79,7 +79,7 @@ package com.rmc.projects.racecardz.robotlegs.view.mediator
 		private function _onRenderLayoutSignal () : void
 		{
 			raceCardzGame.doLayoutScreens();
-			raceCardzGame.showScreen (QuestionScreen);
+			raceCardzGame.showScreen (MainMenuScreen);
 		}
 	}
 }

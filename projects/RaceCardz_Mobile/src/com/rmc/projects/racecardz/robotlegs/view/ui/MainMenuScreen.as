@@ -28,16 +28,21 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 	// --------------------------------------
 	// Imports
 	// --------------------------------------
+	import com.rmc.projects.racecardz.managers.AssetManager;
 	import com.rmc.projects.racecardz.robotlegs.model.PhrasesModel;
 	import com.rmc.projects.shardz.controls.ShardzScreen;
+	import com.rmc.projects.shardz.events.ShardzEvent;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ButtonGroup;
 	import feathers.data.ListCollection;
+	import feathers.layout.VerticalLayout;
 	
 	import org.osflash.signals.Signal;
 	
+	import starling.display.Image;
 	import starling.events.Event;
+	import starling.textures.Texture;
 	
 	// --------------------------------------
 	// Class
@@ -53,6 +58,14 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 		// Properties
 		// --------------------------------------
 		// PUBLIC GETTER/SETTERS
+		
+		/**
+		 *  
+		 */		
+		private var _settingsButtonClickSignal : Signal;
+		public function get settingsButtonClickSignal () 					: Signal 	{ return _settingsButtonClickSignal; }
+		
+		
 		/**
 		 *  
 		 */		
@@ -91,6 +104,8 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 		// --------------------------------------
 		// Constructor
 		// --------------------------------------
+		
+		private var _logo_image:Image;
 		/**
 		 * This is the constructor.
 		 * 
@@ -105,7 +120,8 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			// VARIABLES
 			
 			// PROPERTIES
-			_menuButtonClickSignal = new Signal ();
+			_menuButtonClickSignal 		= new Signal ();
+			_settingsButtonClickSignal 	= new Signal();
 			
 			// METHODS
 			
@@ -128,28 +144,43 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			//SUPER
 			super.initialize();
 			
+			_doLayoutContainer(VerticalLayout);
+			
 			//
 			//shardzHeader.visible = false;
-			shardzHeader.previousButton.visible = false;
-			shardzHeader.nextButton.visible = false;
+			shardzHeader.previousButton.visible 	= false;
+			shardzHeader.nextButton.visible 		= true;
+			
+			//LISTEN
+			addEventListener(ShardzEvent.HEADER_NEXT_BUTTON_CLICK, _onSettingsButtonClick);
 			
 			//ATTACH THINGS
+			
+			_logo_image = new Image (Texture.fromBitmap( new AssetManager.IMAGE_APP_LOGO ()));
+			container.addChild(_logo_image);
+			
+			
+			
 			_buttonGroup = new ButtonGroup();
 			_buttonGroup.direction		= ButtonGroup.DIRECTION_VERTICAL;
+			_buttonGroup.gap = 50;
 			//
 			if (_dataProvider_listcollection) {
 				_buttonGroup.dataProvider = _dataProvider_listcollection
 			}
-			this.addChild(_buttonGroup);
+			container.addChild(_buttonGroup);
 			
-
+			
 			
 		}
+		
+		
 		
 		override protected function _doLayoutWithLocalization () : void
 		{
 			//
 			title = phrasesModel.phrasesVO.titleMainMenuScreen_str;
+			shardzHeader.nextButton.label = phrasesModel.phrasesVO.buttonSettings_str
 			
 			//SET FROM OUTSIDE
 			listCollection 	= new ListCollection(
@@ -193,18 +224,25 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			//SUPER
 			super.draw();
 			
+			
+			//_logo_image.width = container.minWidth;
+			//_logo_image.height = actualWidth; //square
+			
 			//
 			_buttonGroup.validate();
 			_buttonGroup.x = (this.actualWidth - _buttonGroup.width) / 2;
 			_buttonGroup.y = -shardzHeader.height + (this.actualHeight - shardzHeader.height - _buttonGroup.height) / 2;
-			
 			
 		}
 		
 		// --------------------------------------
 		// Event Handlers
 		// --------------------------------------
-		
+		private function _onSettingsButtonClick(aEvent : ShardzEvent):void
+		{
+			_settingsButtonClickSignal.dispatch(aEvent);
+			
+		}
 		
 	}
 }

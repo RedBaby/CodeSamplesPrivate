@@ -145,7 +145,7 @@ package com.rmc.projects.racecardz.robotlegs.service
 				countryData_str 			= node.@data 
 				continentTitle_str 		= node.parent().@title
 				continentData_str 		= node.parent().@data
-				trace ("yeah" + continentTitle_str + " : " + countryTitle_str);
+				//trace ("Parsing Locations: " + continentTitle_str + " : " + countryTitle_str);
 				locations_vector.push ( new LocationVO (countryTitle_str, countryData_str, new ContinentVO (continentTitle_str, continentData_str)));
 			}
 			

@@ -28,20 +28,26 @@ package
 	// --------------------------------------
 	// Imports
 	// --------------------------------------
-	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
-	import com.rmc.projects.racecardz.robotlegs.view.ui.QuestionScreen;
 	import com.rmc.projects.racecardz.robotlegs.RaceCardzContext;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.AfterQuestionScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.AfterTestScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.AnswerScreen;
 	import com.rmc.projects.racecardz.robotlegs.view.ui.MainMenuScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.QuestionScreen;
+	import com.rmc.projects.racecardz.robotlegs.view.ui.SettingsScreen;
 	import com.rmc.projects.shardz.controls.ShardzScreenNavigator;
 	import com.rmc.projects.shardz.events.ShardzEvent;
 	
 	import feathers.controls.ScreenNavigatorItem;
+	import feathers.events.FeathersEventType;
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	import feathers.themes.MetalWorksMobileTheme;
 	
 	import org.robotlegs.mvcs.StarlingContext;
 	
 	import starling.animation.Transitions;
+	import starling.core.Starling;
+	import starling.events.Event;
 	
 	// --------------------------------------
 	// Class
@@ -77,6 +83,8 @@ package
 		// --------------------------------------
 		// Constructor
 		// --------------------------------------
+		
+		private var _screenSlidingStackTransitionManager:ScreenSlidingStackTransitionManager;
 		
 		/**
 		 * This is the constructor.
@@ -122,30 +130,36 @@ package
 			
 			//
 			_shardzScreenNavigator = new ShardzScreenNavigator ();
+			_shardzScreenNavigator.addEventListener(FeathersEventType.TRANSITION_COMPLETE, _onScreenNavigatorTransitionComplete);
 			addChild(_shardzScreenNavigator);
 			//
-			var screenSlidingStackTransitionManager : ScreenSlidingStackTransitionManager = new ScreenSlidingStackTransitionManager (_shardzScreenNavigator);
-			screenSlidingStackTransitionManager.delay 		= 0.0;
-			screenSlidingStackTransitionManager.duration 	= 1;
-			screenSlidingStackTransitionManager.ease 		= Transitions.EASE_IN_OUT;
+			_screenSlidingStackTransitionManager = new ScreenSlidingStackTransitionManager (_shardzScreenNavigator);
+			
+			_screenSlidingStackTransitionManager.delay 		= 0.25;
+			_screenSlidingStackTransitionManager.duration 	= 0.75;
+			_screenSlidingStackTransitionManager.ease 		= Transitions.EASE_IN_OUT;
+			
+			
 			//
 			var mainMenuScreenNavigatorItem : ScreenNavigatorItem = new ScreenNavigatorItem (new MainMenuScreen());
 			_shardzScreenNavigator.addScreen(MainMenuScreen.ID, mainMenuScreenNavigatorItem);
 			(mainMenuScreenNavigatorItem.screen as MainMenuScreen).addEventListener(ShardzEvent.HEADER_NEXT_BUTTON_CLICK, 	_onHeaderButtonClick);
-			
-			
-			////////////////////////////////////////////
-			////////////////////////////////////////////
+			//
+			var settingsScreenScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new SettingsScreen ());
+			_shardzScreenNavigator.addScreen(SettingsScreen.ID, settingsScreenScreenItem);
 			//
 			var testQuestionScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new QuestionScreen ());
-			//(testQuestionScreenItem.screen as ListMenuScreen).addEventListener(ShardzEvent.HEADER_PREVIOUS_BUTTON_CLICK, 		_onHeaderButtonClick);
 			_shardzScreenNavigator.addScreen(QuestionScreen.ID, testQuestionScreenItem);
-			
 			//
 			var testAnswerScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new AnswerScreen ());
-			//(testQuestionScreenItem.screen as ListMenuScreen).addEventListener(ShardzEvent.HEADER_PREVIOUS_BUTTON_CLICK, 		_onHeaderButtonClick);
 			_shardzScreenNavigator.addScreen(AnswerScreen.ID, testAnswerScreenItem);
-
+			//
+			var afterQuestionScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new AfterQuestionScreen ());
+			_shardzScreenNavigator.addScreen(AfterQuestionScreen.ID, afterQuestionScreenItem);
+			//
+			var afterTestScreenItem : ScreenNavigatorItem = new ScreenNavigatorItem (new AfterTestScreen ());
+			_shardzScreenNavigator.addScreen(AfterTestScreen.ID, afterTestScreenItem);
+			
 			
 		}	
 		/**
@@ -154,7 +168,22 @@ package
 		 */		
 		public function showScreen (aScreen_class : Class) : void
 		{
-			_shardzScreenNavigator.showScreen(aScreen_class["ID"]);
+			
+			
+			//SHOW A DIFFERENT SCREEN THAN THE CURRENT 
+			if (_shardzScreenNavigator.activeScreenID != aScreen_class["ID"]) {
+				_shardzScreenNavigator.showScreen(aScreen_class["ID"]); 
+			} else {
+				//SHOW CURRENT SCREEN AGAIN (I.E. QUESTION 1 -> QUESTION 2);
+				/*
+				I TRIED TO REMOVE/RE-ADD THE SAME SCREEN AND IT DOESN'T WORK
+				
+				SO FOR NOW JUST DO THE SAME THING (REGARDLESS OF THIS IF STATEMENT)
+				
+				*/
+				_shardzScreenNavigator.showScreen(aScreen_class["ID"]);
+				
+			}
 			
 		}	
 		
@@ -166,20 +195,21 @@ package
 		 */		
 		private function _onHeaderButtonClick(aEvent : ShardzEvent):void
 		{
-			if (aEvent.currentTarget is MainMenuScreen) {
-				if (aEvent.type == ShardzEvent.HEADER_NEXT_BUTTON_CLICK) {
-					_shardzScreenNavigator.showScreen(QuestionScreen.ID);
-				}
-			} else {
-				//TODO, MAKE ERROR
-				throw new Error ("TODO: Switchstatement");
-			}
+			//TRIGGERED, BUT DO NOTHING HERE NOW
+			//WE HANDLE THIS IN EACH MEDIATOR
 		}
 		
 		// --------------------------------------
 		// Events
 		// --------------------------------------
-		
+		private function _onScreenNavigatorTransitionComplete (aEvent : Event) : void
+		{
+			if ( _shardzScreenNavigator.previousScreenInTransition != null &&
+				_shardzScreenNavigator.previousScreenInTransition is AfterQuestionScreen) {
+				trace ("_shardzScreenNavigator: " + _shardzScreenNavigator.previousScreenInTransition);
+				//_shardzScreenNavigator.removeScreen(AfterQuestionScreen.ID);
+			}
+		}
 		
 		
 		

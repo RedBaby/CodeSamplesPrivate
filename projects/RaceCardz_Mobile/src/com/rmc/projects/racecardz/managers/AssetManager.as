@@ -24,6 +24,7 @@
 //Marks the right margin of code *******************************************************************
 package com.rmc.projects.racecardz.managers
 {
+	import flash.display.Bitmap;
 	
 	
 	public class AssetManager
@@ -41,6 +42,11 @@ package com.rmc.projects.racecardz.managers
 		public static var URL_LOCATIONS_XML:String 		= "./assets_runtime/xml/locations.xml";
 		
 		/**
+		 * 
+		 */		
+		public static var URL_QUESTIONS_XML:String 		= "./assets_runtime/xml/questions.xml";
+		
+		/**
 		 *	URL : Load external configuration variables
 		 *  
 		 */		
@@ -55,10 +61,41 @@ package com.rmc.projects.racecardz.managers
 		
 		
 		// --------------------------------------
-		// OTHER
+		// IMAGES
 		//
 		// --------------------------------------
+		/**
+		 *	IMAGE: 
+		 *  
+		 */		
+		[Embed(source="../../../../../../assets_compiletime/images/splash/SplashScreenImage_v1.png")]
+		public static var IMAGE_SPLASH:Class;
 		
+		/**
+		 *	IMAGE: 
+		 *  
+		 */		
+		[Embed(source="../../../../../../assets_compiletime/images/logos/appLogo_v1.png")]
+		public static var IMAGE_APP_LOGO:Class;
+		
+		
+		
+		// --------------------------------------
+		// FONTS
+		//
+		// --------------------------------------
+		// to embed a system font
+		[Embed(source="../../../../../../assets_compiletime/fonts/Candara.ttf", 
+    fontName = "Candara")] 
+		/*
+    mimeType = "application/x-font", 
+    fontWeight="normal", 
+    fontStyle="normal", 
+    unicodeRange="englishRange", 
+    advancedAntiAliasing="true", 
+    embedAsCFF="false")]
+		*/
+		public static var FONT_CANDARA:Class;
 		
 	}
 }

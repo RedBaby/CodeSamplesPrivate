@@ -24,85 +24,21 @@
 //
 //	COMMON SETTINGS
 //
-//	* 	1. Close the TRT App
-//	* 	2. Edit a configuration.xml value. Save the configuration.xml.
-//	* 	3. Run the TRT App.
-//	*   4. Repeat 3/4 or Uninstall and Reinstall the app to reset configuration.xml.		
-//
 //////////////////////////////////////////////////////////////////////////////////////////////
 									
 -->		
 						
-																						
-	<!--   
-		Toggles the visibility for configuration prompt visible. Confirms load of 
-		configuration.xml upon application start. 
-	-->
-	<variable name="isConfigurationPromptVisible" type="boolean" default="false" ></variable>
-	
-						
 	<!--   
 		Toggles the visibility for a debug panel with FPS counter and 'Reload' button. 
 	-->
-	<variable name="isDebugPanelVisible" type="boolean" default="false" ></variable>
+	<variable name="isDebugPanelVisible" type="boolean" default="false" >true</variable>
 	
 							
 	<!--   
 		Toggles the visibility for a debug window that shows when images fail or other errors occur
 	-->
-	<variable name="isDebugPromptVisible" type="boolean" default="false" >true</variable>
-			
-					
-	<!--   
-		Config: Toggles the apps use of MonsterDebugger. A free 3rd party debugger app for 
-		'Debug...', 'Run...', and 'Export AIR Release Build...'
-	-->
-	<variable name="isUsingMonsterDebugger" type="boolean" default="false" ></variable>
-					
-					
-	<!--  
-	 	Toggles the visibility of an overlay showing text for every successful tracking 
-	 	event sent to the servers. 
-	 -->
-	<variable name="isTrackingPanelVisible" type="boolean" default="false" ></variable>
-		
-	<!--  
-	 	Toggles the visibility of an overlay of tick lines in the LifeBar area showing days/months.
-	 -->
-	<variable name="isLifeBarGuideVisible" type="boolean" default="false" ></variable>
-		
-				
-	<!--   
-		Toggles the session’s mouse cursor visibility. 
-	-->
-	<variable name="isMouseVisible" type="boolean" default="false" >true</variable>
-		
-				
-	<!--   
-		Config: Toggle the fullscreen (escape to close app). If false, the app is in a 
-		window (for easier debugging/development) 
-	-->
-	<variable name="isFullScreen" type="boolean" default="true"></variable>
-
-	<!--   
-		This URL is called for the session data immediately after the config is loaded. 
-		TRT TIMELINE: 			 http://dt-dev-004.amnh.org/kiosk/trxml/40941 
-		TRT PRODUCTION(CACHED)   http://www.amnh.org/kiosk/trxml/44879
-		TRT TIMELINE(NOCACHE)	http://dt-web-002.amnh.org/kiosk/trxml/44879	
-		TEMP OFFLINE VERIONOLD: 	./assets_runtime/temporary/xml/online_from_10_25_2012.xml 
-		TEMP OFFLINE VERIONNEW: 	./assets_runtime/temporary/xml/online_from_11_02_2012.xml 
-		
-		//BEST http://dt-web-002.amnh.org/kiosk/trxml/44879
-	-->
-	<variable name="backendDataURL" type="string" default="http://www.amnh.org/kiosk/trxml/44879" ></variable>
-		
-				
-	<!-- 
-		NOTE: This URL is not loaded unless the user clicks 'Reset with Kitchen Sink' 
-		from the debug panel. 
-	-->
-	<variable name="backendDataURLKitchenSink" type="string" default="http://dt-dev-004.amnh.org/kiosk/trxml/41107" ></variable>
-
+	<variable name="isDebugPromptVisible" type="boolean" default="false" ></variable>
+	
 
 	<!--   
 		The trackingID sent to GoogleAnalytics. Default is UA-5330062-1 as provided 
@@ -112,20 +48,9 @@
 
 
 	<!--   
-		This value in milliseconds (5000 is minimum). When the application sits idle with
-		no user interactivity for this duration, it resets to display the content of the 
-		default menu item as defined by defaultMenuItemIndex. The reset has no transition. 
-		The default time is 120000 milliseconds, which is 2 minutes.  
+		This value in milliseconds (5000 is minimum). Duration of each question's timer.  
 	-->
-	<variable name="idleDurationMS" type="uint" default="120000" >60000</variable>
-
-
-	<!--   
-		When the application starts or resets the app simulates a ´click´ to the 
-		main menu button of this index, showing the content for that menu item. 
-		The default value will show the top menu item´s content.  
-	-->
-	<variable name="defaultMenuItemIndex" type="uint" default="0" ></variable>
+	<variable name="questionTimerDurationMS" type="uint" default="10000" ></variable>
 
 							
 <!-- 
@@ -134,20 +59,9 @@
 //
 //	ADVANCED SETTINGS
 //
-//	* 	1. Close the TRT App
-//	* 	2. Edit a configuration.xml value. Save the configuration.xml.
-//	* 	3. Run the TRT App.
-//	*   4. Repeat 3/4 or Uninstall and Reinstall the app to reset configuration.xml.		
-//
 //////////////////////////////////////////////////////////////////////////////////////////////
 									
 -->
-				
-	<!--   
-		Set to 'true' here to load the url backendDataURL by default (Required for Production). 
-		Set to 'false' here to load the backendDataURLKitchenSink instead (Debugging Only).  
-	-->
-	<variable name="isUsingKitchenSinkURL" type="boolean" default="false" ></variable>
 
 
 </variables>

@@ -27,9 +27,9 @@ package
 	// --------------------------------------
 	// Imports
 	// --------------------------------------
-	import flash.events.Event;
+	import com.rmc.projects.racecardz.managers.AssetManager;
 	
-	import org.robotlegs.mvcs.StarlingContext;
+	import flash.events.Event;
 	
 	// --------------------------------------
 	// Class
@@ -60,7 +60,7 @@ package
 		public function RaceCardz_Mobile()
 		{
 			// SUPER
-			super();
+			super(new AssetManager.IMAGE_SPLASH ());
 			
 			// EVENTS
 			
@@ -69,6 +69,7 @@ package
 			// PROPERTIES
 			
 			// METHODS
+
 			
 		}
 		
@@ -80,7 +81,7 @@ package
 		 * @return void
 		 * 
 		 */	
-		override protected function _onAddedToStage (aEvent : Event) : void
+		override protected function _onAddedToStage (aEvent : flash.events.Event) : void
 		{
 			//SUPER
 			super._onAddedToStage (aEvent);
