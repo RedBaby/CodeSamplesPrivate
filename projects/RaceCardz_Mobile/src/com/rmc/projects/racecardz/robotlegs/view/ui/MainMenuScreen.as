@@ -29,12 +29,11 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 	// Imports
 	// --------------------------------------
 	import com.rmc.projects.racecardz.managers.AssetManager;
-	import com.rmc.projects.racecardz.robotlegs.model.PhrasesModel;
-	import com.rmc.projects.shardz.controls.ShardzScreen;
 	import com.rmc.projects.shardz.events.ShardzEvent;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ButtonGroup;
+	import feathers.controls.Label;
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
 	
@@ -106,6 +105,8 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 		// --------------------------------------
 		
 		private var _logo_image:Image;
+
+		private var instructions_label:Label;
 		/**
 		 * This is the constructor.
 		 * 
@@ -159,6 +160,9 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 			_logo_image = new Image (Texture.fromBitmap( new AssetManager.IMAGE_APP_LOGO ()));
 			container.addChild(_logo_image);
 			
+			instructions_label = new Label();
+			container.addChild(instructions_label);
+			
 			
 			
 			_buttonGroup = new ButtonGroup();
@@ -179,8 +183,9 @@ package com.rmc.projects.racecardz.robotlegs.view.ui
 		override protected function _doLayoutWithLocalization () : void
 		{
 			//
-			title = phrasesModel.phrasesVO.titleMainMenuScreen_str;
-			shardzHeader.nextButton.label = phrasesModel.phrasesVO.buttonSettings_str
+			title 							= phrasesModel.phrasesVO.titleMainMenuScreen_str;
+			instructions_label.text			= phrasesModel.phrasesVO.labelInstructions_str;
+			shardzHeader.nextButton.label 	= phrasesModel.phrasesVO.buttonSettings_str
 			
 			//SET FROM OUTSIDE
 			listCollection 	= new ListCollection(

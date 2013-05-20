@@ -31,7 +31,7 @@
 	<!--   
 		Toggles the visibility for a debug panel with FPS counter and 'Reload' button. 
 	-->
-	<variable name="isDebugPanelVisible" type="boolean" default="false" ></variable>
+	<variable name="isDebugPanelVisible" type="boolean" default="false" >true</variable>
 	
 							
 	<!--   
