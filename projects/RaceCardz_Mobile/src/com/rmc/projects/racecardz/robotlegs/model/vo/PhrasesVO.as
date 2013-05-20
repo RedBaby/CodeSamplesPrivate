@@ -24,6 +24,8 @@
 //Marks the right margin of code *******************************************************************
 package com.rmc.projects.racecardz.robotlegs.model.vo
 {
+	import feathers.controls.Label;
+
 	//--------------------------------------
 	//  Imports
 	//--------------------------------------
@@ -50,6 +52,7 @@ package com.rmc.projects.racecardz.robotlegs.model.vo
 		//--------------------------------------
 		//  Debug
 		//--------------------------------------
+		public var labelInstructions_str:String		 = "You will see [x] faces. \nGuess the nationality of each within the time limit.";
 		public var labelTimerTitle_str:String		 = "Timer";
 		public var scrollTextAfterTest_str:String     = "You did [ok] with a score of [score], etc...";
 		public var titleAfterTestScreen_str:String	 = "Summary";

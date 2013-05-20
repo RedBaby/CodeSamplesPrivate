@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<questions>
+	<question locationData="BURMA" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_burma_v1.png" />
+	</question>
+	<question locationData="CAMBODIA" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_cambodia_v1.png" />
+	</question>
+	<question locationData="CHINA" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_china_v1.png" />
+	</question>
+	<question locationData="INDIA" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_india_v1.png" />
+	</question>
+	<question locationData="JAPAN" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_japan_v1.png" />
+	</question>
+	<question locationData="KOREAN" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_korean_v1.png" />
+	</question>
+	<question locationData="PHILIPPINES" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_philippines_v1.png" />
+	</question>
+	<question locationData="TAIWAN" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_taiwan_v1.png" />
+	</question>
+	<question locationData="THAILAND" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_thailand_v1.png" />
+	</question>
+	<question locationData="VIETNAM" gender="FEMALE">
+		<image url="./assets_runtime/images/faces/face_female_vietnam_v1.png" />
+	</question>
+</questions>
