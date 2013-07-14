@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Community Assets/uMOM/Scripts/Editor/uMOMInitializeOnLoad.cs">
+    <Files>
+      <File FileName="Assets/Community Assets/uMOM/Scripts/Editor/ManagerCandidate.cs" Line="98" Column="101" />
+      <File FileName="Assets/Community Assets/uMOM/Scripts/Editor/uMOMEditorWindow.cs" Line="433" Column="5" />
+      <File FileName="Assets/Community Assets/uMOM/Scripts/Editor/uMOMInitializeOnLoad.cs" Line="166" Column="12" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Catchpoint exceptionName="System.NullReferenceException" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="Assets/RMCLibrary/Scripts/managers/mom/MOM.cs" line="156" offsetX="581" offsetY="2335" expression="_Instance" liveUpdate="False" />
+    <Watch file="Assets/RMCLibrary/Scripts/managers/mom/Editor/MOMEditorWindow.cs" line="262" offsetX="167" offsetY="3915" expression="scriptableObject" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+</Properties>
