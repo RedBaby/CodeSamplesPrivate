@@ -46,8 +46,8 @@
   <ItemGroup>
      <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\ManagerCandidate.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\UMOMEditorWindow.cs" />
+     <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\UMOMInitializeOnLoad2.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\UMOMMenu.cs" />
-     <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\uMOMInitializeOnLoad.cs" />
      <None Include="Assets\Community Assets\UMOM\Scripts\read_me.txt" />
  <Reference Include="\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.Graphs">
  <HintPath>\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.Graphs.dll</HintPath>

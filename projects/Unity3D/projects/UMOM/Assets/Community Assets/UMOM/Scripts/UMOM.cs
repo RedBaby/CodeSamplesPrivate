@@ -80,7 +80,7 @@ namespace com.rmc.managers.umom
 		///<summary>
 		///	 NAME: GameObject containing the UMOM
 		///</summary>
-		private static string _NAME_MOM = "_UMOM";
+		private static string _NAME_MOM = "_uMOM";
 		
 		///<summary>
 		///	 NAME: GameObject containing any static children (manually placed in heirarchy)
