@@ -179,7 +179,6 @@ namespace com.rmc.managers.umom.Editor
 			
 			Object[] allValidScriptableObjects = EditorWindowUtility.GetAllProjectWindowScriptsBySuperClassAndInterface (typeof (BaseManager), typeof (IManager));
 			
-			Debug.Log ("TOTAL VALID " + allValidScriptableObjects.Length);
 			//
 			MonoScript scriptableObject_monoscript;
 					
@@ -204,30 +203,30 @@ namespace com.rmc.managers.umom.Editor
 		private void _getTargetReferences ()
 		{
 			//
-			_mom_serializedObject 						= new SerializedObject(UMOM.Instance);
-			_isEnabled_serializedproperty 				= _mom_serializedObject.FindProperty ("isEnabled");
-			_isHiddenInHierarchy_serializedproperty 	= _mom_serializedObject.FindProperty ("isHiddenInHierarchy");
-			_managers_serializedproperty 				= _mom_serializedObject.FindProperty ("managers");
-			
-			if (_mom_serializedObject == null) {
-				Debug.Log ("_mom_serializedObject: " + _mom_serializedObject);
-			}
-			
-			if (_isEnabled_serializedproperty == null) {
-				Debug.Log ("_isEnabled_serializedproperty: " + _isEnabled_serializedproperty);
-			}
-			
-			if (_isHiddenInHierarchy_serializedproperty == null) {
-				Debug.Log ("_isHiddenInHierarchy_serializedproperty: " + _isHiddenInHierarchy_serializedproperty);
-			}
-			
-			if (_managers_serializedproperty == null) {
-				Debug.Log ("_managersList_serializedproperty: " + _managers_serializedproperty);
-			}
-			
-			
-			//throw new UnityException();
-			
+			if (UMOM.Instance) {
+				_mom_serializedObject 						= new SerializedObject(UMOM.Instance);
+				_isEnabled_serializedproperty 				= _mom_serializedObject.FindProperty ("isEnabled");
+				_isHiddenInHierarchy_serializedproperty 	= _mom_serializedObject.FindProperty ("isHiddenInHierarchy");
+				_managers_serializedproperty 				= _mom_serializedObject.FindProperty ("managers");
+				
+				if (_mom_serializedObject == null) {
+					Debug.Log ("_mom_serializedObject: " + _mom_serializedObject);
+				}
+				
+				if (_isEnabled_serializedproperty == null) {
+					Debug.Log ("_isEnabled_serializedproperty: " + _isEnabled_serializedproperty);
+				}
+				
+				if (_isHiddenInHierarchy_serializedproperty == null) {
+					Debug.Log ("_isHiddenInHierarchy_serializedproperty: " + _isHiddenInHierarchy_serializedproperty);
+				}
+				
+				if (_managers_serializedproperty == null) {
+					Debug.Log ("_managersList_serializedproperty: " + _managers_serializedproperty);
+				}
+				
+				
+				}
 		}
 		
 		/// <summary>
@@ -459,10 +458,8 @@ namespace com.rmc.managers.umom.Editor
 			//TODO, MAKE IMAGE FILL THE 'BOX' (OR CHOOSE SOMETHING OTHER THAN 'BOX');
 			//bannerImage_texture2D.width 	= 300;
 			//bannerImage_texture2D.height 	= 50;
-			if (bannerImage_texture2D != null) {
-				bannerImage_texture2D.wrapMode = TextureWrapMode.Repeat;
-				GUILayout.Box(bannerImage_texture2D,GUILayout.Width(position.width - _bannerPaddingRight_int),GUILayout.Height(40)); 
-			}
+			bannerImage_texture2D.wrapMode = TextureWrapMode.Repeat;
+			GUILayout.Box(bannerImage_texture2D,GUILayout.Width(position.width - _bannerPaddingRight_int),GUILayout.Height(40)); 
 			//GUILayout.Label(bannerImage_texture2D,GUILayout.Width(position.width - 7),GUILayout.Height(50)); 
 				
 			//OPTIONS

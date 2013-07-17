@@ -151,11 +151,13 @@ public static class Debug
 		output_string += aMessage_string;
 		string spaces_string = "  ";
 		StackFrame stackFrame;
-		for (int count_int = 2 ; count_int < stackFrames.Length; count_int ++ ) {
+		
+		//WE don't show'Debug.LogStackTrace()' in result by controlling 'for' loop
+		for (int count_int = stackFrames.Length -1 ; count_int > 1; count_int -- ) {
 			
 			stackFrame = stackFrames[count_int];
-			output_string += "\n" + (spaces_string + stackFrame.GetMethod());
-			spaces_string += "  ";
+			output_string += "\n" + (spaces_string + stackFrame.GetMethod().DeclaringType.Name + "." + stackFrame.GetMethod().Name + "()");
+			spaces_string += "     ";
 		}
 		return output_string;			
 	}

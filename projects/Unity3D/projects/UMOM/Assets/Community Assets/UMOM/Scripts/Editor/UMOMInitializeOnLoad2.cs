@@ -53,7 +53,7 @@ namespace com.rmc.managers.umom.Editor
 	//  Class
 	//--------------------------------------
 	[InitializeOnLoad]
-	public class uMOMInitializeOnLoad 
+	public class UMOMInitializeOnLoad 
 	{
 			
 	
@@ -103,12 +103,12 @@ namespace com.rmc.managers.umom.Editor
 		
 		// PUBLIC STATIC
 		/// <summary>
-		/// Initializes the <see cref="uMOMInitializeOnLoad"/> class.
+		/// Initializes the <see cref="UMOMInitializeOnLoad"/> class.
 		/// </summary>
-		static uMOMInitializeOnLoad()
+		static UMOMInitializeOnLoad()
 		{
 			//
-			//Debug.Log ("uMOMInitializeOnLoad.constructor()");
+			//Debug.Log ("UMOMInitializeOnLoad.constructor()");
 			EditorApplication.playmodeStateChanged += onPlaymodeStateChanged;
 			
 			
@@ -163,7 +163,7 @@ namespace com.rmc.managers.umom.Editor
 				#pragma warning restore 0219
 				
 				//FOR DEVELOPMENT ONLY - SHOW WINDOW *ALWAYS*
-				//uMOMMenu.ShowEditorWindow();
+				//UMOMMenu.ShowEditorWindow();
 			}
 		}
 		

@@ -82,6 +82,7 @@ namespace com.rmc.managers.umom.Editor
 		[MenuItem("RMC/uMom/Show Editor", false, 50)]
 		public static void ShowEditorWindow()
 		{
+			Debug.Log ("ShowEditorWindow()");
 			//Show existing window instance. If one doesn't exist, make one.
 			bool isUtility_boolean 		= false; //false means dockable
 			EditorWindow.GetWindow		(	typeof(UMOMEditorWindow), isUtility_boolean, "UMOM Editor");
@@ -94,6 +95,7 @@ namespace com.rmc.managers.umom.Editor
 		[MenuItem("RMC/uMom/Create ScriptableObject From Project Selection", false, 50)]
 		public static void CreateAssetFromSelected ()
 		{
+			Debug.Log ("CreateAssetFromSelected()");
 			ScriptableObjectUtility.CreateAssetFromProjectSelection ();
 			
 		}

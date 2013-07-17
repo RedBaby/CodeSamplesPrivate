@@ -185,7 +185,7 @@ namespace com.rmc.managers.umom
 			
 			_tempRandom_float = r.Next(100);
 			Debug.Log ("UMOM.constructor() " + _tempRandom_float);
-			
+												
 		}
 		
 		public void destroy()
@@ -551,8 +551,7 @@ namespace com.rmc.managers.umom
 						
 					}
 					
-					//
-					Debug.LogStackTrace();
+
 
 					//5. TEMPORARY***** ADD MANAGERS (SHOULD BE DONE FROM OUTSIDE)
 					_Instance._reAddAllManagersFromInspector();
@@ -565,6 +564,7 @@ namespace com.rmc.managers.umom
 					
 					
 				} 
+
 				
 									
 				//4. ADD FLAGS TO HIDE EVERYTHING FROM HIERARCHY (OPTIONAL)
@@ -634,8 +634,19 @@ namespace com.rmc.managers.umom
 		void OnDestroy() {
 			//I DON'T EXPECT IN TYPICAL USE, BECAUSE THE UMOM SHOULD PERSIST FOREVER, RIGHT? (WHAT ABOUT WHEN UMOM.ENABLED= FALSE?)
 			removeAllManagers();
-    		Debug.Log("	Mom.OnDestroy() " + _tempRandom_float);
+												
+					//
+					Debug.LogStackTrace();
+    		Debug.Log("	UMOM.OnDestroy() " + _tempRandom_float);
 		}
+		
+		
+		void OnDrawGizmos() 
+		{
+			
+        	Gizmos.DrawIcon ( _Instance.transform.position, "UMOMGizmoIcon", true);
+			
+    	}
 	}
 }
 
