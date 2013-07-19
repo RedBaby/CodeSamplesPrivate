@@ -217,6 +217,7 @@ namespace com.rmc.managers.umom
 			IManager found_imanager;
 			
 			//NOTE: LIMIT - ONLY 1 MANAGER OF EACH TYPE MAY EXIST.
+			Debug.Log ("1addManager, has?: " + hasManager<T>());
 			if (hasManager<T>()) {
 				
 				found_imanager = getManager<T>();
@@ -226,6 +227,8 @@ namespace com.rmc.managers.umom
 				found_imanager = _addManagerByForce<T>();
 				
 			} 
+			
+			Debug.Log ("2addManager: " + found_imanager);
 				
 			
 			//RETURN
@@ -300,6 +303,7 @@ namespace com.rmc.managers.umom
 		public bool hasManager <T> () where T : IManager
 		{
 			ScriptableObject scriptableObject = managers.Find ( man => (man.GetType() == typeof(T))	);
+			Debug.Log ("hasManager(): " + scriptableObject);
 			IManager found_imanager = (IManager) scriptableObject;
 			return (found_imanager != null);
 		}
@@ -316,6 +320,11 @@ namespace com.rmc.managers.umom
 		public T getManager <T> () where T : IManager
 		{
 			ScriptableObject scriptableObject = managers.Find ( man => (man.GetType() == typeof(T))	);
+			
+			Debug.Log ("getManager: " + managers);
+			foreach (IManager iManager in managers) {
+				Debug.Log ("is : " + iManager);
+			}
 			IManager found_imanager = (IManager) scriptableObject;
 			return (T) found_imanager;
 		}
@@ -368,7 +377,7 @@ namespace com.rmc.managers.umom
 			IManager existing_imanager = getManager<T>();
 			bool wasSuccessful_boolean;
 			
-			Debug.Log ("removeManager(): " + existing_imanager);
+			Debug.Log ("	removeManager(): " + existing_imanager);
 			if (existing_imanager == null) {
 				wasSuccessful_boolean = false; //failed
 				
@@ -400,10 +409,12 @@ namespace com.rmc.managers.umom
 			for (int count_int = managers.Count -1; count_int >=0; count_int--) {
 				
 				IManager iManager = managers[count_int];
-				Debug.Log ("removing manager : " + iManager);
-				toBeDestroyed_type = iManager.GetType();
-				Debug.Log ("REMO: " + iManager);
-				GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "removeManager", toBeDestroyed_type);
+				if (iManager != null) {
+					Debug.Log ("removing manager : " + iManager);
+					toBeDestroyed_type = iManager.GetType();
+					Debug.Log ("REMO: " + iManager);
+					GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "removeManager", toBeDestroyed_type);
+				}
 			}
 			
 			return wasSuccessful_boolean;

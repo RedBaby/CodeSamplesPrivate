@@ -173,6 +173,32 @@ namespace com.rmc.utilities
 			
 		}
 		
+		
+		
+		public static MonoScript[] GetAllAssetMonoScriptsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
+		{
+			
+			//
+			aSuperClassType = typeof (BaseManager);
+			//
+			
+			 MonoScript[] scripts = (MonoScript[])Object.FindObjectsOfTypeIncludingAssets( typeof( MonoScript ) );
+ 
+			List<MonoScript> result = new List<MonoScript>();
+			 
+			foreach( MonoScript m in scripts )	{
+				//Debug.Log ("m1: " + (m.GetClass() != null));
+				if( m.GetClass() != null && m.GetClass().IsClass == true && m.GetClass().IsSubclassOf (aSuperClassType) == true ) {
+					//result.Add( m );
+					result.Add (m);
+					//Debug.Log ("	m: " + result[result.Count-1] );
+				}
+			}
+			return result.ToArray();
+			
+		}
+			
+			
 		/// <summary>
 		/// Gets the type of the all project window items by interface and is subclass of.
 		/// </summary>
@@ -185,17 +211,26 @@ namespace com.rmc.utilities
 		/// <param name='aSuperClassType'>
 		/// A super class type.
 		/// </param>
-		public static Object[] GetAllProjectWindowScriptsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
+		public static Object[] GetAllObjectsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
 		{
 			//SEARCH 'ALL' OBJECTS, THEN FILTER DOWN BEFORE RETURNING
 			System.Type classType = typeof (UnityEngine.Object);
-			Object[] objects_array = Object.FindObjectsOfTypeIncludingAssets(classType).Where ( (aItem) => 
-				(
-				
-					aItem.GetType().GetInterface(aInterfaceType.Name) == (aInterfaceType) ) &&
-					aItem.GetType().IsSubclassOf(aSuperClassType) == true 
-				
-				
+			
+			//SOME HACK I FOUND ONLINE SO 'FIND' WORKS
+			//** THIS IS INDEED NEEDED!!! IT MAKES 'FIND' RETURN ALL, AND NOT JUST THE ONES I HAD CLICKED OR USED**
+			//TODO: PERHAPS CACHE THIS CALL INSTEAD OF CALLING IT SO MUCH, IS IT CAUSING SLOWDOWN NOW?
+			Resources.LoadAll("", classType );
+			
+			//
+			Object[] objects_array = Object.FindObjectsOfTypeIncludingAssets(classType).Where 
+				( 
+					(aItem) => 
+						(
+							aItem.GetType().GetInterface(aInterfaceType.Name) == (aInterfaceType) &&
+							aItem.GetType().IsSubclassOf(aSuperClassType) == true  &&
+							(aItem.GetType().Equals (aSuperClassType) == false) &&
+							aItem.GetType().IsClass
+						) 
 				).ToArray();
 			return objects_array;
 			

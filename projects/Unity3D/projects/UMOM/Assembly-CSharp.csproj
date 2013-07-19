@@ -60,11 +60,10 @@
      <Compile Include="Assets\Community Assets\UMOM\Scripts\IManager.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\UMOM.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\CustomManager.cs" />
-     <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\EventManager\EventManager.cs" />
+     <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\EventManager.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\GUIManager.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\LevelManager.cs" />
-     <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\SoundManager.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\TestManagerWithNoAsset.cs" />
      <Compile Include="Assets\UMOMDemo\Scripts\AbstractButtonComponent.cs" />
      <Compile Include="Assets\UMOMDemo\Scripts\AddGOButtonComponent.cs" />

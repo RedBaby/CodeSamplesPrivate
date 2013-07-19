@@ -177,14 +177,14 @@ namespace com.rmc.managers.umom.Editor
 		public static bool IsCompatibleManagerMonoScript (MonoScript aMonoScript) 
 		{
 			
-			Object[] allValidScriptableObjects = EditorWindowUtility.GetAllProjectWindowScriptsBySuperClassAndInterface (typeof (BaseManager), typeof (IManager));
+			Object[] allValidScriptableObjects = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (typeof (BaseManager), typeof (IManager));
 			
 			//
 			MonoScript scriptableObject_monoscript;
 					
 			//FIND THE SCRIPTABLE OBJECT THAT MATCHES THE MONOSCRIPT
 			foreach (ScriptableObject scriptableObject in allValidScriptableObjects) {
-				Debug.Log ("	valid: " + scriptableObject);
+				//Debug.Log ("	valid: " + scriptableObject);
 				scriptableObject_monoscript  = MonoScript.FromScriptableObject (scriptableObject);
 				//Debug.Log ("	CHECKING2 : " + scriptableObject_monoscript.GetClass().FullName + " , " +  aMonoScript.GetClass().FullName);
 				if (scriptableObject_monoscript.GetClass().FullName == aMonoScript.GetClass().FullName) {
@@ -291,6 +291,42 @@ namespace com.rmc.managers.umom.Editor
 		{
 			
 			
+			///////////////////////////////////////////////////////////////////
+			//MAKE THE TABLE ITEMS
+			///////////////////////////////////////////////////////////////////
+			List<MonoScript> monoScriptsOfBaseManager = EditorWindowUtility.GetAllAssetMonoScriptsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	).ToList();
+			
+			//Debug.Log ("ALL MONOSCRIPTS (MANY)" + monoScriptsOfBaseManager.Count);
+			//foreach (MonoScript monoScript in monoScripts) {
+				
+			//	Debug.Log ("	s: " + monoScript);
+				
+			//}
+			
+
+			
+			List<ScriptableObject> scriptableObjectsOfBaseManager = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	).Cast<ScriptableObject>().ToList();
+			
+			//Debug.Log ("ALL SCRIPTABLES (LESS) " + scriptableObjectsOfBaseManager.Count);
+			foreach (ScriptableObject scriptableObject in scriptableObjectsOfBaseManager) {
+				
+			//	Debug.Log ("	s: " + scriptableObject);
+				
+			}
+			
+			
+			//*****************************************************
+			//*****************************************************
+			//**	HELP BOX
+			//*****************************************************
+			//*****************************************************
+			//*****************************************************
+			EditorGUI.indentLevel ++;
+			EditorGUILayout.HelpBox ("Compatible? Your project has " + monoScriptsOfBaseManager.Count + " MonoScripts and " + scriptableObjectsOfBaseManager.Count + " ScriptableObjects", MessageType.Info);
+			EditorGUI.indentLevel --;
+			
+				
+			
 			//EditorGUILayout.LabelField ("Scripts");
 			EditorGUI.indentLevel ++;
 			
@@ -300,106 +336,56 @@ namespace com.rmc.managers.umom.Editor
 			///////////////////////////////////////////////////////////////////
 			//
 			GUILayoutOption[] header1GUILayoutOptions = new GUILayoutOption[2];
-			header1GUILayoutOptions[1] = GUILayout.MinWidth (250);
 			header1GUILayoutOptions[0] = GUILayout.MaxWidth (250);
+			header1GUILayoutOptions[1] = GUILayout.MinWidth (250);
 			//
 			GUILayoutOption[] header2GUILayoutOptions = new GUILayoutOption[2];
-			header2GUILayoutOptions[1] = GUILayout.MinWidth (80);
 			header2GUILayoutOptions[0] = GUILayout.MaxWidth (80);
+			header2GUILayoutOptions[1] = GUILayout.MinWidth (80);
 			//
 			GUILayoutOption[] header3GUILayoutOptions = new GUILayoutOption[2];
-			header3GUILayoutOptions[1] = GUILayout.MinWidth (80);
 			header3GUILayoutOptions[0] = GUILayout.MaxWidth (80);
+			header3GUILayoutOptions[1] = GUILayout.MinWidth (80);
 			//
 			GUILayoutOption[] header4GUILayoutOptions = new GUILayoutOption[2];
-			header4GUILayoutOptions[1] = GUILayout.MinWidth (100);
 			header4GUILayoutOptions[0] = GUILayout.MaxWidth (100);
+			header4GUILayoutOptions[1] = GUILayout.MinWidth (100);
 			//
 			
 			///
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.TextArea ("Name", EditorStyles.whiteLabel, header1GUILayoutOptions);
-			EditorGUILayout.TextArea ("[STATUS]", EditorStyles.whiteLabel, header2GUILayoutOptions);
-			EditorGUILayout.TextArea ("Option", EditorStyles.whiteLabel, header3GUILayoutOptions);
-			EditorGUILayout.TextArea ("Run Update()", EditorStyles.whiteLabel, header4GUILayoutOptions);
+			EditorGUILayout.TextArea ("NAME", EditorStyles.structHeadingLabel, header1GUILayoutOptions);
+			EditorGUILayout.TextArea ("[STATUS]", EditorStyles.structHeadingLabel, header2GUILayoutOptions);
+			EditorGUILayout.TextArea ("OPTION", EditorStyles.structHeadingLabel, header3GUILayoutOptions);
+			EditorGUILayout.TextArea ("UPDATE()?", EditorStyles.structHeadingLabel, header4GUILayoutOptions);
 			EditorGUILayout.EndHorizontal();
 			
-			///////////////////////////////////////////////////////////////////
-			//MAKE THE TABLE ITEMS
-			///////////////////////////////////////////////////////////////////
-			string[] assetPaths = AssetDatabase.GetAllAssetPaths();
-			int countIt_int = 0;
-		    foreach(string assetPath in assetPaths)
-		    {
-		        if(assetPath.Contains(".cs")) // or .js if you want
-		        {
-					if (assetPath.Contains ("Manager")) {
-						countIt_int++;
-					}
-		        }
-		    }
-
 			
 			
-
-			//TODO CHANGE TO IMANANGER TYPE
-			Object[] o3 = EditorWindowUtility.GetAllProjectWindowScriptsBySuperClassAndInterface ( typeof (BaseManager), typeof (IManager));
-			
-			
-			if (o3 != null) {
-				//Debug.Log ("BASE/IMAN !! :" + o3.Length);
-				for (int count_int3 = 0; count_int3 < o3.Length; count_int3++) {
-					//Debug.Log ("	||" + o3[count_int3] + "     " );
-				}
-				
-			}
-			
-			/*
-			//EditorGUILayout ("C: " + resourcesFound.Count());
-			ScriptableTableItem[] scriptableTableItems = new ScriptableTableItem[resourcesFound.Count];
-			int count_int = 0;
-			foreach (ScriptableObject scriptableObject in resourcesFound) {
-				
-				scriptableTableItems[count_int] = new ScriptableTableItem ( scriptableObject, _managers_serializedproperty);
-				count_int++;
-				
-			}
-			
-			*/			
-						
-			List<ScriptableObject> scriptableObjects = EditorWindowUtility.GetAllProjectWindowScriptsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	).Cast<ScriptableObject>().ToList();
-
-			
-			
-			//Debug.Log ("ASSETS" + countIt_int);
-			List<string> sortedAssetPaths_array = assetPaths.ToList();
-			sortedAssetPaths_array.Sort();
-			//
+			//*****************************************************
+			//*****************************************************
+			//**	LIST OF MANAGER CANDIDATES
+			//*****************************************************
+			//*****************************************************
 			ManagerCandidate managerCandidate;
-			foreach(string assetPath in sortedAssetPaths_array)
-		    {
-		        if(assetPath.Contains(".cs")) // or .js if you want
-		        {
-					MonoScript monoScript = AssetDatabase.LoadMainAssetAtPath(assetPath) as MonoScript;
-					if (monoScript.name.Contains ("Manager")) {
-						managerCandidate = ManagerCandidate.FromMonoScriptAsset (monoScript, scriptableObjects, _managers_serializedproperty);
-						managerCandidate.doLayoutGUI();
-					}
-		        }
-		    }
 			
-			/*
-			foreach (ScriptableTableItem scriptableTableItem in scriptableTableItems) 
-			{
-				if (scriptableTableItem != null) {
-					//scriptableTableItem.doLayoutGUI();
+			//SORT ALPHABETICALLY (MANUAL SORT NEEDED BECAUSE OUR LIST IS A GENERIC, I THINK)
+			monoScriptsOfBaseManager.Sort
+			(
+				delegate(MonoScript monoScript1, MonoScript monoScript2)
+				{
+					return (monoScript1.name.CompareTo (monoScript2.name));
 				}
+			);
+			
+			
+			//LIST OUT
+			foreach (MonoScript monoScript in monoScriptsOfBaseManager) {
+				managerCandidate = ManagerCandidate.FromMonoScriptAsset (monoScript, scriptableObjectsOfBaseManager, _managers_serializedproperty);
+				managerCandidate.doLayoutGUI();
 				
 			}
-			
-			*/
-			
-			
+					
 			
 			
 			
@@ -679,9 +665,6 @@ namespace com.rmc.managers.umom.Editor
 			
 			
 			EditorGUI.indentLevel ++;
-			EditorGUI.indentLevel ++;
-			EditorGUILayout.HelpBox ("No more drag/drop. Just click buttons. Great!", MessageType.Info);
-			EditorGUI.indentLevel --;
 			_doLayoutScriptablesTable();
 			EditorGUI.indentLevel --;
 
@@ -719,7 +702,7 @@ namespace com.rmc.managers.umom.Editor
 			
 			//SAVE TO DISK - WHICH PARAMETER?
 			if (GUI.changed) {
-				_setEditorWindowDirty();
+				setEditorWindowDirty();
 				
 			}
 			
@@ -812,6 +795,16 @@ namespace com.rmc.managers.umom.Editor
 		
 		
 		/// <summary>
+		/// Refresh this instance.
+		/// </summary>
+		public static void Refresh () 
+		{
+			UMOMEditorWindow uMOMEditorWindow = EditorWindow.GetWindow<UMOMEditorWindow>();	
+			uMOMEditorWindow.setEditorWindowDirty();
+		}
+		
+		
+		/// <summary>
 		/// _gets the editor popup for I manager scripts.
 		/// </summary>
 		public static void _getEditorPopupForIManagerScripts ()
@@ -876,7 +869,7 @@ namespace com.rmc.managers.umom.Editor
 		/// <summary>
 		/// _sets the editor window dirty.
 		/// </summary>
-		private void _setEditorWindowDirty ()
+		public void setEditorWindowDirty ()
 		{
 			
 			//STILL HAVING ISSUES
@@ -901,7 +894,7 @@ namespace com.rmc.managers.umom.Editor
 				_mom_serializedObject.Update();
 				UMOM.Instance.addManager<BaseManager>();
 				_getTargetReferences();
-				_setEditorWindowDirty();
+				setEditorWindowDirty();
 			} else {
 				EditorUtility.DisplayDialog ("blah", "Drag ScriptableObject to blank item first.", "OK", "Cancel");	
 			}
@@ -952,7 +945,7 @@ namespace com.rmc.managers.umom.Editor
 			}
 			//
 			if (isSuccessful_boolean) {
-				_setEditorWindowDirty();
+				setEditorWindowDirty();
 			} else {
 				EditorUtility.DisplayDialog ("blah", "_onDeleteManagerClick", "OK", "Cancel");	
 			}

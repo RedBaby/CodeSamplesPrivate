@@ -117,17 +117,12 @@ namespace com.rmc.utilities
 				desiredScriptableObject_path = selectedScriptPath_string.Replace (".cs",".asset");
 				
 				//	CREATE NEW OBJECT
-				scriptableObject = ScriptableObject.CreateInstance (selectedScriptName_string);
-				desiredScriptableObject_path = AssetDatabase.GenerateUniqueAssetPath (desiredScriptableObject_path);
-				AssetDatabase.CreateAsset (scriptableObject, desiredScriptableObject_path);
-		 
-				//	STORE ASSET
-				AssetDatabase.SaveAssets ();
+				scriptableObject = ScriptableObjectUtility.CreateAssetFromPath(selectedScriptName_string, desiredScriptableObject_path);
 				EditorUtility.FocusProjectWindow ();
 				Selection.activeObject = scriptableObject;
 				
 			} else {
-				Debug.Log ("Show ERROR Window: Must select ScriptableObject");	
+				Debug.Log ("Show ERROR Window: Select ScriptableObject before calling CreateAssetFromProjectSelection().");	
 			}
 		}
 		
@@ -150,6 +145,58 @@ namespace com.rmc.utilities
 			
 		}
 		
+		
+		
+		/// <summary>
+		/// Creates the asset from path.
+		/// </summary>
+		/// <returns>
+		/// The asset from path.
+		/// </returns>
+		/// <param name='aSelectedScriptName_string'>
+		/// A selected script name_string.
+		/// </param>
+		/// <param name='aDesiredScriptableObject_path'>
+		/// A desired scriptable object_path.
+		/// </param>
+		public static ScriptableObject CreateAssetFromPath (string aSelectedScriptName_string, string aDesiredScriptableObject_path)
+		{
+			ScriptableObject scriptableObject;
+			scriptableObject = ScriptableObject.CreateInstance (aSelectedScriptName_string);
+			aDesiredScriptableObject_path = AssetDatabase.GenerateUniqueAssetPath (aDesiredScriptableObject_path);
+			AssetDatabase.CreateAsset (scriptableObject, aDesiredScriptableObject_path);
+	 
+			//	STORE ASSET
+			AssetDatabase.SaveAssets ();
+			
+			return scriptableObject;
+			
+		}
+		
+		/// <summary>
+		/// Creates the asset from mono script.
+		/// </summary>
+		/// <returns>
+		/// The asset from mono script.
+		/// </returns>
+		/// <param name='monoScript'>
+		/// Mono script.
+		/// </param>
+		public static ScriptableObject CreateAssetFromMonoScript (MonoScript monoScript)
+		{
+			//
+			string selectedScriptName_string 		= monoScript.name;
+			string desiredScriptableObject_path = AssetDatabase.GetAssetPath (monoScript);
+			desiredScriptableObject_path = desiredScriptableObject_path.Replace (".cs",".asset");
+			
+			//
+			return ScriptableObjectUtility.CreateAssetFromPath (selectedScriptName_string, desiredScriptableObject_path);
+			
+		}
+		
+			
+			
+			
 		// PRIVATE
 		
 		// PRIVATE STATIC

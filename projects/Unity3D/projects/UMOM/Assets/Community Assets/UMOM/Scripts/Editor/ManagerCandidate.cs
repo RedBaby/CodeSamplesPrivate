@@ -42,8 +42,7 @@ namespace com.rmc.managers.umom.Editor
 	
 	enum ManagerCandidateType
 	{
-		INVALID,
-		SCRIPT_ONLY,
+		MONOSCRIPT,
 		SCRIPTABLE_UNUSED,
 		SCRIPTABLE_USED
 		
@@ -90,57 +89,11 @@ namespace com.rmc.managers.umom.Editor
 		///</summary>
 		public ManagerCandidate (MonoScript aMonoScript, ScriptableObject aScriptableObject, SerializedProperty aManagers_serializedproperty)
 		{
-			_monoScript		 		= aMonoScript;
-			_inUse_scriptableobject = aScriptableObject;
+			_monoScript		 			= aMonoScript;
+			_inUse_scriptableobject 	= aScriptableObject;
+			_managers_serializedproperty = aManagers_serializedproperty;
 			
-			if (_inUse_scriptableobject == null) {
-				
-				bool isAUMOMCompatibleManagerMonoScript_boolean = UMOMEditorWindow.IsCompatibleManagerMonoScript(_monoScript);
-				
-				if (isAUMOMCompatibleManagerMonoScript_boolean) {
-					_scriptableTableItemType = ManagerCandidateType.SCRIPTABLE_UNUSED;
-				} else {
-					_scriptableTableItemType = ManagerCandidateType.INVALID;
-				}
-				
-			} else {
-				//Debug.Log ("	script: " + _scriptableObject.name);
-				_managers_serializedproperty = aManagers_serializedproperty;
-				
-				
-				
-				IEnumerator iEnumerator =  _managers_serializedproperty.GetEnumerator();
-				
-				bool isFound_boolean = false;
-				IManager iManager;
-				while (iEnumerator.MoveNext()) {
-					
-					iManager = ((iEnumerator.Current as SerializedProperty).objectReferenceValue as IManager);
-					//
-					if ( iManager == _inUse_scriptableobject) {
-						isFound_boolean = true;
-						break;
-					} else {
-						
-						//Debug.Log ("iEnumerator.Current: " + iManager);
-						int x = 10;
-					}
-				}
-				
-				//Debug.Log ("is : " + scriptableObject.GetType() + " =? " +  typeof (BaseManager));
-				if (_inUse_scriptableobject.GetType() == typeof (BaseManager)) {
-					_scriptableTableItemType = ManagerCandidateType.INVALID;
-	
-				} else {
-					
-					if (isFound_boolean) {
-						_scriptableTableItemType = ManagerCandidateType.SCRIPTABLE_USED;
-					} else {
-						_scriptableTableItemType = ManagerCandidateType.SCRIPTABLE_UNUSED;
-					}
-				}
-				
-			}
+			_doSetType();
 			
 		}
 		
@@ -189,27 +142,15 @@ namespace com.rmc.managers.umom.Editor
 			
 			//EditorGUILayout.ObjectField (scriptableObject, typeof (ScriptableObject));
 			switch (_scriptableTableItemType) {
-				case ManagerCandidateType.INVALID:
-					//
-					GUI.color = Color.red;
-					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.whiteLabel, textAreaGUILayoutOptions);
-					//
-					EditorGUILayout.TextArea ("INVALID", tempTypeGUILayoutOptions);
-					if (GUILayout.Button ("", buttonGUILayoutOptions)) {
-					
-					}
-					GUI.enabled = false;
-					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
-					GUI.enabled = true;
-					break;
-				case ManagerCandidateType.SCRIPT_ONLY:
+				case ManagerCandidateType.MONOSCRIPT:
 					//
 					GUI.color = Color.green;
 					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.whiteLabel, textAreaGUILayoutOptions);
 					//
-					EditorGUILayout.TextArea ("SCRIPT_ONLY", tempTypeGUILayoutOptions);
+					EditorGUILayout.TextArea ("MonoScript", tempTypeGUILayoutOptions);
 					if (GUILayout.Button ("Convert", buttonGUILayoutOptions)) {
-					
+						Debug.Log ("Converting... " + _monoScript.name);
+						ScriptableObjectUtility.CreateAssetFromMonoScript (_monoScript);
 					}
 					GUI.enabled = false;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
@@ -221,7 +162,9 @@ namespace com.rmc.managers.umom.Editor
 					//
 					EditorGUILayout.TextArea ("Used", tempTypeGUILayoutOptions);
 					if (GUILayout.Button ("Remove", buttonGUILayoutOptions)) {
-					
+						Debug.Log ("Remove... " + _monoScript.GetClass());
+						//GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "removeManager", typeof (CustomManager)); 
+						UMOM.Instance.removeManager<CustomManager>();
 					}
 					GUI.enabled = true;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
@@ -234,6 +177,12 @@ namespace com.rmc.managers.umom.Editor
 					//
 					EditorGUILayout.TextArea ("Unused", tempTypeGUILayoutOptions);
 					if (GUILayout.Button ("Add", buttonGUILayoutOptions)) {
+						Debug.Log ("add1 : " +  _monoScript.GetClass()	);
+						GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "addManager", _monoScript.GetClass()); 
+						Debug.Log ("add2 : " +  _monoScript.GetClass()	);
+					
+						//TODO, CHECK IF THIS IS NEEDED to refresh ui after an 'add'????
+						UMOMEditorWindow.Refresh();
 					
 					}
 					GUI.enabled = false;
@@ -247,6 +196,8 @@ namespace com.rmc.managers.umom.Editor
 			EditorGUILayout.Space();
 			EditorGUILayout.EndHorizontal();
 		}
+		
+		//PRIVATE
 		
 		
 		// PUBLIC STATIC
@@ -287,6 +238,57 @@ namespace com.rmc.managers.umom.Editor
 		}
 		
 		// PRIVATE
+		
+		
+		/// <summary>
+		/// _dos the type of the set.
+		/// </summary>
+		private void _doSetType ()
+		{
+			if (_inUse_scriptableobject == null) {
+				
+				bool isAUMOMCompatibleManagerMonoScript_boolean = UMOMEditorWindow.IsCompatibleManagerMonoScript(_monoScript);
+				
+				if (isAUMOMCompatibleManagerMonoScript_boolean) {
+					_scriptableTableItemType = ManagerCandidateType.SCRIPTABLE_UNUSED;
+				} else {
+					_scriptableTableItemType = ManagerCandidateType.MONOSCRIPT;
+				}
+				
+			} else {
+				
+				IEnumerator iEnumerator =  _managers_serializedproperty.GetEnumerator();
+				
+				bool isFound_boolean = false;
+				IManager iManager;
+				while (iEnumerator.MoveNext()) {
+					
+					iManager = ((iEnumerator.Current as SerializedProperty).objectReferenceValue as IManager);
+					//
+					if ( iManager.Equals(_inUse_scriptableobject)) {
+						isFound_boolean = true;
+						break;
+					} else {
+						
+						//Debug.Log ("iEnumerator.Current: " + iManager);
+					}
+				}
+				
+				//Debug.Log ("is : " + scriptableObject.GetType() + " =? " +  typeof (BaseManager));
+				if (_inUse_scriptableobject.GetType() == typeof (BaseManager)) {
+					_scriptableTableItemType = ManagerCandidateType.MONOSCRIPT;
+	
+				} else {
+					
+					if (isFound_boolean) {
+						_scriptableTableItemType = ManagerCandidateType.SCRIPTABLE_USED;
+					} else {
+						_scriptableTableItemType = ManagerCandidateType.SCRIPTABLE_UNUSED;
+					}
+				}
+				
+			}
+		}
 		
 		// PRIVATE STATIC
 		

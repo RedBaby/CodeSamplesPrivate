@@ -133,7 +133,7 @@ namespace com.rmc.managers.umom
 		
 		override public void onRemoveManager()
 		{
-			if (_gameManager == null) {
+			if (_gameManager != null) {
 				if (_gameManager.hasEventListener (GameManager.SCORE_CHANGED, _onScoreChanged) ) {
 					_gameManager.removeEventListener (GameManager.SCORE_CHANGED, _onScoreChanged);
 				}
