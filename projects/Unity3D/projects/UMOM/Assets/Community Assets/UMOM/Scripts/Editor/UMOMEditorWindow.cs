@@ -209,6 +209,7 @@ namespace com.rmc.managers.umom.Editor
 				_isHiddenInHierarchy_serializedproperty 	= _mom_serializedObject.FindProperty ("isHiddenInHierarchy");
 				_managers_serializedproperty 				= _mom_serializedObject.FindProperty ("managers");
 				
+				
 				if (_mom_serializedObject == null) {
 					Debug.Log ("_mom_serializedObject: " + _mom_serializedObject);
 				}
@@ -226,7 +227,7 @@ namespace com.rmc.managers.umom.Editor
 				}
 				
 				
-				}
+			}
 		}
 		
 		/// <summary>
@@ -294,14 +295,16 @@ namespace com.rmc.managers.umom.Editor
 			///////////////////////////////////////////////////////////////////
 			//MAKE THE TABLE ITEMS
 			///////////////////////////////////////////////////////////////////
-			List<MonoScript> monoScriptsOfBaseManager = EditorWindowUtility.GetAllAssetMonoScriptsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	).ToList();
+			List<MonoScript> monoScriptsOfBaseManager = EditorWindowUtility.GetAllAssetMonoScriptsBySuperClassAndInterface (	typeof (BaseManager)	).ToList();
 			
-			//Debug.Log ("ALL MONOSCRIPTS (MANY)" + monoScriptsOfBaseManager.Count);
-			//foreach (MonoScript monoScript in monoScripts) {
+			/*
+			Debug.Log ("ALL MONOSCRIPTS (MANY)" + monoScriptsOfBaseManager.Count);
+			foreach (MonoScript monoScript in monoScriptsOfBaseManager) {
 				
-			//	Debug.Log ("	s: " + monoScript);
+				Debug.Log ("	ms: " + monoScript.name);
 				
-			//}
+			}
+			*/
 			
 
 			
@@ -310,7 +313,7 @@ namespace com.rmc.managers.umom.Editor
 			//Debug.Log ("ALL SCRIPTABLES (LESS) " + scriptableObjectsOfBaseManager.Count);
 			foreach (ScriptableObject scriptableObject in scriptableObjectsOfBaseManager) {
 				
-			//	Debug.Log ("	s: " + scriptableObject);
+				//Debug.Log ("	so: " + scriptableObject);
 				
 			}
 			
@@ -354,10 +357,10 @@ namespace com.rmc.managers.umom.Editor
 			
 			///
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.TextArea ("NAME", EditorStyles.structHeadingLabel, header1GUILayoutOptions);
-			EditorGUILayout.TextArea ("[STATUS]", EditorStyles.structHeadingLabel, header2GUILayoutOptions);
-			EditorGUILayout.TextArea ("OPTION", EditorStyles.structHeadingLabel, header3GUILayoutOptions);
-			EditorGUILayout.TextArea ("UPDATE()?", EditorStyles.structHeadingLabel, header4GUILayoutOptions);
+			EditorGUILayout.TextArea ("NAME", EditorStyles.label, header1GUILayoutOptions);
+			EditorGUILayout.TextArea ("[STATUS]", EditorStyles.label, header2GUILayoutOptions);
+			EditorGUILayout.TextArea ("OPTION", EditorStyles.label, header3GUILayoutOptions);
+			EditorGUILayout.TextArea ("UPDATE()?", EditorStyles.label, header4GUILayoutOptions);
 			EditorGUILayout.EndHorizontal();
 			
 			

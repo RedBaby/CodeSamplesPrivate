@@ -130,6 +130,7 @@ namespace com.rmc.managers.umom
 		public void OnEnable() 
 		{ 
 			Debug.Log ("OnEnable"); //I'M SEEING INSTANCE GETTER CALLED SOMEHOW BY *THIS* METHOD
+			EditorWindowUtility.LoadAllAssetsOfType (typeof (ScriptableObject));
 
 		}
 		/// <summary>
@@ -141,6 +142,13 @@ namespace com.rmc.managers.umom
 		}
 	
 		
+		public void doDebugLogManagers () 
+		{
+			Debug.Log ("UMOM.debugManagersList() : " + managers.Count);
+			foreach (IManager iManager in managers) {
+				Debug.Log ("	iManager: " + iManager);
+			}
+		}
 		
 		/// <summary>
 		/// Update this instance.
@@ -150,6 +158,8 @@ namespace com.rmc.managers.umom
 			//DO UMOM STUFF
 			//Debug.Log("updateUMOM");
 			_doUpdateHideFlagsForGameObject(gameObject);
+			
+			//debugManagersList();
 			
 			
 			/*
@@ -217,7 +227,6 @@ namespace com.rmc.managers.umom
 			IManager found_imanager;
 			
 			//NOTE: LIMIT - ONLY 1 MANAGER OF EACH TYPE MAY EXIST.
-			Debug.Log ("1addManager, has?: " + hasManager<T>());
 			if (hasManager<T>()) {
 				
 				found_imanager = getManager<T>();
@@ -227,9 +236,6 @@ namespace com.rmc.managers.umom
 				found_imanager = _addManagerByForce<T>();
 				
 			} 
-			
-			Debug.Log ("2addManager: " + found_imanager);
-				
 			
 			//RETURN
 			return (T) found_imanager;
@@ -303,7 +309,6 @@ namespace com.rmc.managers.umom
 		public bool hasManager <T> () where T : IManager
 		{
 			ScriptableObject scriptableObject = managers.Find ( man => (man.GetType() == typeof(T))	);
-			Debug.Log ("hasManager(): " + scriptableObject);
 			IManager found_imanager = (IManager) scriptableObject;
 			return (found_imanager != null);
 		}
@@ -321,10 +326,6 @@ namespace com.rmc.managers.umom
 		{
 			ScriptableObject scriptableObject = managers.Find ( man => (man.GetType() == typeof(T))	);
 			
-			Debug.Log ("getManager: " + managers);
-			foreach (IManager iManager in managers) {
-				Debug.Log ("is : " + iManager);
-			}
 			IManager found_imanager = (IManager) scriptableObject;
 			return (T) found_imanager;
 		}
@@ -377,7 +378,6 @@ namespace com.rmc.managers.umom
 			IManager existing_imanager = getManager<T>();
 			bool wasSuccessful_boolean;
 			
-			Debug.Log ("	removeManager(): " + existing_imanager);
 			if (existing_imanager == null) {
 				wasSuccessful_boolean = false; //failed
 				
@@ -385,7 +385,6 @@ namespace com.rmc.managers.umom
 				
 				existing_imanager.onRemoveManager();
 				wasSuccessful_boolean = managers.Remove ((BaseManager)existing_imanager);
-				Debug.Log ("1remove???? " + wasSuccessful_boolean);
 				wasSuccessful_boolean = true;
 			}
 			
@@ -410,9 +409,7 @@ namespace com.rmc.managers.umom
 				
 				IManager iManager = managers[count_int];
 				if (iManager != null) {
-					Debug.Log ("removing manager : " + iManager);
 					toBeDestroyed_type = iManager.GetType();
-					Debug.Log ("REMO: " + iManager);
 					GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "removeManager", toBeDestroyed_type);
 				}
 			}
@@ -646,8 +643,8 @@ namespace com.rmc.managers.umom
 			//I DON'T EXPECT IN TYPICAL USE, BECAUSE THE UMOM SHOULD PERSIST FOREVER, RIGHT? (WHAT ABOUT WHEN UMOM.ENABLED= FALSE?)
 			removeAllManagers();
 												
-					//
-					Debug.LogStackTrace();
+			//
+			Debug.LogStackTrace();
     		Debug.Log("	UMOM.OnDestroy() " + _tempRandom_float);
 		}
 		

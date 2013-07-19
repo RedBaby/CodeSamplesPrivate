@@ -45,7 +45,7 @@ namespace com.rmc.managers.umom
 	/// <summary>
 	/// Abstract manager.
 	/// </summary>
-	public class LevelManager : BaseManager
+	public class LevelManager : BaseManager, IManager
 	{
 	
 		//--------------------------------------

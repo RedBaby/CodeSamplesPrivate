@@ -175,26 +175,26 @@ namespace com.rmc.utilities
 		
 		
 		
-		public static MonoScript[] GetAllAssetMonoScriptsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
+		public static MonoScript[] GetAllAssetMonoScriptsBySuperClassAndInterface (System.Type aSuperClassType)
 		{
 			
 			//
 			aSuperClassType = typeof (BaseManager);
 			//
 			
-			 MonoScript[] scripts = (MonoScript[])Object.FindObjectsOfTypeIncludingAssets( typeof( MonoScript ) );
+			 MonoScript[] allMonoScripts = (MonoScript[])Object.FindObjectsOfTypeIncludingAssets( typeof( MonoScript ) );
  
-			List<MonoScript> result = new List<MonoScript>();
+			List<MonoScript> validMonoScripts = new List<MonoScript>();
 			 
-			foreach( MonoScript m in scripts )	{
-				//Debug.Log ("m1: " + (m.GetClass() != null));
-				if( m.GetClass() != null && m.GetClass().IsClass == true && m.GetClass().IsSubclassOf (aSuperClassType) == true ) {
-					//result.Add( m );
-					result.Add (m);
-					//Debug.Log ("	m: " + result[result.Count-1] );
+			foreach( MonoScript monoScript in allMonoScripts )	{
+				if( monoScript.GetClass() != null && 
+					monoScript.GetClass().IsClass == true && 
+					monoScript.GetClass().IsSubclassOf (aSuperClassType) == true ) {
+					//
+					validMonoScripts.Add (monoScript);
 				}
 			}
-			return result.ToArray();
+			return validMonoScripts.ToArray();
 			
 		}
 			
@@ -213,27 +213,49 @@ namespace com.rmc.utilities
 		/// </param>
 		public static Object[] GetAllObjectsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
 		{
-			//SEARCH 'ALL' OBJECTS, THEN FILTER DOWN BEFORE RETURNING
-			System.Type classType = typeof (UnityEngine.Object);
-			
 			//SOME HACK I FOUND ONLINE SO 'FIND' WORKS
 			//** THIS IS INDEED NEEDED!!! IT MAKES 'FIND' RETURN ALL, AND NOT JUST THE ONES I HAD CLICKED OR USED**
 			//TODO: PERHAPS CACHE THIS CALL INSTEAD OF CALLING IT SO MUCH, IS IT CAUSING SLOWDOWN NOW?
-			Resources.LoadAll("", classType );
 			
 			//
-			Object[] objects_array = Object.FindObjectsOfTypeIncludingAssets(classType).Where 
+			Object[] objects_array = Object.FindObjectsOfTypeIncludingAssets(aSuperClassType).Where 
 				( 
 					(aItem) => 
 						(
 							aItem.GetType().GetInterface(aInterfaceType.Name) == (aInterfaceType) &&
 							aItem.GetType().IsSubclassOf(aSuperClassType) == true  &&
 							(aItem.GetType().Equals (aSuperClassType) == false) &&
-							aItem.GetType().IsClass
+							aItem.GetType().IsClass == true
 						) 
 				).ToArray();
 			return objects_array;
 			
+		}
+		
+		private static bool loadedAll_boolean = false;
+		public static void LoadAllAssetsOfType (System.Type aSuperClassType)
+		{
+			if (!loadedAll_boolean) {
+				loadedAll_boolean = true;
+				
+				string[] paths = AssetDatabase.GetAllAssetPaths();
+			    foreach( string path_string in paths )
+			    {
+					//Debug.Log ("path: " + path_string);
+					
+					//WORKS
+					
+					AssetDatabase.LoadAllAssetRepresentationsAtPath (path_string);
+					
+					
+			        //Object o = AssetDatabase.LoadAssetAtPath( path_string, typeof (Component) );
+			        //if( o != null )
+			        //{
+			        //    Debug.Log( "Found Object of type " + o.name );
+			       // }
+			    }
+				
+			}
 		}
 		
 		
@@ -243,19 +265,39 @@ namespace com.rmc.utilities
 		//**	HIERARCHY WINDOW UTILITIES
 		//*********************************************************************
 		//*********************************************************************
-		public static Object[] GetAllHierarchyScriptsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
+		/// <summary>
+		/// Gets all hierarchy components by super class and interface.
+		/// </summary>
+		/// <returns>
+		/// The all hierarchy components by super class and interface.
+		/// </returns>
+		/// <param name='aSuperClassType'>
+		/// A super class type.
+		/// </param>
+		/// <param name='aInterfaceType'>
+		/// A interface type.
+		/// </param>
+		public static Object[] GetAllHierarchyComponentsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
 		{
-			
-			
-			throw new UnityException();
-			
-		    Object[] foundGameObjects_array = GameObject.FindObjectsOfType (typeof (GameObject));
+			Object[] foundGameObjects_array = GameObject.FindObjectsOfType (typeof (GameObject));
+			/*
+			//NOT WORKING YET, NOT NEEDED EITHER
+			aSuperClassType = typeof (AudioListener);
 		    
 			//
-			for (int i=0;i<foundGameObjects_array.Length;i++) {
-				Debug.Log ("found_gameobject: " + ((GameObject)foundGameObjects_array[i]).name);
+			Component[] someComponents;
+			List<Component> allComponents;
+			foreach (GameObject gameObject in foundGameObjects_array) {
+				
+				someComponents = gameObject.GetComponentsInChildren ( aSuperClassType);
+				foreach (Component component in someComponents) {
+					Debug.Log ("Component: " + component);
+					allComponents.Add(component);
+				}
+				
 			}
 			//
+			*/
 			return foundGameObjects_array;
 		}
 		

@@ -1,13 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Community Assets/RMCLibrary/Scripts/utilities/ScriptableObjectUtility.cs">
-    <Files>
-      <File FileName="Assets/Community Assets/UMOM/Scripts/UMOM.cs" Line="1" Column="1" />
-      <File FileName="Assets/Community Assets/RMCLibrary/Scripts/utilities/EditorWindowUtility.cs" Line="1" Column="1" />
-      <File FileName="Assets/Community Assets/RMCLibrary/Scripts/utilities/ScriptableObjectUtility.cs" Line="189" Column="11" />
-      <File FileName="Assets/Community Assets/UMOM/Scripts/Editor/ManagerCandidate.cs" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
