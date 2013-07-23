@@ -177,7 +177,7 @@ namespace com.rmc.managers.umom.Editor
 		public static bool IsCompatibleManagerMonoScript (MonoScript aMonoScript) 
 		{
 			
-			Object[] allValidScriptableObjects = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (typeof (BaseManager), typeof (IManager));
+			Object[] allValidScriptableObjects = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (typeof (BaseManager));
 			
 			//
 			MonoScript scriptableObject_monoscript;
@@ -205,6 +205,7 @@ namespace com.rmc.managers.umom.Editor
 			//
 			if (UMOM.Instance) {
 				_mom_serializedObject 						= new SerializedObject(UMOM.Instance);
+				_mom_serializedObject.Update();
 				_isEnabled_serializedproperty 				= _mom_serializedObject.FindProperty ("isEnabled");
 				_isHiddenInHierarchy_serializedproperty 	= _mom_serializedObject.FindProperty ("isHiddenInHierarchy");
 				_managers_serializedproperty 				= _mom_serializedObject.FindProperty ("managers");
@@ -312,7 +313,7 @@ namespace com.rmc.managers.umom.Editor
 			
 
 			
-			List<ScriptableObject> scriptableObjectsOfBaseManager = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	).Cast<ScriptableObject>().ToList();
+			List<ScriptableObject> scriptableObjectsOfBaseManager = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (	typeof (BaseManager)	).Cast<ScriptableObject>().ToList();
 			
 			//Debug.Log ("ALL SCRIPTABLES (LESS) " + scriptableObjectsOfBaseManager.Count);
 			foreach (ScriptableObject scriptableObject in scriptableObjectsOfBaseManager) {
@@ -542,170 +543,48 @@ namespace com.rmc.managers.umom.Editor
 				string manager_string = "Managers";
 				EditorGUILayout.LabelField (manager_string, bold_guistyle );
 				
-				/*
-				if (UMOM.Instance.managers.Count == 0) {
-					
-					//NO MANAGERS
-					EditorGUILayout.HelpBox ("Add Managers", MessageType.Info);
-					
-						
-				} else {
-					
-					//
-					EditorGUI.indentLevel++;
-					IEnumerator temp = _managers_serializedproperty.GetEnumerator();
-					int count_int = 0;
-					while (temp.MoveNext()) {
-						count_int++;
-					}
-					_managers_serializedproperty.isExpanded = EditorGUILayout.Foldout(_managers_serializedproperty.isExpanded, new GUIContent ("Expand (real " + UMOM.Instance.managers.Count +  ", iterator" + count_int +")"));
+				EditorGUI.indentLevel ++;
+				_doLayoutScriptablesTable();
+				EditorGUI.indentLevel --;
+	
 				
-					EditorGUI.indentLevel++;
-					if (_managers_serializedproperty.isExpanded) {
-						
-						IEnumerator managersList_ienumerator = _managers_serializedproperty.GetEnumerator();
-							
-						SerializedProperty 	managerListItem_serializedproperty;
-						ScriptableObject 	scriptableObject;
-						string 				scriptableObjectName_string;
-						string				scriptableObjectTooltip_string;
-						//
-						//
-						//
-						while (managersList_ienumerator.MoveNext()) {
-						
-							//
-							EditorGUILayout.BeginHorizontal();
-							{
-								
-								GUILayout.FlexibleSpace();
-								//
-								managerListItem_serializedproperty 			= managersList_ienumerator.Current as SerializedProperty;
-								scriptableObject 							= managerListItem_serializedproperty.objectReferenceValue as ScriptableObject;
-								
-								
-								
-								//Debug.Log ("epand loop: scriptableObject: " + scriptableObject + " (" + _managers_serializedproperty.arraySize + ")");
-								
-								
-								if (scriptableObject != null) {
-									//NAME DISPLAY 1: THIS SETS THE LABEL FIELD TEXT
-									if (scriptableObject.GetType().IsSubclassOf (typeof (BaseManager) ) ) {
-										scriptableObjectName_string 	= scriptableObject.GetType().Name;
-										scriptableObjectTooltip_string 	= "Tip: " + scriptableObjectName_string;
-									} else {
-										scriptableObjectName_string 	= "Drag Asset ->";	
-										scriptableObjectTooltip_string 	= "Tip: Drag Asset Here.";
-									}
-									
-									//NAME DISPLAY 2: THIS SETS THE OBJECT FIELD TEXT
-									scriptableObject.name = scriptableObjectName_string;
-									
-									//
-									managerListItem_serializedproperty.objectReferenceValue = (ScriptableObject) EditorGUILayout.ObjectField(new GUIContent (scriptableObjectName_string, scriptableObjectTooltip_string), scriptableObject, typeof (ScriptableObject), false, scriptableObjectFieldOptions);
-						
-			
-									if (GUILayout.Button (new GUIContent("Delete", "Delete This Manager"), buttonGUILayoutOptions)) {
-										_onDeleteManagerClick (managerListItem_serializedproperty);
-									}
-								} // end if scriptable exists
-								
-							EditorGUILayout.EndHorizontal();
-						
-							}
-						}
-						
-					}///////////					
-
-				}
-				
-				
-				EditorGUI.indentLevel--;
-				 */
-				
-				/*
-				//GUILayoutOption[] buttonMenu_options = new GUILayoutOption[2]; //NEEDED?
-				EditorGUILayout.BeginHorizontal();
-				{
-					EditorGUILayout.Space ();
-					
-					//TOGGLE VISIBILITY FOR THIS SPECIFIC SECTION
-					GUI.enabled = _isAddNewManagerEnabled();
-					if (GUILayout.Button (new GUIContent ("Add New Manager", "Add New Manager"))) {
-						_onAddNewManagerClick();
-					}
-					
-					//TOGGLE VISIBILITY BACK TO OVERALL VALUE
-					GUI.enabled = _isEnabled_serializedproperty.boolValue;
-				}
-				EditorGUILayout.EndHorizontal();
-				
+				//*****************************************************
+				//*****************************************************
+				//**	BOTTOM MENU
+				//*****************************************************
+				//*****************************************************
+				EditorGUILayout.Separator();
+				EditorGUILayout.LabelField ("Instructions", bold_guistyle);
 				//
+				EditorGUI.indentLevel++;
+				string textArea_string = "" +
+					"\n" +
+					"1. Create a new script which subclasses BaseManager.\n" + 
+					"2. Script will appear above in this window.\n" +
+					"3. Click 'Convert' above in this window.\n" + 
+					"4. Click 'Add' above in this window.\n" +
+					"5. Enjoy. Click 'Remove' and toggle 'Update' as needed." +
+					"Click for more <a href='http://forum/post/on/this/package/'>info</a>.\n" +
+					"\n";
+				EditorGUILayout.TextArea (textArea_string);
+				EditorGUILayout.Space();
+				EditorGUILayout.Space();
 				EditorGUI.indentLevel--;
 				
-				 */
 				
-			}
-
-			//*****************************************************
-			//*****************************************************
-			//**	BOTTOM MENU
-			//*****************************************************
-			//*****************************************************
-			/*
-			EditorGUILayout.Separator();
-			EditorGUILayout.LabelField ("Menu", bold_guistyle);
-			
-			//GUILayoutOption[] buttonMenu_options = new GUILayoutOption[2]; //NEEDED?
-			EditorGUI.indentLevel ++;
-			EditorGUILayout.BeginHorizontal();
-			{
-				EditorGUILayout.Space();
-				if (GUILayout.Button (new GUIContent("What", "?"))) {
-					
-				}
-			}
-			
-			EditorGUILayout.EndHorizontal();
-			EditorGUI.indentLevel --;
-			*/
-			
-			
-			EditorGUI.indentLevel ++;
-			_doLayoutScriptablesTable();
-			EditorGUI.indentLevel --;
-
-			
-			//*****************************************************
-			//*****************************************************
-			//**	BOTTOM MENU
-			//*****************************************************
-			//*****************************************************
-			EditorGUILayout.Separator();
-			EditorGUILayout.LabelField ("Instructions", bold_guistyle);
-			//
-			EditorGUI.indentLevel++;
-			string textArea_string = "" +
-				"\n" +
-				"1. Create a script which derives AbstractManager, IManager.\n" + 
-				"2. Select script in Project Window.\n" +
-				"3. Create script to asset using Menu -> uMOM -> Create.\n" +
-				"4. Script will appear in panel above.\n" +
-				"5. Toggle enabled/disabled & update? in panel above.\n" + 
-				"\n" +
-				"Click for more <a href='http://forum/post/on/this/package/'>info</a>.\n" +
-				"\n";
-			EditorGUILayout.TextArea (textArea_string);
-			EditorGUILayout.Space();
-			EditorGUILayout.Space();
-			EditorGUI.indentLevel--;
-			
-			
-			
+				
 			
 			//END
+			}
 			EditorGUILayout.EndScrollView();
 			
+			//*****************************************************
+			//*****************************************************
+			//**	UPDATE THE CLASS WITH ANY EDITOR CHANGES
+			//*****************************************************
+			//*****************************************************
+				
+				
 			
 			//SAVE TO DISK - WHICH PARAMETER?
 			if (GUI.changed) {

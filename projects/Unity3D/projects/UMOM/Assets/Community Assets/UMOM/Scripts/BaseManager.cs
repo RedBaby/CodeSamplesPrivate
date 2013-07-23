@@ -47,7 +47,7 @@ namespace com.rmc.managers.umom
 	/// Abstract manager.
 	/// </summary>
 	[System.Serializable]
-	public class BaseManager : ScriptableObject, IManager
+	public class BaseManager : ScriptableObject
 	{
 	
 		//--------------------------------------
@@ -150,7 +150,7 @@ namespace com.rmc.managers.umom
 		/// <param name='iManager'>
 		/// I manager.
 		/// </param>
-		virtual public void onReset(IManager iManager){}
+		virtual public void onReset(BaseManager baseManager){}
 		
 		/// <summary>
 		/// Ons the update.

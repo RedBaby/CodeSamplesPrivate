@@ -107,7 +107,7 @@ namespace com.rmc.managers.umom
 		//  Events
 		//--------------------------------------
 
-		override public void onReset(IManager aIManager)
+		override public void onReset(BaseManager aBaseManager)
 		{
 			
 			//JUST RE-GET THIS OFTEN

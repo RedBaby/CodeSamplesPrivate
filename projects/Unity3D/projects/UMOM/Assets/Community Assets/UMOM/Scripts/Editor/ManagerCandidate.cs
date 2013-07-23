@@ -153,38 +153,44 @@ namespace com.rmc.managers.umom.Editor
 			switch (_scriptableTableItemType) {
 				case ManagerCandidateType.MONOSCRIPT:
 					//
-					GUI.color = Color.green;
-					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.whiteLabel, textAreaGUILayoutOptions);
+					
+					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.label, textAreaGUILayoutOptions);
 					//
 					EditorGUILayout.TextArea ("MonoScript", tempTypeGUILayoutOptions);
+					GUI.color = Color.green;
 					if (GUILayout.Button ("Convert", buttonGUILayoutOptions)) {
 						_onButtonClick(ButtonClickType.CONVERT);
 					}
+					GUI.color = default_color;
 					GUI.enabled = false;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
 					GUI.enabled = true;
 					break;
 				case ManagerCandidateType.SCRIPTABLE_USED:
 					//
-					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.whiteLabel, textAreaGUILayoutOptions);
+					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.label, textAreaGUILayoutOptions);
 					//
 					EditorGUILayout.TextArea ("Used", tempTypeGUILayoutOptions);
+					GUI.color = Color.red;
 					if (GUILayout.Button ("Remove", buttonGUILayoutOptions)) {
 						_onButtonClick(ButtonClickType.REMOVE);
 					}
+					GUI.color = default_color;
 					GUI.enabled = true;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
 					GUI.enabled = true;
 					break;
 				case ManagerCandidateType.SCRIPTABLE_UNUSED:
 					//
-					GUI.color = Color.yellow;
-					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.whiteLabel, textAreaGUILayoutOptions);
+					
+					EditorGUILayout.TextArea (_monoScript.name, EditorStyles.label, textAreaGUILayoutOptions);
 					//
 					EditorGUILayout.TextArea ("Unused", tempTypeGUILayoutOptions);
+					GUI.color = Color.yellow;
 					if (GUILayout.Button ("Add", buttonGUILayoutOptions)) {
 						_onButtonClick(ButtonClickType.ADD);
 					}
+					GUI.color = default_color;
 					GUI.enabled = false;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
 					GUI.enabled = true;
@@ -192,7 +198,6 @@ namespace com.rmc.managers.umom.Editor
 				
 				
 			}
-			GUI.color = default_color;
 			EditorGUILayout.Space();
 			EditorGUILayout.EndHorizontal();
 		}

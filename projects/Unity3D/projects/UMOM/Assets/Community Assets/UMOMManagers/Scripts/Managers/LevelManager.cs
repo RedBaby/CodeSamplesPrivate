@@ -45,7 +45,7 @@ namespace com.rmc.managers.umom
 	/// <summary>
 	/// Abstract manager.
 	/// </summary>
-	public class LevelManager : BaseManager, IManager
+	public class LevelManager : BaseManager
 	{
 	
 		//--------------------------------------
@@ -192,7 +192,7 @@ namespace com.rmc.managers.umom
 			
 		}
 		
-		override public void onReset(IManager aIManager)
+		override public void onReset(BaseManager aBaseManager)
 		{
 			Debug.Log ("	onReset(): " + this);
 			

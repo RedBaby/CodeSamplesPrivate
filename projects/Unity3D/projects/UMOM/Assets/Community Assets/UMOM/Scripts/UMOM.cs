@@ -145,8 +145,8 @@ namespace com.rmc.managers.umom
 		public void doDebugLogManagers () 
 		{
 			Debug.Log ("UMOM.debugManagersList() : " + managers.Count);
-			foreach (IManager iManager in managers) {
-				Debug.Log ("	iManager: " + iManager);
+			foreach (BaseManager aBaseManager in managers) {
+				Debug.Log ("	aBaseManager: " + aBaseManager);
 			}
 		}
 		
@@ -171,11 +171,11 @@ namespace com.rmc.managers.umom
 			//THEN DO MANAGER STUFF
 			//Debug.Log ("UMOM.update() : " + _Instance.isEnabled + " #: " + _Instance.managers);
 			if (_Instance && _Instance.isEnabled) {
-				foreach (IManager iManager in _Instance.managers) {
+				foreach (BaseManager aBaseManager in _Instance.managers) {
 					//Debug.Log ("UMOM update() iManager.canReceiveUpdate: " + iManager.canReceiveUpdate);
-					if (iManager.canReceiveUpdate) {
-						Debug.Log ("	UMOM calling " + iManager + ".update()");
-						iManager.onUpdate();
+					if (aBaseManager.canReceiveUpdate) {
+						Debug.Log ("	UMOM calling " + aBaseManager + ".update()");
+						aBaseManager.onUpdate();
 					}
 				}
 			}
@@ -221,11 +221,11 @@ namespace com.rmc.managers.umom
 		/// <typeparam name='T'>
 		/// The 1st type parameter.
 		/// </typeparam>
-		public T addManager <T> () where T : IManager
+		public T addManager <T> () where T : BaseManager
 		{
 			
 			//
-			IManager found_imanager;
+			BaseManager found_imanager;
 			
 			//NOTE: LIMIT - ONLY 1 MANAGER OF EACH TYPE MAY EXIST.
 			if (hasManager<T>()) {
@@ -251,7 +251,7 @@ namespace com.rmc.managers.umom
 		/// <typeparam name='T'>
 		/// The 1st type parameter.
 		/// </typeparam>
-		public T _addManagerByForce <T> () where T : IManager
+		public T _addManagerByForce <T> () where T : BaseManager
 		{
 			
 			//Debug.Log ("	_addManagerByForce: TOTAL1:    " + managers.Count + " AND " + typeof (T));
@@ -263,12 +263,12 @@ namespace com.rmc.managers.umom
 			
 			//Debug.Log ("	_addManagerByForce: TOTAL2:    " + managers.Count + " AND " + typeof (T));
 			//
-			IManager found_imanager;
+			BaseManager found_imanager;
 			
 				
 			//CREATE
 			var newInstance = ScriptableObject.CreateInstance(typeof(T));
-			found_imanager = (IManager) newInstance;
+			found_imanager = (BaseManager) newInstance;
 			
 			//ADD
 			managers.Add ((BaseManager)found_imanager);
@@ -278,11 +278,11 @@ namespace com.rmc.managers.umom
 			
 			
 			//DISPATCH TO 'ALL BUT ME?' THAT 'ANOTHER MANAGER' WAS ADDED
-			foreach (IManager iManager in _Instance.managers) {
+			foreach (BaseManager aBaseManager in _Instance.managers) {
 				
 				//TODO: DECIDE IF A MANAGER SHOULD GET ONRESET() WHEN ITSELF IS ADDED. FOR NOW, YES!
 				//if (iManager != found_imanager) {
-					iManager.onReset(found_imanager);	
+					aBaseManager.onReset(found_imanager);	
 				//}
 			}
 			
@@ -307,10 +307,10 @@ namespace com.rmc.managers.umom
 		/// <typeparam name='T'>
 		/// The 1st type parameter.
 		/// </typeparam>
-		public bool hasManager <T> () where T : IManager
+		public bool hasManager <T> () where T : BaseManager
 		{
 			ScriptableObject scriptableObject = managers.Find ( man => (man.GetType() == typeof(T))	);
-			IManager found_imanager = (IManager) scriptableObject;
+			BaseManager found_imanager = (BaseManager) scriptableObject;
 			return (found_imanager != null);
 		}
 		
@@ -323,11 +323,11 @@ namespace com.rmc.managers.umom
 		/// <typeparam name='T'>
 		/// The 1st type parameter.
 		/// </typeparam>
-		public T getManager <T> () where T : IManager
+		public T getManager <T> () where T : BaseManager
 		{
 			ScriptableObject scriptableObject = managers.Find ( man => (man.GetType() == typeof(T))	);
 			
-			IManager found_imanager = (IManager) scriptableObject;
+			BaseManager found_imanager = (BaseManager) scriptableObject;
 			return (T) found_imanager;
 		}
 
@@ -348,15 +348,15 @@ namespace com.rmc.managers.umom
 			//	NOTE: THIS PROPERLY CALLS THE ADD EVENTS WITHOUT THE DELETE EVENTS
 			
 			
-			IManager iManager;
+			BaseManager aBaseManager;
 			for (int index_int = copyOfManagersList.Count -1; index_int >= 0 ; index_int --) {
 				
 				//
-				iManager = copyOfManagersList[index_int];
+				aBaseManager = copyOfManagersList[index_int];
 				//
 				//WHY WOULD IT BE NULL? I THINK THERE IS A BLANK ADDED IN THE EDITORWINDOW, AND UNTIL WE DRAG SOMETHING THERE ITS BLANK (BLANKISH)
-				if (iManager != null) {
-					System.Type type = iManager.GetType();
+				if (aBaseManager != null) {
+					System.Type type = aBaseManager.GetType();
 					GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "_addManagerByForce", type);
 				}
 			
@@ -374,9 +374,9 @@ namespace com.rmc.managers.umom
 		/// <typeparam name='T'>
 		/// The 1st type parameter.
 		/// </typeparam>
-		public bool removeManager <T> () where T : IManager
+		public bool removeManager <T> () where T : BaseManager
 		{
-			IManager existing_imanager = getManager<T>();
+			BaseManager existing_imanager = getManager<T>();
 			bool wasSuccessful_boolean;
 			
 			if (existing_imanager == null) {
@@ -408,9 +408,9 @@ namespace com.rmc.managers.umom
 			
 			for (int count_int = managers.Count -1; count_int >=0; count_int--) {
 				
-				IManager iManager = managers[count_int];
-				if (iManager != null) {
-					toBeDestroyed_type = iManager.GetType();
+				BaseManager aBaseManager = managers[count_int];
+				if (aBaseManager != null) {
+					toBeDestroyed_type = aBaseManager.GetType();
 					GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "removeManager", toBeDestroyed_type);
 				}
 			}

@@ -104,10 +104,11 @@ namespace com.rmc.managers.eventmanager
 			
 		}
 		
-		override public void onReset(IManager aIManager)
+		override public void onReset(BaseManager aBaseManager)
 		{
-			Debug.Log ("game manager");
+		
 		}
+		
 		
 		override public void onUpdate()
 		{

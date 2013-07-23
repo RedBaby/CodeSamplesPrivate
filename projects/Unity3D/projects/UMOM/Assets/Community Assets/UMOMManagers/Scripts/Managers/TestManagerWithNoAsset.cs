@@ -113,7 +113,7 @@ namespace com.rmc.managers.umom
 			
 		}
 		
-		override public void onReset(IManager aIManager)
+		override public void onReset(BaseManager aBaseManager)
 		{
 			//Debug.Log ("	onReset(): " + this);
 			

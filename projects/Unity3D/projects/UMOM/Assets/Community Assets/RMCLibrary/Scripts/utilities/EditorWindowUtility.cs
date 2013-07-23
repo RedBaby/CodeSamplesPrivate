@@ -235,7 +235,7 @@ namespace com.rmc.utilities
 		/// <param name='aSuperClassType'>
 		/// A super class type.
 		/// </param>
-		public static Object[] GetAllObjectsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
+		public static Object[] GetAllObjectsBySuperClassAndInterface (System.Type aSuperClassType)
 		{
 			//SOME HACK I FOUND ONLINE SO 'FIND' WORKS
 			//** THIS IS INDEED NEEDED!!! IT MAKES 'FIND' RETURN ALL, AND NOT JUST THE ONES I HAD CLICKED OR USED**
@@ -246,7 +246,6 @@ namespace com.rmc.utilities
 				( 
 					(aItem) => 
 						(
-							aItem.GetType().GetInterface(aInterfaceType.Name) == (aInterfaceType) &&
 							aItem.GetType().IsSubclassOf(aSuperClassType) == true  &&
 							(aItem.GetType().Equals (aSuperClassType) == false) &&
 							aItem.GetType().IsClass == true
@@ -281,7 +280,7 @@ namespace com.rmc.utilities
 				
 			}
 			*/		
-			Selection.objects = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	);
+			Selection.objects = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (	typeof (BaseManager));
 			
 			/*
 			if (!loadedAll_boolean) {
