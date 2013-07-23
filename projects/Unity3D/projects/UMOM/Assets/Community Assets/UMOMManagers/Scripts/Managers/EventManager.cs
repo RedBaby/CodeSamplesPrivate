@@ -76,7 +76,7 @@ namespace com.rmc.managers.eventmanager
 		///</summary>
 		public EventManager ( ) : base ()
 		{
-			Debug.Log ("EventManager.constructor()");
+			
 			
 		}
 		

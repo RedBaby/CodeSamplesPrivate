@@ -47,6 +47,14 @@ namespace com.rmc.managers.umom.Editor
 		SCRIPTABLE_USED
 		
 	}
+	
+	enum ButtonClickType
+	{
+		ADD,
+		REMOVE,
+		CONVERT
+		
+	}
 	//--------------------------------------
 	//  Class
 	//--------------------------------------
@@ -150,8 +158,7 @@ namespace com.rmc.managers.umom.Editor
 					//
 					EditorGUILayout.TextArea ("MonoScript", tempTypeGUILayoutOptions);
 					if (GUILayout.Button ("Convert", buttonGUILayoutOptions)) {
-						Debug.Log ("Converting... " + _monoScript.name);
-						ScriptableObjectUtility.CreateAssetFromMonoScript (_monoScript);
+						_onButtonClick(ButtonClickType.CONVERT);
 					}
 					GUI.enabled = false;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
@@ -163,10 +170,7 @@ namespace com.rmc.managers.umom.Editor
 					//
 					EditorGUILayout.TextArea ("Used", tempTypeGUILayoutOptions);
 					if (GUILayout.Button ("Remove", buttonGUILayoutOptions)) {
-						UMOM.Instance.doDebugLogManagers();
-						Debug.Log ("Remove... " + _monoScript.GetClass());
-						//GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "removeManager", typeof (CustomManager)); 
-						//UMOM.Instance.removeManager<GUIManager>();
+						_onButtonClick(ButtonClickType.REMOVE);
 					}
 					GUI.enabled = true;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
@@ -179,13 +183,7 @@ namespace com.rmc.managers.umom.Editor
 					//
 					EditorGUILayout.TextArea ("Unused", tempTypeGUILayoutOptions);
 					if (GUILayout.Button ("Add", buttonGUILayoutOptions)) {
-						Debug.Log ("add1 : " +  _monoScript.GetClass()	);
-						GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "addManager", _monoScript.GetClass()); 
-						Debug.Log ("add2 : " +  _monoScript.GetClass()	);
-					
-						//TODO, CHECK IF THIS IS NEEDED to refresh ui after an 'add'????
-						UMOMEditorWindow.Refresh();
-					
+						_onButtonClick(ButtonClickType.ADD);
 					}
 					GUI.enabled = false;
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
@@ -266,7 +264,7 @@ namespace com.rmc.managers.umom.Editor
 			} else {
 				
 				//UMOM.Instance.doDebugLogManagers();
-				bool hasManager_boolean = (bool)GenericsUtility.invokeGenericMethodByType (UMOM.Instance, "hasManager", _monoScript.GetClass() );
+				bool hasManager_boolean = _hasManagerAlready(_monoScript.GetClass() );
 				//
 				if (hasManager_boolean) {
 					
@@ -281,11 +279,102 @@ namespace com.rmc.managers.umom.Editor
 			}
 		}
 		
+		/// <summary>
+		/// _hases the manager already.
+		/// </summary>
+		/// <returns>
+		/// The manager already.
+		/// </returns>
+		/// <param name='aType'>
+		/// If set to <c>true</c> a type.
+		/// </param>
+		public bool _hasManagerAlready (System.Type aType)
+		{
+			bool hasManagerAlready_boolean = false;
+			IEnumerator iEnumerator = _managers_serializedproperty.GetEnumerator();
+			//Debug.Log ("#: " + (_managers_serializedproperty.CountInProperty()));
+			while (iEnumerator.MoveNext()) {
+				
+				if ((iEnumerator.Current as SerializedObject) != null) {
+					if ((((iEnumerator.Current as SerializedProperty).objectReferenceValue).GetType() == aType)) {
+						hasManagerAlready_boolean = true;
+						break;
+					}
+				}
+			}
+		
+			return hasManagerAlready_boolean;
+		}
+		
+		/// <summary>
+		/// _gets the index of the manager.
+		/// </summary>
+		/// <returns>
+		/// The manager index.
+		/// </returns>
+		/// <param name='aType'>
+		/// A type.
+		/// </param>
+		public int _getManagerIndex (System.Type aType)
+		{
+			IEnumerator iEnumerator = _managers_serializedproperty.GetEnumerator();
+			int index_int = -1;
+			while (iEnumerator.MoveNext()) {
+				index_int++;
+				if ((((iEnumerator.Current as SerializedProperty).objectReferenceValue).GetType() == aType)) {
+					break;
+				}
+			}
+		
+			return index_int;
+		}
+		
 		// PRIVATE STATIC
 		
 		//--------------------------------------
 		//  Events
 		//--------------------------------------
+		/// <summary>
+		/// _ons the button click.
+		/// </summary>
+		/// <param name='buttonClickType'>
+		/// Button click type.
+		/// </param>
+		private void _onButtonClick (ButtonClickType buttonClickType)
+		{
+			IEnumerator iEnumerator = _managers_serializedproperty.GetEnumerator();
+			
+			while (iEnumerator.MoveNext()) {
+				Debug.Log ("is : " + (iEnumerator.Current as SerializedProperty).objectReferenceValue);
+			}
+		
+			switch (buttonClickType) {
+				case ButtonClickType.ADD:
+					_managers_serializedproperty.InsertArrayElementAtIndex (0);
+					_managers_serializedproperty.GetArrayElementAtIndex(0).objectReferenceValue = _inUse_scriptableobject;
+					break;
+				case ButtonClickType.REMOVE:
+				
+					//
+					if (_hasManagerAlready (_monoScript.GetClass() )	) {
+						Debug.Log ("i: " + _getManagerIndex (_monoScript.GetClass()) );
+						_managers_serializedproperty.DeleteArrayElementAtIndex ( 0);
+					}
+						
+					break;
+				case ButtonClickType.CONVERT:
+				
+					
+					ScriptableObject scriptableObject = ScriptableObjectUtility.CreateAssetFromMonoScript (_monoScript);
+					EditorWindowUtility.doSetThenUnsetProjectWindowSelectionTo(scriptableObject);
+					break;
+			}
+			
+			_managers_serializedproperty.serializedObject.ApplyModifiedProperties();
+			_managers_serializedproperty.serializedObject.SetIsDifferentCacheDirty();
+			_managers_serializedproperty.serializedObject.UpdateIfDirtyOrScript();
+			
+		}
 	}
 }
 

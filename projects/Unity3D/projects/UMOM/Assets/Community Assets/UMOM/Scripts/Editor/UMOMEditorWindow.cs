@@ -263,8 +263,12 @@ namespace com.rmc.managers.umom.Editor
 			hierarchyItem_texture2D 	= Resources.Load("UMOMHierarchyItemIcon") as Texture2D;
 			bannerImage_texture2D 		= Resources.Load("UMOMEditorWindowBannerImage") as Texture2D;
 				
-			//GRAB FRESH
+			//GRAB FRESH REFERENCES, NEEDED?
 			_getTargetReferences();
+			
+			//LOAD OBJECTS manually so they exist in needed 'FindObjectsOfTypeIncludingAssets' call, later
+			EditorWindowUtility.LoadAllAssetsOfType (typeof (ScriptableObject));
+			
 			
 			//
 			autoRepaintOnSceneChange = true;

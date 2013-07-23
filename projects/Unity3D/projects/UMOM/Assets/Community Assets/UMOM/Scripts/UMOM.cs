@@ -130,7 +130,7 @@ namespace com.rmc.managers.umom
 		public void OnEnable() 
 		{ 
 			Debug.Log ("OnEnable"); //I'M SEEING INSTANCE GETTER CALLED SOMEHOW BY *THIS* METHOD
-			EditorWindowUtility.LoadAllAssetsOfType (typeof (ScriptableObject));
+			
 
 		}
 		/// <summary>
@@ -169,11 +169,12 @@ namespace com.rmc.managers.umom
 			 * 
 			 */
 			//THEN DO MANAGER STUFF
-			//Debug.Log ("UMOM.update()1");
+			//Debug.Log ("UMOM.update() : " + _Instance.isEnabled + " #: " + _Instance.managers);
 			if (_Instance && _Instance.isEnabled) {
-				//Debug.Log ("UMOM.update() _Instance.manager" + _Instance.managers.Count);
 				foreach (IManager iManager in _Instance.managers) {
+					//Debug.Log ("UMOM update() iManager.canReceiveUpdate: " + iManager.canReceiveUpdate);
 					if (iManager.canReceiveUpdate) {
+						Debug.Log ("	UMOM calling " + iManager + ".update()");
 						iManager.onUpdate();
 					}
 				}

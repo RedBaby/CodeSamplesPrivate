@@ -101,7 +101,7 @@ namespace com.rmc.managers.umom
 		///</summary>
 		public BaseManager ( )
 		{
-			//Debug.Log ("AbstractManager.constructor()");
+			//Debug.Log (">" + this.GetType().Name + ".constructor()");
 			_eventDispatcher = new EventDispatcher (this);
 			
 		}

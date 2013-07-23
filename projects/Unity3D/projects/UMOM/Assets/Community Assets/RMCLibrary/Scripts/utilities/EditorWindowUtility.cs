@@ -155,6 +155,23 @@ namespace com.rmc.utilities
 			
 		}
 		
+		
+		/// <summary>
+		/// Dos the set then unset project window selection to.
+		/// 
+		/// NOTE: Set a new scriptable temporarily to 'load it into memory'
+		/// 
+		/// </summary>
+		/// <param name='scriptableObject'>
+		/// Scriptable object.
+		/// </param>
+		public static void doSetThenUnsetProjectWindowSelectionTo (Object scriptableObject)
+		{
+			Object[] currentlySelectedObjects_array = Selection.objects;
+			Selection.activeObject 	= scriptableObject;
+			Selection.objects 		= currentlySelectedObjects_array;
+		}
+		
 		/// <summary>
 		/// Gets all project window items interface of.
 		/// </summary>
@@ -174,7 +191,15 @@ namespace com.rmc.utilities
 		}
 		
 		
-		
+		/// <summary>
+		/// Gets all asset mono scripts by super class and interface.
+		/// </summary>
+		/// <returns>
+		/// The all asset mono scripts by super class and interface.
+		/// </returns>
+		/// <param name='aSuperClassType'>
+		/// A super class type.
+		/// </param>
 		public static MonoScript[] GetAllAssetMonoScriptsBySuperClassAndInterface (System.Type aSuperClassType)
 		{
 			
@@ -182,8 +207,7 @@ namespace com.rmc.utilities
 			aSuperClassType = typeof (BaseManager);
 			//
 			
-			 MonoScript[] allMonoScripts = (MonoScript[])Object.FindObjectsOfTypeIncludingAssets( typeof( MonoScript ) );
- 
+			MonoScript[] allMonoScripts = (MonoScript[])Object.FindObjectsOfTypeIncludingAssets( typeof( MonoScript ) );
 			List<MonoScript> validMonoScripts = new List<MonoScript>();
 			 
 			foreach( MonoScript monoScript in allMonoScripts )	{
@@ -232,9 +256,34 @@ namespace com.rmc.utilities
 			
 		}
 		
-		private static bool loadedAll_boolean = false;
+		//private static bool loadedAll_boolean = false;
+		
+		/// <summary>
+		/// Loads the type of the all assets of.
+		/// 
+		/// NOTE: Seems either to NOT work or to CRASH unity.app, depending on how I implement it
+		/// 
+		/// </summary>
+		/// <param name='aSuperClassType'>
+		/// A super class type.
+		/// </param>
 		public static void LoadAllAssetsOfType (System.Type aSuperClassType)
 		{
+			
+			/*
+			Object[] objects =  EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	);
+			
+			//Debug.Log ("ALL SCRIPTABLES (LESS) " + scriptableObjectsOfBaseManager.Count);
+			foreach (Object scriptableObject in objects) {
+				
+				Debug.Log ("	so: " + scriptableObject);
+				//EditorWindowUtility.doSetThenUnsetProjectWindowSelectionTo (scriptableObject);
+				
+			}
+			*/		
+			Selection.objects = EditorWindowUtility.GetAllObjectsBySuperClassAndInterface (	typeof (BaseManager), typeof (IManager)	);
+			
+			/*
 			if (!loadedAll_boolean) {
 				loadedAll_boolean = true;
 				
@@ -256,6 +305,7 @@ namespace com.rmc.utilities
 			    }
 				
 			}
+			*/
 		}
 		
 		
