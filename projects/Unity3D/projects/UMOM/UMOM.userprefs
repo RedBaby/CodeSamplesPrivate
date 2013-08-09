@@ -1,6 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Community Assets/UMOMManagers/Scripts/Managers/TestManagerWithNoAsset.cs">
+    <Files>
+      <File FileName="Assets/Community Assets/UMOMManagers/Scripts/Managers/EventManager.cs" Line="2" Column="48" />
+      <File FileName="Assets/Community Assets/UMOM/Scripts/UMOM.cs" Line="1" Column="1" />
+      <File FileName="Assets/Community Assets/UMOM/Scripts/BaseManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Community Assets/RMCLibrary/Scripts/utilities/GenericsUtility.cs" Line="1" Column="1" />
+      <File FileName="Assets/Community Assets/UMOM/Scripts/Editor/UMOMEditorWindow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Community Assets/UMOM/Scripts/Editor/ManagerCandidate.cs" Line="1" Column="1" />
+      <File FileName="Assets/Community Assets/UMOMManagers/Scripts/Managers/GUIManager.cs" Line="32" Column="15" />
+      <File FileName="Assets/Community Assets/UMOMManagers/Scripts/Managers/GameManager.cs" Line="32" Column="10" />
+      <File FileName="Assets/Community Assets/UMOMManagers/Scripts/Managers/CustomManager.cs" Line="32" Column="14" />
+      <File FileName="Assets/Community Assets/UMOMManagers/Scripts/Managers/LevelManager.cs" Line="32" Column="10" />
+      <File FileName="Assets/Community Assets/UMOMManagers/Scripts/Managers/TestManagerWithNoAsset.cs" Line="45" Column="23" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
