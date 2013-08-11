@@ -47,7 +47,7 @@ namespace com.rmc.managers.umom
 	/// <summary>
 	/// MOM = Manager of Managers. One singleton to rule them all.
 	/// </summary>
-	[ExecuteInEditMode()] 
+	[ExecuteInEditMode] 
 	[System.Serializable]
 	public class UMOM : MonoBehaviour
 	{
@@ -65,7 +65,20 @@ namespace com.rmc.managers.umom
 		/// 	NOTE: I TRIED PRIVATE WITH SERIALIZED, ALL THAT WORKS GREAT *BUT* THE GETTER/SETTER ISN'T CALLED FROM THE EDITOR, SO GETTER/SETTER HAS LIMITED VALUE WITH THIS EDITOR-CENTRIC PROPERTY
 		/// 
 		[SerializeField] 
-		public bool isEnabled = true;
+		private bool _canReceiveUpdate_boolean = true;
+		public bool canReceiveUpdate
+		{
+			set {
+				_canReceiveUpdate_boolean = value;
+			}
+			get {
+				
+				return _canReceiveUpdate_boolean;	
+			}
+			
+		}
+		
+		
 		
 		/// <summary>
 		/// The _is visible in hierarchy_boolean.
@@ -169,10 +182,11 @@ namespace com.rmc.managers.umom
 			 * 
 			 */
 			//THEN DO MANAGER STUFF
-			//Debug.Log ("UMOM.update() : " + _Instance.isEnabled + " #: " + _Instance.managers);
-			if (_Instance && _Instance.isEnabled) {
+		
+			if (_Instance && _Instance.canReceiveUpdate) {
+				Debug.Log ("UMOM.update() : " + _Instance.canReceiveUpdate + " #: " + _Instance.managers);
 				foreach (BaseManager aBaseManager in _Instance.managers) {
-					//Debug.Log ("UMOM update() iManager.canReceiveUpdate: " + iManager.canReceiveUpdate);
+					Debug.Log ("UMOM update() iManager.canReceiveUpdate: " + aBaseManager.canReceiveUpdate);
 					if (aBaseManager.canReceiveUpdate) {
 						Debug.Log ("	UMOM calling " + aBaseManager + ".update()");
 						aBaseManager.onUpdate();

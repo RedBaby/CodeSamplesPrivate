@@ -47,9 +47,9 @@
      <Compile Include="Assets\Community Assets\RMCLibrary\Scripts\Editor\CreateDefaultFoldersMenu.cs" />
      <Compile Include="Assets\Community Assets\RMCLibrary\Scripts\Editor\utilities\EditorWindowUtility.cs" />
      <Compile Include="Assets\Community Assets\RMCLibrary\Scripts\Editor\utilities\ScriptableObjectUtility.cs" />
-     <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\ManagerCandidate.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\UMOMEditorWindow.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\UMOMInitializeOnLoad2.cs" />
+     <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\UMOMManagerCandidate.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\Editor\UMOMMenu.cs" />
      <None Include="Assets\Community Assets\UMOM\Scripts\read_me.txt" />
  <Reference Include="\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.Graphs">

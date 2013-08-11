@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (C) 2005-2013 by Rivello Multimedia Consulting (RMC).                    
  * code [at] RivelloMultimediaConsulting [dot] com                                                  
  *                                                                      
@@ -44,7 +44,7 @@ namespace com.rmc.managers.umom
 	/// <summary>
 	/// Abstract manager.
 	/// </summary>
-	public class CustomManager : BaseManager
+	public class AnotherTestManager : BaseManager
 	{
 	
 		//--------------------------------------
@@ -72,18 +72,18 @@ namespace com.rmc.managers.umom
 		///<summary>
 		///	 Constructor
 		///</summary>
-		public CustomManager ( )
+		public AnotherTestManager ( )
 		{
-			//Debug.Log ("CustomManager.constructor()");
+			//Debug.Log ("AnotherTestManager.constructor()");
 			
 		}
 		
 		/// <summary>
 		/// Deconstructor
 		/// </summary>
-		~CustomManager ( )
+		~AnotherTestManager ( )
 		{
-			//Debug.Log ("CustomManager.deconstructor()");
+			//Debug.Log ("AnotherTestManager.deconstructor()");
 			
 		}
 		
@@ -119,7 +119,7 @@ namespace com.rmc.managers.umom
 		{
 			
 			//USE MY PROPS AND ALL OTHER MANAGERS AS NEEDED
-			Debug.Log ("onUpdate(): " + this);
+			//Debug.Log ("onUpdate(): " + this);
 			
 		}
 		

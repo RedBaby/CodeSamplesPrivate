@@ -34,6 +34,7 @@ using System.Reflection;
 using System.Linq;
 using com.rmc.managers.umom;
 using System.Collections.Generic;
+using System.IO;
 
 //--------------------------------------
 //  Namespace
@@ -150,7 +151,7 @@ namespace com.rmc.utilities
 		/// </param>
 		public static Object[] GetAllProjectWindowItemsSubclassOfType (System.Type aType)
 		{
-			Object[] objects_array = Object.FindObjectsOfTypeIncludingAssets(aType).Where ( (aItem) => (aItem.GetType().IsSubclassOf (aType) )).ToArray();
+			Object[] objects_array = _GetAllObjects(aType).Where ( (aItem) => (aItem.GetType().IsSubclassOf (aType) )).ToArray();
 			return objects_array;
 			
 		}
@@ -185,7 +186,7 @@ namespace com.rmc.utilities
 		{
 			System.Type classType = typeof (Object);
 			System.Type interfaceType = aType;
-			Object[] objects_array = Object.FindObjectsOfTypeIncludingAssets(classType).Where ( (aItem) => (aItem.GetType().GetInterface(interfaceType.Name) == (interfaceType) )).ToArray();
+			Object[] objects_array = _GetAllObjects(classType).Where ( (aItem) => (aItem.GetType().GetInterface(interfaceType.Name) == (interfaceType) )).ToArray();
 			return objects_array;
 			
 		}
@@ -207,7 +208,7 @@ namespace com.rmc.utilities
 			aSuperClassType = typeof (BaseManager);
 			//
 			
-			MonoScript[] allMonoScripts = (MonoScript[])Object.FindObjectsOfTypeIncludingAssets( typeof( MonoScript ) );
+			MonoScript[] allMonoScripts = (MonoScript[])_GetAllObjects( typeof( MonoScript ) );
 			List<MonoScript> validMonoScripts = new List<MonoScript>();
 			 
 			foreach( MonoScript monoScript in allMonoScripts )	{
@@ -242,7 +243,7 @@ namespace com.rmc.utilities
 			//TODO: PERHAPS CACHE THIS CALL INSTEAD OF CALLING IT SO MUCH, IS IT CAUSING SLOWDOWN NOW?
 			
 			//
-			Object[] objects_array = Object.FindObjectsOfTypeIncludingAssets(aSuperClassType).Where 
+			Object[] objects_array = _GetAllObjects(aSuperClassType).Where 
 				( 
 					(aItem) => 
 						(
@@ -254,6 +255,73 @@ namespace com.rmc.utilities
 			return objects_array;
 			
 		}
+		
+		/// <summary>
+		/// _s the get all objects.
+		/// 
+		/// NOTE: This is a custom class so we can easily tweak how this line is implemented since it behaves 
+		/// unpredictably at times
+		/// 
+		/// </summary>
+		/// <returns>
+		/// The get all objects.
+		/// </returns>
+		/// <param name='aSuperClassType'>
+		/// A super class type.
+		/// </param>
+		private static Object[] _GetAllObjects (System.Type aSuperClassType)
+		{
+			//TRIED BEFORE AUG 9 - (BROKEN - I MUST SELECT ALL FILES IN PROJECT WINDOW TO 'WORK')
+			//return Object.FindObjectsOfTypeIncludingAssets(aSuperClassType);
+			
+			//Debug.Log ("FINDING: " + Resources.FindObjectsOfTypeAll(aSuperClassType).Length);
+			
+			//TRIED ON AUG 9 -- (BROKEN - I MUST SELECT ALL FILES IN PROJECT WINDOW TO 'WORK')
+			return Resources.FindObjectsOfTypeAll(aSuperClassType);
+			
+		}
+		
+		/// <summary>
+		/// TRYING AN ALTERNATIVE TO Resources.FindObjectsOfTypeAll.... 
+		/// 
+		/// NOTE: DOES NOT WORK, it crashes the IDE, I think due to AssetDatabase.LoadAssetAtPath()
+		/// 
+		/// </summary>
+		protected static GameObject[]  getAllEditorAssets() 
+		{
+				
+			List<GameObject> tempObjects_list = new List<GameObject>();
+		    DirectoryInfo directory = new DirectoryInfo(Application.dataPath);
+		    FileInfo[] goFileInfo = directory.GetFiles("*.prefab", SearchOption.AllDirectories);
+		    uint i = 0; 
+			int goFileInfoLength = goFileInfo.Length;
+		    FileInfo tempGoFileInfo; 
+			string tempFilePath; 
+			int assetIndex;
+		    GameObject tempGO;
+		    for(i = 0; i < goFileInfoLength; i++)
+		    {
+		    tempGoFileInfo = goFileInfo[i] as FileInfo;
+		    if(tempGoFileInfo == null) continue;
+		    tempFilePath = tempGoFileInfo.FullName;
+		     
+		    assetIndex = tempFilePath.IndexOf("Assets/");
+		    //assetIndex = tempFilePath.IndexOf("Assets\\");
+		    if (assetIndex < 0) {
+				assetIndex = 0;
+			}
+		    tempFilePath = tempFilePath.Substring(assetIndex, tempFilePath.Length - assetIndex);
+		    //tempFilePath = tempFilePath.Replace('\\', '/');
+		    tempGO = AssetDatabase.LoadAssetAtPath(tempFilePath, typeof (GameObject)) as GameObject;
+		    if(tempGO == null) continue;
+		    	tempObjects_list.Add(tempGO);
+		    }
+		     
+		    return tempObjects_list.ToArray();
+	    }
+			
+			
+			
 		
 		//private static bool loadedAll_boolean = false;
 		
@@ -328,7 +396,7 @@ namespace com.rmc.utilities
 		/// </param>
 		public static Object[] GetAllHierarchyComponentsBySuperClassAndInterface (System.Type aSuperClassType, System.Type aInterfaceType)
 		{
-			Object[] foundGameObjects_array = GameObject.FindObjectsOfType (typeof (GameObject));
+			Object[] foundGameObjects_array = _GetAllObjects (typeof (GameObject));
 			/*
 			//NOT WORKING YET, NOT NEEDED EITHER
 			aSuperClassType = typeof (AudioListener);

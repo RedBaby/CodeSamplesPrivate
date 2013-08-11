@@ -56,6 +56,7 @@
      <Compile Include="Assets\Community Assets\UMOM\Scripts\BaseManager.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\IManager.cs" />
      <Compile Include="Assets\Community Assets\UMOM\Scripts\UMOM.cs" />
+     <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\AnotherTestManager.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\CustomManager.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\EventManager.cs" />
      <Compile Include="Assets\Community Assets\UMOMManagers\Scripts\Managers\GUIManager.cs" />

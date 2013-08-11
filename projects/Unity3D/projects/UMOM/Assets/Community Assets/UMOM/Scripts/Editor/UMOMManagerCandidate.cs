@@ -62,7 +62,7 @@ namespace com.rmc.managers.umom.Editor
 	/// Test event.
 	/// </summary>
 	[System.Serializable]
-	public class ManagerCandidate
+	public class UMOMManagerCandidate
 	{
 	
 		//--------------------------------------
@@ -72,8 +72,8 @@ namespace com.rmc.managers.umom.Editor
 		
 		// PUBLIC
 		MonoScript   		_monoScript;
-		ScriptableObject  	_inUse_scriptableobject;
-		SerializedProperty 	_managers_serializedproperty;
+		ScriptableObject  	_inUseFromAssets_scriptableobject;
+		SerializedProperty 	_managersFromRAM_serializedproperty;
 		ManagerCandidateType _scriptableTableItemType;
 		
 		
@@ -87,6 +87,8 @@ namespace com.rmc.managers.umom.Editor
 		
 		// PRIVATE
 		
+		bool _previousGUIEnabled_boolean;
+		
 		// PRIVATE STATIC
 		
 		//--------------------------------------
@@ -95,11 +97,11 @@ namespace com.rmc.managers.umom.Editor
 		///<summary>
 		///	 Constructor
 		///</summary>
-		public ManagerCandidate (MonoScript aMonoScript, ScriptableObject aScriptableObject, SerializedProperty aManagers_serializedproperty)
+		public UMOMManagerCandidate (MonoScript aMonoScript, ScriptableObject aScriptableObject, SerializedProperty aManagers_serializedproperty)
 		{
 			_monoScript		 				= aMonoScript;
-			_inUse_scriptableobject 		= aScriptableObject;
-			_managers_serializedproperty 	= aManagers_serializedproperty;
+			_inUseFromAssets_scriptableobject 		= aScriptableObject;
+			_managersFromRAM_serializedproperty 	= aManagers_serializedproperty;
 			
 			//
 			_doSetType();
@@ -124,8 +126,8 @@ namespace com.rmc.managers.umom.Editor
 			
 			//OPTIONS
 			GUILayoutOption[] skinnyToggleGUILayoutOptions = new GUILayoutOption[2];
-			skinnyToggleGUILayoutOptions[1] = GUILayout.MinWidth (20);
-			skinnyToggleGUILayoutOptions[0] = GUILayout.MaxWidth (20);
+			skinnyToggleGUILayoutOptions[1] = GUILayout.MinWidth (50);
+			skinnyToggleGUILayoutOptions[0] = GUILayout.MaxWidth (50);
 			//
 			GUILayoutOption[] textAreaGUILayoutOptions = new GUILayoutOption[2];
 			textAreaGUILayoutOptions[1] = GUILayout.MinWidth (250);
@@ -162,9 +164,9 @@ namespace com.rmc.managers.umom.Editor
 						_onButtonClick(ButtonClickType.CONVERT);
 					}
 					GUI.color = default_color;
-					GUI.enabled = false;
+					_setGUIEnabledTo (false);
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
-					GUI.enabled = true;
+				    _setGUIEnabledToPreviousValue();
 					break;
 				case ManagerCandidateType.SCRIPTABLE_USED:
 					//
@@ -176,9 +178,7 @@ namespace com.rmc.managers.umom.Editor
 						_onButtonClick(ButtonClickType.REMOVE);
 					}
 					GUI.color = default_color;
-					GUI.enabled = true;
-					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
-					GUI.enabled = true;
+					_getInUseManagerFromRAM().canReceiveUpdate =  EditorGUILayout.Toggle ( _getInUseManagerFromRAM().canReceiveUpdate, skinnyToggleGUILayoutOptions);
 					break;
 				case ManagerCandidateType.SCRIPTABLE_UNUSED:
 					//
@@ -191,9 +191,9 @@ namespace com.rmc.managers.umom.Editor
 						_onButtonClick(ButtonClickType.ADD);
 					}
 					GUI.color = default_color;
-					GUI.enabled = false;
+					_setGUIEnabledTo (false);
 					EditorGUILayout.Toggle (false,skinnyToggleGUILayoutOptions);
-					GUI.enabled = true;
+					_setGUIEnabledToPreviousValue();
 					break;
 				
 				
@@ -221,7 +221,7 @@ namespace com.rmc.managers.umom.Editor
 		/// <param name='aManagers_serializedproperty'>
 		/// A managers_serializedproperty.
 		/// </param>
-		public static ManagerCandidate FromMonoScriptAsset (MonoScript aCandidate_monoscript, List<ScriptableObject> aInUseScriptableObjects, SerializedProperty aManagers_serializedproperty) 
+		public static UMOMManagerCandidate FromMonoScriptAsset (MonoScript aCandidate_monoscript, List<ScriptableObject> aInUseScriptableObjects, SerializedProperty aManagers_serializedproperty) 
 		{
 			
 			MonoScript monoScriptMatchingCandidate;
@@ -236,7 +236,7 @@ namespace com.rmc.managers.umom.Editor
 				}
 			}
 			//Debug.Log (" SO : " + winningCandidate_scriptableobject);
-			ManagerCandidate managerCandidate = new ManagerCandidate (aCandidate_monoscript, winningCandidate_scriptableobject, aManagers_serializedproperty);
+			UMOMManagerCandidate managerCandidate = new UMOMManagerCandidate (aCandidate_monoscript, winningCandidate_scriptableobject, aManagers_serializedproperty);
 			return managerCandidate;
 			
 			
@@ -251,7 +251,7 @@ namespace com.rmc.managers.umom.Editor
 		private void _doSetType ()
 		{
 			//Debug.Log ("_inUse_scriptableobject: " + _inUse_scriptableobject);
-			if (_inUse_scriptableobject == null) {
+			if (_inUseFromAssets_scriptableobject == null) {
 				
 				_scriptableTableItemType = ManagerCandidateType.MONOSCRIPT;
 				/*
@@ -296,18 +296,22 @@ namespace com.rmc.managers.umom.Editor
 		public bool _hasManagerAlready (System.Type aType)
 		{
 			bool hasManagerAlready_boolean = false;
-			IEnumerator iEnumerator = _managers_serializedproperty.GetEnumerator();
-			//Debug.Log ("#: " + (_managers_serializedproperty.CountInProperty()));
+			IEnumerator iEnumerator = _managersFromRAM_serializedproperty.GetEnumerator();
+			
+			//Debug.Log ("#: " + _managers_serializedproperty.arraySize);
+			
 			while (iEnumerator.MoveNext()) {
 				
-				if ((iEnumerator.Current as SerializedObject) != null) {
+				//Debug.Log( "	e: " + (SerializedProperty)iEnumerator.Current);
+				if ((SerializedProperty)iEnumerator.Current != null) {
+					//Debug.Log ("has? : " + ((iEnumerator.Current as SerializedProperty).objectReferenceValue).GetType());
 					if ((((iEnumerator.Current as SerializedProperty).objectReferenceValue).GetType() == aType)) {
 						hasManagerAlready_boolean = true;
 						break;
 					}
 				}
 			}
-		
+			//Debug.Log ("has? : " + hasManagerAlready_boolean);
 			return hasManagerAlready_boolean;
 		}
 		
@@ -322,7 +326,7 @@ namespace com.rmc.managers.umom.Editor
 		/// </param>
 		public int _getManagerIndex (System.Type aType)
 		{
-			IEnumerator iEnumerator = _managers_serializedproperty.GetEnumerator();
+			IEnumerator iEnumerator = _managersFromRAM_serializedproperty.GetEnumerator();
 			int index_int = -1;
 			while (iEnumerator.MoveNext()) {
 				index_int++;
@@ -332,6 +336,20 @@ namespace com.rmc.managers.umom.Editor
 			}
 		
 			return index_int;
+		}
+		
+		/// <summary>
+		/// _gets the in use manager from RAM.
+		/// </summary>
+		/// <returns>
+		/// The in use manager from RAM.
+		/// </returns>
+		private BaseManager _getInUseManagerFromRAM () 
+		{
+			
+			SerializedProperty serializedProperty = _managersFromRAM_serializedproperty.GetArrayElementAtIndex(_getManagerIndex (_monoScript.GetClass()));
+			BaseManager baseManager = serializedProperty.objectReferenceValue as BaseManager;
+			return baseManager;
 		}
 		
 		// PRIVATE STATIC
@@ -347,7 +365,7 @@ namespace com.rmc.managers.umom.Editor
 		/// </param>
 		private void _onButtonClick (ButtonClickType buttonClickType)
 		{
-			IEnumerator iEnumerator = _managers_serializedproperty.GetEnumerator();
+			IEnumerator iEnumerator = _managersFromRAM_serializedproperty.GetEnumerator();
 			
 			while (iEnumerator.MoveNext()) {
 				Debug.Log ("is : " + (iEnumerator.Current as SerializedProperty).objectReferenceValue);
@@ -355,15 +373,15 @@ namespace com.rmc.managers.umom.Editor
 		
 			switch (buttonClickType) {
 				case ButtonClickType.ADD:
-					_managers_serializedproperty.InsertArrayElementAtIndex (0);
-					_managers_serializedproperty.GetArrayElementAtIndex(0).objectReferenceValue = _inUse_scriptableobject;
+					_managersFromRAM_serializedproperty.InsertArrayElementAtIndex (0);
+					_managersFromRAM_serializedproperty.GetArrayElementAtIndex(0).objectReferenceValue = _inUseFromAssets_scriptableobject;
 					break;
 				case ButtonClickType.REMOVE:
 				
 					//
 					if (_hasManagerAlready (_monoScript.GetClass() )	) {
 						Debug.Log ("i: " + _getManagerIndex (_monoScript.GetClass()) );
-						_managers_serializedproperty.DeleteArrayElementAtIndex ( 0);
+						_managersFromRAM_serializedproperty.DeleteArrayElementAtIndex ( 0);
 					}
 						
 					break;
@@ -375,10 +393,36 @@ namespace com.rmc.managers.umom.Editor
 					break;
 			}
 			
-			_managers_serializedproperty.serializedObject.ApplyModifiedProperties();
-			_managers_serializedproperty.serializedObject.SetIsDifferentCacheDirty();
-			_managers_serializedproperty.serializedObject.UpdateIfDirtyOrScript();
+			_managersFromRAM_serializedproperty.serializedObject.ApplyModifiedProperties();
+			_managersFromRAM_serializedproperty.serializedObject.SetIsDifferentCacheDirty();
+			_managersFromRAM_serializedproperty.serializedObject.UpdateIfDirtyOrScript();
 			
+		}
+		
+		/// <summary>
+		/// _sets the GUI enabled to.
+		/// </summary>
+		/// <param name='par1'>
+		/// Par1.
+		/// </param>
+		/// <exception cref='System.NotImplementedException'>
+		/// Is thrown when a requested operation is not implemented for a given type.
+		/// </exception>
+		public void _setGUIEnabledTo (bool aValue_boolean)
+		{
+			_previousGUIEnabled_boolean = GUI.enabled;
+			GUI.enabled = aValue_boolean;
+		}
+		
+		/// <summary>
+		/// _sets the GUI enabled to previous value.
+		/// </summary>
+		/// <exception cref='System.NotImplementedException'>
+		/// Is thrown when a requested operation is not implemented for a given type.
+		/// </exception>
+		public void _setGUIEnabledToPreviousValue ()
+		{
+			GUI.enabled = _previousGUIEnabled_boolean;
 		}
 	}
 }

@@ -57,7 +57,7 @@ namespace com.rmc.managers.umom.Editor
 	//  Class
 	//--------------------------------------
 	[System.Serializable]
-	[ExecuteInEditMode()]  
+	[ExecuteInEditMode]  
 	public class UMOMEditorWindow : EditorWindow 
 	{
 	
@@ -88,9 +88,9 @@ namespace com.rmc.managers.umom.Editor
 		private int _bannerPaddingRight_int = 10;
 		
 		/// <summary>
-		/// The is enabled_serializedproperty.
+		/// The _can receive update_serializedproperty.
 		/// </summary>
-		private SerializedProperty _isEnabled_serializedproperty;
+		private SerializedProperty _canReceiveUpdate_serializedproperty;
 		
 		/// <summary>
 		/// The _is hidden in hierarchy_serializedproperty.
@@ -206,7 +206,7 @@ namespace com.rmc.managers.umom.Editor
 			if (UMOM.Instance) {
 				_mom_serializedObject 						= new SerializedObject(UMOM.Instance);
 				_mom_serializedObject.Update();
-				_isEnabled_serializedproperty 				= _mom_serializedObject.FindProperty ("isEnabled");
+				_canReceiveUpdate_serializedproperty 		= _mom_serializedObject.FindProperty ("_canReceiveUpdate_boolean");
 				_isHiddenInHierarchy_serializedproperty 	= _mom_serializedObject.FindProperty ("isHiddenInHierarchy");
 				_managers_serializedproperty 				= _mom_serializedObject.FindProperty ("managers");
 				
@@ -215,8 +215,8 @@ namespace com.rmc.managers.umom.Editor
 					Debug.Log ("_mom_serializedObject: " + _mom_serializedObject);
 				}
 				
-				if (_isEnabled_serializedproperty == null) {
-					Debug.Log ("_isEnabled_serializedproperty: " + _isEnabled_serializedproperty);
+				if (_canReceiveUpdate_serializedproperty == null) {
+					Debug.Log ("_canReceiveUpdate_serializedproperty: " + _canReceiveUpdate_serializedproperty);
 				}
 				
 				if (_isHiddenInHierarchy_serializedproperty == null) {
@@ -375,7 +375,7 @@ namespace com.rmc.managers.umom.Editor
 			//**	LIST OF MANAGER CANDIDATES
 			//*****************************************************
 			//*****************************************************
-			ManagerCandidate managerCandidate;
+			UMOMManagerCandidate managerCandidate;
 			
 			//SORT ALPHABETICALLY (MANUAL SORT NEEDED BECAUSE OUR LIST IS A GENERIC, I THINK)
 			monoScriptsOfBaseManager.Sort
@@ -389,7 +389,7 @@ namespace com.rmc.managers.umom.Editor
 			
 			//LIST OUT
 			foreach (MonoScript monoScript in monoScriptsOfBaseManager) {
-				managerCandidate = ManagerCandidate.FromMonoScriptAsset (monoScript, scriptableObjectsOfBaseManager, _managers_serializedproperty);
+				managerCandidate = UMOMManagerCandidate.FromMonoScriptAsset (monoScript, scriptableObjectsOfBaseManager, _managers_serializedproperty);
 				managerCandidate.doLayoutGUI();
 				
 			}
@@ -501,12 +501,12 @@ namespace com.rmc.managers.umom.Editor
 					
 					//
 					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.PrefixLabel ("Enabled?");
-					_isEnabled_serializedproperty.boolValue = EditorGUILayout.Toggle (_isEnabled_serializedproperty.boolValue, wideToggleGUILayoutOptions);	
+					EditorGUILayout.PrefixLabel ("Receive Update?");
+					_canReceiveUpdate_serializedproperty.boolValue = EditorGUILayout.Toggle (_canReceiveUpdate_serializedproperty.boolValue, wideToggleGUILayoutOptions);	
 					EditorGUILayout.EndHorizontal();
 					
 					//TOGGLE FOR THE PAGE BELOW
-					GUI.enabled = _isEnabled_serializedproperty.boolValue;
+					GUI.enabled = _canReceiveUpdate_serializedproperty.boolValue;
 					
 					//
 					EditorGUILayout.BeginHorizontal();
@@ -563,8 +563,8 @@ namespace com.rmc.managers.umom.Editor
 					"2. Script will appear above in this window.\n" +
 					"3. Click 'Convert' above in this window.\n" + 
 					"4. Click 'Add' above in this window.\n" +
-					"5. Enjoy. Click 'Remove' and toggle 'Update' as needed." +
-					"Click for more <a href='http://forum/post/on/this/package/'>info</a>.\n" +
+					"5. Enjoy. Click 'Remove' and toggle 'Update' as needed.\n" +
+					"    Click for more <a href='http://forum/post/on/this/package/'>info</a>.\n" +
 					"\n";
 				EditorGUILayout.TextArea (textArea_string);
 				EditorGUILayout.Space();
